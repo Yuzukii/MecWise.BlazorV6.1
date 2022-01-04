@@ -1,0 +1,864 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MecWise.XtraReportCommon</name>
+    </assembly>
+    <members>
+        <member name="T:MecWise.XtraReportCommon.CommonFunctions">
+            <summary>Common utility/static properties and methods used inside XtraReports library.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.#ctor">
+            <summary>Default constructor</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.SetCurrentReport(MecWise.XtraReportCommon.Report)">
+            <summary>Sets the reference to Report class used in XtraReport scripts.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.GetCommandParams(System.String)">
+            <summary>Splits and retrieves parameters passed as command-line arguments.</summary>
+            <param name="delim">Delimitor string to split.</param>
+            <returns>Array of string values representing command-line arguments.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.AppValue(System.String,System.Object)">
+            <summary>Gets value for specified key from configuration file.</summary>
+            <param name="key">Key name.</param>
+            <param name="defValue">Default value to be returned, if key not found in configuration file.</param>
+            <returns>Value for key or default value if key not specified.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.GetFullPath(System.String,System.String)">
+            <summary>Gets full path from relative path specified in configuration file for specified key.</summary>
+            <param name="key">Key name.</param>
+            <param name="defPath">Default value to be used, if key not found in configuration file.</param>
+            <returns>Full path in string for specified key or default value if key not specified.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.BuildReportParameters(System.String)">
+            <summary>Builds report parameters from specified string.</summary>
+            <param name="paramString">
+            Parameter string containing parameter names/values separated by semi-colon(;).
+            <para><example>Example : CoyId=SV;EmpeId=0111;OrgUnit=SGP</example></para>
+            </param>
+            <returns>Array of ReportParam instance, used for report generation.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.WriteToLog(System.String)">
+            <summary>
+            Writes message(errors) into log file.
+            <para>Log file path/name must be specified using LogFilePath/Name properties.</para>
+            </summary>
+            <param name="msg">Message(error) string.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.WriteToLog(System.String,System.String)">
+            <summary>Writes message(errors) into log file.</summary>
+            <param name="file">Full path of log file.</param>
+            <param name="msg">Message(error) string.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.DeleteFile(System.String)">
+            <summary>Deletes file at specified path.</summary>
+            <param name="file">Full path and name of the file.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.ToDate(System.Object)">
+            <summary>Gets date in dd/MM/yyyy format.</summary>
+            <param name="date">Date.</param>
+            <returns>Date in dd/MM/yyyy format.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.ToCommonParamType(MecWise.XtraReportBase.ParameterType)">
+            <summary>Converts parameter type of the report between different declarations.</summary>
+            <param name="type">ParamType declaration from XtraReportBase assembly.</param>
+            <returns>ParamType declaration from XtraReportCommon assembly.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.ToBaseParamType(MecWise.XtraReportCommon.ParameterType)">
+            <summary>Converts parameter type of the report between different declarations.</summary>
+            <param name="type">ParamType declaration from XtraReportCommon assembly.</param>
+            <returns>ParamType declaration from XtraReportBase assembly.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.ToCommonReportFormat(MecWise.XtraReportBase.ReportFormats)">
+            <summary>Converts output format of the report between different declarations.</summary>
+            <param name="format">ReportFormats declaration from XtraReportBase assembly.</param>
+            <returns>ReportFormats declaration from XtraReportCommon assembly.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.CommonFunctions.ToBaseReportFormat(MecWise.XtraReportCommon.ReportFormats)">
+            <summary>Converts output format of the report between different declarations.</summary>
+            <param name="format">ReportFormats declaration from XtraReportCommon assembly.</param>
+            <returns>ReportFormats declaration from XtraReportBase assembly.</returns>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.ToolkitFolderPath">
+            <summary>Gets full path of MecWise.Toolkit folder from config file. Default is current path.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.ReportFolderPath">
+            <summary>
+            Gets full path of reports folder from configuration file.
+            <para>Relative path may be specified based on Toolkit folder path. Default is ~\Reports\.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.OutputFolderPath">
+            <summary>
+            Gets full path of reports output(BatchReports) folder from configuration file.
+            <para>Relative path may be specified based on Toolkit folder path. Default is ~\BatchReports\</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.CurrentReport">
+            <summary>Gets the reference to Report class used in XtraReport scripts.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.Dbms">
+            <summary>Gets DBMS value from configuration file. Default is MSSQL.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.DbOwner">
+            <summary>Gets Database Owner value from configuration file. Default is DBO.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.ConnectString">
+            <summary>Gets Connection string value from configuration file. Default is empty string.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.CoyId">
+            <summary>Gets CompanyId value from configuration file. Default is empty string.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.LogEnabled">
+            <summary>Gets if message(error) log enabled from configuration file. Default is false.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.LogFilePath">
+            <summary>
+            Gets full path of log files folder based on absolute/relative path specified in configuration file.
+            <para>Default is ~\..\Logs\ (relative to current folder).</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.LogFileName">
+            <summary>Gets log file name value from configuration file. Default is XtraReports.log.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.CommonFunctions.ReportScriptReferences">
+            <summary>
+            Gets full path and name of referenced assemblies used by XtraReport scripts.
+            <para>Array of string containing all referenced assemblies.</para>
+            </summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportFormats">
+            <summary>Represents different report output formats.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Pdf">
+            <summary>Pdf format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Excel">
+            <summary>MS-Excel format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.ExcelX">
+            <summary>MS-Excel format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Csv">
+            <summary>Csv format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Rtf">
+            <summary>Rtf format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Mht">
+            <summary>Mht format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Html">
+            <summary>Html format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Text">
+            <summary>Text format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportFormats.Image">
+            <summary>Image format.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ParameterType">
+            <summary>Report parameter types.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ParameterType.Char">
+            <summary>Character (string) type.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ParameterType.DateTime">
+            <summary>DateTime type.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ParameterType.Numeric">
+            <summary>Numeric type.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportParam">
+            <summary>Represents report parameter.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportParam.Name">
+            <summary>Parameters name.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportParam.Type">
+            <summary>Parameters type.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportCommon.ReportParam.Value">
+            <summary>Parameters value.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.IDirectReport">
+            <summary>Interface for direct report generation (XtraReports).</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.IDirectReport.LaunchReport">
+            <summary>Launch report to be generated.</summary>
+            <returns>True if report launched successfully.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.IDirectReport.ExportReport(MecWise.XtraReportCommon.ReportFormats)">
+            <summary>Exports report output into file, specified as OutputFileName.</summary>
+            <param name="format">Report output format (pdf/xls).</param>
+            <returns>True if report exported successfully.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.IDirectReport.ExportReport(MecWise.XtraReportCommon.ReportFormats,System.IO.Stream)">
+            <summary>Exports report output into Stream (MemoryStream instance).</summary>
+            <param name="format">Report output format (pdf/xls).</param>
+            <param name="stream">Stream instance.</param>
+            <returns>True if report exported successfully.</returns>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.CoyId">
+            <summary>Gets or sets the Company Code.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.ReportId">
+            <summary>Gets or sets the Report Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.ReportFolderPath">
+            <summary>Gets or sets the Report folder path.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.ReportFileName">
+            <summary>Gets or sets the Report FileName.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.OutputFolderPath">
+            <summary>Gets or sets the Output folder path.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.OutputFileName">
+            <summary>Gets or sets the Output FileName.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.DBSession">
+            <summary>Gets or sets the Database connection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.ReportParams">
+            <summary>Gets or sets the report parameters.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.IDirectReport.Parameters">
+            <summary>Gets the report parameters collection.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.Job">
+            <summary>Internal class representing report job submitted by applications.
+            <para>Class used by XtraReports library for report generation by XtraReport Engine.</para>
+            </summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.#ctor(ePlatform.CommonClasses.EPSession)">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.GetJobDetails">
+            <summary>Gets job details from database.</summary>
+            <returns>True if successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.UpdateJobStatus(System.String,System.String)">
+            <summary>Updates job status after report generated.</summary>
+            <param name="oldStatus">Old status.</param>
+            <param name="newStatus">New status.</param>
+            <returns>True if successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.ExecutePrepProcs(ePlatform.CommonClasses.EPSession)">
+            <summary>Executes prep procedures for the report, before executing report data source.</summary>
+            <param name="sess">Database connection instance.</param>
+            <returns>True if procedures executed successfully, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.UpdateJobError(System.Int32)">
+            <summary>Updates job error details in database.</summary>
+            <param name="errorCode">Error code.</param>
+            <returns>True if updated successfully, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.GetJobDetails(System.String,System.String,System.String,System.String)">
+            <summary>Gets job details from database.</summary>
+            <param name="coyId">Company Id.</param>
+            <param name="jobId">Job Id.</param>
+            <param name="jobType">Job Type.</param>
+            <param name="jobStatus">Job Status.</param>
+            <returns>True if successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.UpdateJobStatus(System.String,System.String,System.String,System.String,System.String)">
+            <summary>Updates job status after report generated.</summary>
+            <param name="coyId">Company Id.</param>
+            <param name="jobType">Job Type.</param>
+            <param name="jobId">Job Id.</param>
+            <param name="oldStatus">Old Status.</param>
+            <param name="newStatus">New Status.</param>
+            <returns>True if successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.UpdateJobError(System.String,System.String,System.String,System.String,System.String)">
+            <summary>Updates job error, if report generation failed</summary>
+            <param name="coyId">Company Id</param>
+            <param name="jobType">Job Type</param>
+            <param name="jobId">Job Id</param>
+            <param name="errorCode">Error code</param>
+            <param name="errorDesc">Error description</param>
+            <returns>True if successful, False otherwise</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.ExecutePrepProcs(ePlatform.CommonClasses.EPSession,MecWise.XtraReportCommon.ReportPrepProcs)">
+            <summary>Executes the report prep procedures (before executing the report data source).</summary>
+            <param name="sess">Database connection instance.</param>
+            <param name="procs">Report prep procedures collection.</param>
+            <returns>True, if the procedures executed successfully, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.GetPrepProcParams(System.String)">
+            <summary>Gets report prep procedure parameters (from FORMULA type parameters).</summary>
+            <param name="sql">SQL Statement to retrieve the parameters list.</param>
+            <returns>Hashtable instance containing list of parameters.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.GetDefaultPrepProcParams">
+            <summary>Gets the list of all default parameters used in report prep procedures.</summary>
+            <returns>Hashtable instance containing list of all default parameters.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.GetNodeValue(System.String,System.String)">
+            <summary>Gets value of an element(node) from XML content.</summary>
+            <param name="xml">XML content in string format.</param>
+            <param name="nodePath">Element(node) with path to search.</param>
+            <returns>Value of searched element(node).</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Job.ToParamType(System.String)">
+            <summary>Converts data-type (string type) into coresponding ParameterType enum.</summary>
+            <param name="type">Data-type (string).</param>
+            <returns>ParameterType enum type.</returns>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.CoyId">
+            <summary>Gets or sets company Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.JobId">
+            <summary>Gets or sets job Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.JobType">
+            <summary>Gets or sets job type.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.JobStatus">
+            <summary>Gets or sets job status.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.ReportId">
+            <summary>Gets report Id. Initialized from job details retrieved from database.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.ReportFileName">
+            <summary>Gets report file name. Initialized from job details retrieved from database.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.OutputFileName">
+            <summary>Gets report output file name. Initialized from job details retrieved from database.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.Parameters">
+            <summary>Gets report parameters as ReportParameters collection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.ReportWhereClause">
+            <summary>Gets or sets where clause to be added report query.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.OverwriteRecSel">
+            <summary>Gets or sets whether or not to overwrite record selection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.PropWhereClause">
+            <summary>Gets or sets whether or not report where clause passed to sub-report.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.JobConnect">
+            <summary>
+            Gets connection string to Application database.
+            <para>Initialized from job details retrieved from database.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.ReportFolderPath">
+            <summary>
+            Gets report folder path.
+            <para>Initialized from job details retrieved from database Or configuration settings.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.OutputFolderPath">
+            <summary>
+            Gets report output folder path.
+            <para>Initialized from job details retrieved from database Or configuration settings.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.SelectionCriteria">
+            <summary>Gets report selection criteria. Initialized from JOB_PROPERTY in MF_JOB table.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.ReportFormat">
+            <summary>
+            Gets report output format.
+            <para>Initialized from job details (report output file name) retrieved from database.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.LanguageId">
+            <summary>Gets current language Id. Initialized from job details retrieved from database.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.ExportAttr">
+            <summary>Gets the value for ExportAttr parameter, submitted by the user.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.DBSession">
+            <summary>Gets current EPSession instance.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.ReportParamNamesFromDB">
+            <summary>Gets report parameter names from database.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.SubReports">
+            <summary>Gets subreports for current report.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Job.PrepProcs">
+            <summary>Gets list of prep procedures to be executed before executing report data source.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportLauncher">
+            <summary>Class for generating, printing and exporting XtraReports.
+            <para>Reports may be generated directly without submitting request through Report Server.</para>
+            <para>Required information(like ReportFileName, OutputFileName, ReportParams..etc) must be</para>
+            <para>specified using properties for direct report generation. This information is retrieved from</para>
+            <para>job details, if submitted through Report Server.</para>
+            </summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.#ctor(ePlatform.CommonClasses.EPSession)">
+            <summary>Constructor.</summary>
+            <param name="sess">Instance of EPSession for database connectivity.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.LaunchReport">
+            <summary>Initialize report generation(report submitted through Report Server).</summary>
+            <returns>True if report initialization was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.LaunchReport(System.Boolean)">
+            <summary>Initialize report generation(report may/not be submitted through Report Server).</summary>
+            <param name="directReport">True or false indicating direct report generation.</param>
+            <returns>True if report initialization was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.ExportReport">
+            <summary>Export report in default format to the output file.</summary>
+            <returns>True if export was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.ExportReport(MecWise.XtraReportCommon.ReportFormats)">
+            <summary>Export report in specified format to the output file.</summary>
+            <param name="format">Report output format (e.g. Pdf, Xls).</param>
+            <returns>True if export was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.ExportReport(MecWise.XtraReportCommon.ReportFormats,System.IO.Stream)">
+            <summary>Export report in specified format to Stream object.</summary>
+            <param name="format">Report output format (e.g. Pdf, Xls).</param>
+            <param name="stream">
+            <para>System.IO.Stream object to which the created file should be sent.</para>
+            <para>For example, MemoryStream instance.</para>
+            </param>
+            <returns>True if export was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportLauncher.WriteToLog(System.String)">
+            <summary>Writes message(errors) to log file.</summary>
+            <param name="msg">Message(error) string.</param>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.ReportParams">
+            <summary>Gets or sets report parameters(Array of ReportParam instances).</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.Parameters">
+            <summary>Gets report parameters collection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.ReportFormat">
+            <summary>Gets or sets report output format. Default is Pdf.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.Dbms">
+            <summary>Gets or sets DB system (MSSQL or Oracle). Default is MSSQL.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.DbOwner">
+            <summary>Gets or sets Database Owner. Default is DBO.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.ConnectString">
+            <summary>Gets or sets Connection string.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.CoyId">
+            <summary>Gets or sets Company Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.ReportId">
+            <summary>Gets or sets Report Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.ReportFileName">
+            <summary>Gets or sets Report file name (from REPORT_DEFN table).</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.OutputFileName">
+            <summary>Gets or sets Report output file name.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.ReportFolderPath">
+            <summary>
+            Gets or sets full path to report file. Default value read from configuration settings.
+            <para>Relative paths may be specified with reference to absolute path of Toolkit folder.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.OutputFolderPath">
+            <summary>
+            Gets or sets full path to report output file. Default value read from configuration settings.
+            <para>Relative paths may be specified with reference to absolute path of Toolkit folder.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.IsDirectReport">
+            <summary>
+            Gets or sets flag to indicate method of report generation.
+            <para>Reports may be generated directly without submitting request through Report Server.</para>
+            <para>Required information(like ReportFileName, OutputFileName, ReportParams..etc) must be</para>
+            <para>specified using properties for direct report generation.</para>
+            <para>Retrieved from job details, if submitted through Report Server.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportLauncher.DBSession">
+            <summary>Gets instance of EPSession for database connectivity.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.Report">
+            <summary>Represents common properties/methods required inside XtraReport scripts.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.SetSession(ePlatform.CommonClasses.EPSession)">
+            <summary>Initializes EPSession instance used inside report scripts.</summary>
+            <param name="sess">EPSession instance.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.GetDataSet(System.String)">
+            <summary>Executes SQL query for used as report's data source.</summary>
+            <param name="sql">SQL query.</param>
+            <returns>DataTable instance, assigned to report's data source.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.GetDataSet(System.String,System.Boolean)">
+            <summary>Executes SQL query for used as report's data source.</summary>
+            <param name="sql">SQL query.</param>
+            <param name="addSelectionCriteria">
+            Whether or not, add selection criteria to report sql.
+            <para>Selection criteria is entered by the user, using QueryBuilder.</para>
+            </param>
+            <returns>DataTable instance, assigned to report's data source.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.GetAVal(System.String)">
+            <summary>Executes SQL query and returns the resultant value.</summary>
+            <param name="sql">SQL query.</param>
+            <returns>Resultant value of the query.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.GetAVal(System.String,System.Object)">
+            <summary>Executes SQL query and returns the resultant value.</summary>
+            <param name="sql">SQL query.</param>
+            <param name="defaultValue">Default value to be returned, if resultant value is empty.</param>
+            <returns>Resultant value of the query.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.BindDataMember(DevExpress.XtraReports.UI.XRControl,System.String,System.String)">
+            <summary>Binds data member from data source to the control in report and applies format.</summary>
+            <param name="control">Report control.</param>
+            <param name="dataMember">Data member in the data source.</param>
+            <param name="format">Format string.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.BindDataMember(DevExpress.XtraReports.UI.XRControl,System.Object,System.String,System.String)">
+            <summary>Binds data member from data source to the control in report and applies format.</summary>
+            <param name="control">Report control.</param>
+            <param name="dataSource">Report data source.</param>
+            <param name="dataMember">Data member in the data source.</param>
+            <param name="format">Format string.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.LoadSubReport(System.String)">
+            <summary>Loads subreport from file.</summary>
+            <param name="fileName">Subreport file name (looked at same folder as main report).</param>
+            <returns>XtraReport instance representing subreport.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.InitSubReport(DevExpress.XtraReports.UI.XtraReport)">
+            <summary>Initializes subreport, its script references and executes the report script.</summary>
+            <param name="report">XtraReport instance representing subreport.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.Report.WriteToLog(System.String)">
+            <summary>Write message(errors) to log file.</summary>
+            <param name="msg">Message(error) string.</param>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.DBSession">
+            <summary>Gets EPSession instance.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.CompanyId">
+            <summary>Gets company Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.CompanyName">
+            <summary>Gets company name.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.DataSource">
+            <summary>Gets or sets report data source.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.SelectionCriteria">
+            <summary>Gets or sets the selection criteria used for report datasource.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.ReportWhereClause">
+            <summary>Gets or sets where clause to be added report query.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.OverwriteRecSel">
+            <summary>Gets or sets whether or not to overwrite record selection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.PropWhereClause">
+            <summary>Gets or sets whether or not report where clause passed to sub-report.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.SubReportPath">
+            <summary>
+            Gets or sets path for subreport file (loaded from within the report script).
+            <para>Default value is application path (unless specified in config file).</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.Report.IsSubReport">
+            <summary>Gets or sets indicator whether report is a sub-report.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportParameter">
+            <summary>Represents report parameter.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportParameter.#ctor">
+            <summary>Initializes report parameter instance.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportParameter.#ctor(System.String,System.Object)">
+            <summary>Initializes report parameter instance.</summary>
+            <param name="name">Parameter name.</param>
+            <param name="value">Parameter value.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportParameter.#ctor(System.String,System.Object,MecWise.XtraReportCommon.ParameterType)">
+            <summary>Initializes report parameter instance.</summary>
+            <param name="name">Parameter name.</param>
+            <param name="value">Parameter value.</param>
+            <param name="type">Parameter type.</param>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportParameter.Name">
+            <summary>Gets or sets parameter name.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportParameter.Value">
+            <summary>Gets or sets parameter value.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportParameter.Type">
+            <summary>Gets or sets parameter type.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportParameters">
+            <summary>Represents report parameters collection.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportParameters.#ctor">
+            <summary>Initializes report parameters collection.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportParameters.AddRange(MecWise.XtraReportCommon.ReportParameter[])">
+            <summary>Adds a parameter to report parameters collection.</summary>
+            <param name="parameters">Report parameter.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportParameters.Contains(System.String)">
+            <summary>Checks if report parameter already exists in the collection.</summary>
+            <param name="name">Parameter name.</param>
+            <returns>True if report parameter already exists, False otherwise.</returns>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportParameters.Item(System.String)">
+            <summary>Gets a parameter by name from report parameters collection.</summary>
+            <param name="name">Paramter name.</param>
+            <returns>ReportParameter instance.</returns>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportPrepProc">
+            <summary>Class represents one report prep procedure (to be executed before executing report data source) and its parameters.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportPrepProc.#ctor">
+            <summary>Initializes report prep procedure. Default constructor.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportPrepProc.#ctor(System.String,MecWise.XtraReportCommon.ReportParameters)">
+            <summary>Initializes report prep procedure instance.</summary>
+            <param name="name">Procedure name.</param>
+            <param name="parameters">Parameters collection of the procedure.</param>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportPrepProc.Name">
+            <summary>Gets or sets the procedure name.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportPrepProc.Params">
+            <summary>Gets the parameters collection of the procedure.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportPrepProcs">
+            <summary>Class represents list of report prep procedures (to be executed before executing report data source) and its parameters.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportPrepProcs.#ctor">
+            <summary>Initializes report prep procedures collection.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportPrepProcs.AddRange(MecWise.XtraReportCommon.ReportPrepProc[])">
+            <summary>Adds a list of procedures to the collection.</summary>
+            <param name="procs">Collection of ReportPrepProc instances.</param>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportPrepProcs.Item(System.String)">
+            <summary>Gets a procedure from the collection using procedure name.</summary>
+            <param name="name">Procedure name.</param>
+            <returns>ReportPrepProc instance.</returns>
+        </member>
+        <member name="T:MecWise.XtraReportCommon.ReportProvider">
+            <summary>Class for generating, printing and exporting XtraReports.
+            <para>Reports may be generated directly without submitting request through Report Server.</para>
+            <para>Required information(like ReportFileName, OutputFileName, ReportParams..etc) must be</para>
+            <para>specified using properties for direct report generation. This information is retrieved from</para>
+            <para>job details, if submitted through Report Server.</para>
+            </summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.#ctor(ePlatform.CommonClasses.EPSession)">
+            <summary>Constructor.</summary>
+            <param name="sess">Instance of EPSession for database connectivity.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.LaunchReport">
+            <summary>Initialize report generation(report submitted through Report Server).</summary>
+            <returns>True if report initialization was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.LaunchReport(System.Boolean)">
+            <summary>Initialize report generation(report may/not be submitted through Report Server).</summary>
+            <param name="directReport">True or false indicating direct report generation.</param>
+            <returns>True if report initialization was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.PrintReport">
+            <summary>Print report to default printer.</summary>
+            <returns>True if report printing was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.PrintReport(System.String)">
+            <summary>Print report to specified printer.</summary>
+            <param name="printer">Printer name.</param>
+            <returns>True if report printing was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.ShowReport">
+            <summary>Show preview of report.</summary>
+            <returns>True if report preview was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.ExportReport">
+            <summary>Export report in default format to the output file.</summary>
+            <returns>True if export was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.ExportReport(MecWise.XtraReportCommon.ReportFormats)">
+            <summary>Export report in specified format to the output file.</summary>
+            <param name="format">Report output format (e.g. Pdf, Xls).</param>
+            <returns>True if export was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.ExportReport(MecWise.XtraReportCommon.ReportFormats,System.IO.Stream)">
+            <summary>Export report in specified format to Stream object.</summary>
+            <param name="format">Report output format (e.g. Pdf, Xls).</param>
+            <param name="stream">
+            <para>System.IO.Stream object to which the created file should be sent.</para>
+            <para>For example, MemoryStream instance.</para>
+            </param>
+            <returns>True if export was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.SetReportSession(ePlatform.CommonClasses.EPSession)">
+            <summary>Initializes instance of Report class to be used in XtraReport scripts.</summary>
+            <param name="sess">Instance of EPSession.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.InitReport">
+            <summary>Initializes report attributes from Job details submitted through Report Server.</summary>
+            <returns>True if initialization was successful, False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.UpdateJobStatus(System.Boolean)">
+            <summary>
+            Updates job status after report generated/exported/printed.
+            Job status is updated as COM or ERR based on successful generation/export/print of report.
+            </summary>
+            <param name="success">True if report generation/print/export was successful, False otherwise.</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.UpdateJobError(System.Int32)">
+            <summary>Updates job error, if report generation failed</summary>
+            <param name="errorCode">Error code</param>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.UploadReportStorage">
+            <summary>Uploads report output file to Windows Azure blob storage and deletes the physical file.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportCommon.ReportProvider.WriteToLog(System.String)">
+            <summary>Writes message(errors) to log file.</summary>
+            <param name="msg">Message(error) string.</param>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.DBSession">
+            <summary>Gets instance of EPSession for database connectivity.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ReportParams">
+            <summary>Gets or sets report parameters(Array of ReportParam instances).</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.Parameters">
+            <summary>Gets report parameters collection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ReportFormat">
+            <summary>Gets or sets report output format. Default is Pdf.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.Dbms">
+            <summary>Gets or sets DB system (MSSQL or Oracle). Default is MSSQL.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.DbOwner">
+            <summary>Gets or sets Database Owner. Default is DBO.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ConnectString">
+            <summary>Gets or sets Connection string.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.CoyId">
+            <summary>Gets or sets Company Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.JobId">
+            <summary>Gets or sets Job Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ReportId">
+            <summary>Gets or sets Report Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ReportFileName">
+            <summary>Gets or sets Report file name (from REPORT_DEFN table).</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.OutputFileName">
+            <summary>Gets or sets Report output file name.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ReportFolderPath">
+            <summary>
+            Gets or sets full path to report file. Default value read from configuration settings.
+            <para>Relative paths may be specified with reference to absolute path of Toolkit folder.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.OutputFolderPath">
+            <summary>
+            Gets or sets full path to report output file. Default value read from configuration settings.
+            <para>Relative paths may be specified with reference to absolute path of Toolkit folder.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.IsDirectReport">
+            <summary>
+            Gets or sets flag to indicate method of report generation.
+            <para>Reports may be generated directly without submitting request through Report Server.</para>
+            <para>Required information(like ReportFileName, OutputFileName, ReportParams..etc) must be</para>
+            <para>specified using properties for direct report generation.</para>
+            <para>Retrieved from job details, if submitted through Report Server.</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ReportWhereClause">
+            <summary>Gets or sets where clause to be added report query.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.OverwriteRecSel">
+            <summary>Gets or sets whether or not to overwrite record selection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.PropWhereClause">
+            <summary>Gets or sets whether or not report where clause passed to sub-report.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ExportAttr">
+            <summary>Gets or sets attribute for the exported report output file.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.JobConnect">
+            <summary>
+            Gets or sets Connection string to application database.
+            <para>Default value is same as current database(report database).</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.AppDBSession">
+            <summary>
+            Gets an instance of EPSession for database connectivity to application database.
+            <para>Default value is same as current database(report database).</para>
+            </summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.ReportFileNameFromDB">
+            <summary>Gets report file name from database(report definition).</summary>
+        </member>
+        <member name="P:MecWise.XtraReportCommon.ReportProvider.SelectionCriteria">
+            <summary>Gets or sets criteria specified by user using QueryBuilder (from JobProperty).</summary>
+        </member>
+        <member name="T:ReportService">
+            <remarks/>
+        </member>
+        <member name="M:ReportService.#ctor">
+            <remarks/>
+        </member>
+        <member name="M:ReportService.LaunchReport(System.String,System.Byte[])">
+            <remarks/>
+        </member>
+        <member name="M:ReportService.BeginLaunchReport(System.String,System.Byte[],System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:ReportService.EndLaunchReport(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:ReportService.LaunchReportAsync(System.String,System.Byte[])">
+            <remarks/>
+        </member>
+        <member name="M:ReportService.LaunchReportAsync(System.String,System.Byte[],System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:ReportService.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="E:ReportService.LaunchReportCompleted">
+            <remarks/>
+        </member>
+        <member name="T:LaunchReportCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:LaunchReportCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:LaunchReportCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+    </members>
+</doc>

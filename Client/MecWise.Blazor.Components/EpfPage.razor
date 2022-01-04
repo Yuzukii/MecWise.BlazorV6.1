@@ -1,0 +1,35 @@
+﻿@page "/EpfPage"
+
+@using System.Web
+
+@inject SessionState Session
+@inject NavigationManager  NavigationManager;
+
+
+@((MarkupString)_htmlString)
+
+
+@code{
+    private string _htmlString = "Loading...";
+
+    protected override async Task OnParametersSetAsync() {
+        string url = GetQueryStringValue("URL", NavigationManager.Uri);
+        if (!string.IsNullOrEmpty(url)) {
+            _htmlString = await Session.ExecJSAsync<string>("_load_page", url);
+            StateHasChanged();
+        }
+        
+    }
+
+    private string GetQueryStringValue(string key, string uri = "") {
+        Uri currUri;
+        if (uri != "") {
+            currUri = new Uri(uri);
+            return HttpUtility.ParseQueryString(currUri.Query).Get(key);
+        }
+        else {
+            currUri = new Uri(NavigationManager.Uri);
+            return HttpUtility.ParseQueryString(currUri.Query).Get(key);
+        }
+    }
+}

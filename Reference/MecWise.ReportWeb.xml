@@ -1,0 +1,890 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MecWise.ReportWeb</name>
+    </assembly>
+    <members>
+        <member name="F:MecWise.ReportWeb.ActiveReportViewer.hfPath">
+            <summary>
+            hfPath control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.ActiveReportViewer.hfPrinterName">
+            <summary>
+            hfPrinterName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.ActiveReportViewer.hfCopies">
+            <summary>
+            hfCopies control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.Head1">
+            <summary>
+            Head1 control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblReportName">
+            <summary>
+            lblReportName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblHeader">
+            <summary>
+            lblHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.pnlData">
+            <summary>
+            pnlData control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblMessage">
+            <summary>
+            lblMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblJobId">
+            <summary>
+            lblJobId control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblJobNumber">
+            <summary>
+            lblJobNumber control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblStatus">
+            <summary>
+            lblStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblJobStatus">
+            <summary>
+            lblJobStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.pnlError">
+            <summary>
+            pnlError control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblError">
+            <summary>
+            lblError control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblErrorMsg">
+            <summary>
+            lblErrorMsg control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.pnlAdmin">
+            <summary>
+            pnlAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblAdmin">
+            <summary>
+            lblAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.linkSelf">
+            <summary>
+            linkSelf control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblRefresh">
+            <summary>
+            lblRefresh control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.linkAllStatus">
+            <summary>
+            linkAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblAllStatus">
+            <summary>
+            lblAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblUpdate">
+            <summary>
+            lblUpdate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.pnlNoData">
+            <summary>
+            pnlNoData control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.lblNoDataMessage">
+            <summary>
+            lblNoDataMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.form1">
+            <summary>
+            form1 control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.txtUrl">
+            <summary>
+            txtUrl control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayExcelReport.txtIsPath">
+            <summary>
+            txtIsPath control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.DisplayXLSReport.form1">
+            <summary>
+            form1 control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblReportName">
+            <summary>
+            lblReportName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblHeader">
+            <summary>
+            lblHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.pnlData">
+            <summary>
+            pnlData control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblMessage">
+            <summary>
+            lblMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblJobId">
+            <summary>
+            lblJobId control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblJobNumber">
+            <summary>
+            lblJobNumber control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblStatus">
+            <summary>
+            lblStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblJobStatus">
+            <summary>
+            lblJobStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.pnlError">
+            <summary>
+            pnlError control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblError">
+            <summary>
+            lblError control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblErrorMsg">
+            <summary>
+            lblErrorMsg control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.pnlAdmin">
+            <summary>
+            pnlAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblAdmin">
+            <summary>
+            lblAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.linkSelf">
+            <summary>
+            linkSelf control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblRefresh">
+            <summary>
+            lblRefresh control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.linkAllStatus">
+            <summary>
+            linkAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblAllStatus">
+            <summary>
+            lblAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblUpdate">
+            <summary>
+            lblUpdate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.pnlNoData">
+            <summary>
+            pnlNoData control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment.lblNoDataMessage">
+            <summary>
+            lblNoDataMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblHeader">
+            <summary>
+            lblHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.pnlData">
+            <summary>
+            pnlData control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblMessage">
+            <summary>
+            lblMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblJobId">
+            <summary>
+            lblJobId control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblJobNumber">
+            <summary>
+            lblJobNumber control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblStatus">
+            <summary>
+            lblStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblJobStatus">
+            <summary>
+            lblJobStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.pnlError">
+            <summary>
+            pnlError control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblError">
+            <summary>
+            lblError control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblErrorMsg">
+            <summary>
+            lblErrorMsg control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.pnlAdmin">
+            <summary>
+            pnlAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblAdmin">
+            <summary>
+            lblAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.linkSelf">
+            <summary>
+            linkSelf control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblRefresh">
+            <summary>
+            lblRefresh control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.linkAllStatus">
+            <summary>
+            linkAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblAllStatus">
+            <summary>
+            lblAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblUpdate">
+            <summary>
+            lblUpdate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.pnlNoData">
+            <summary>
+            pnlNoData control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgmentPYJobs.lblNoDataMessage">
+            <summary>
+            lblNoDataMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblHeader">
+            <summary>
+            lblHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblMessage">
+            <summary>
+            lblMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblJobId">
+            <summary>
+            lblJobId control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblJobNumber">
+            <summary>
+            lblJobNumber control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblStatus">
+            <summary>
+            lblStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblStatusName">
+            <summary>
+            lblStatusName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblErrorM">
+            <summary>
+            lblErrorM control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblErrorMsg">
+            <summary>
+            lblErrorMsg control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblAdmin">
+            <summary>
+            lblAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.linkAck">
+            <summary>
+            linkAck control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lbllinkack">
+            <summary>
+            lbllinkack control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.linkWebL">
+            <summary>
+            linkWebL control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lbllinkWebL">
+            <summary>
+            lbllinkWebL control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblUpdate">
+            <summary>
+            lblUpdate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobAcknowledgment_PaySlip.lblDbStatus">
+            <summary>
+            lblDbStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblHeader">
+            <summary>
+            lblHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblMessage">
+            <summary>
+            lblMessage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblJobId">
+            <summary>
+            lblJobId control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblJobNumber">
+            <summary>
+            lblJobNumber control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblStatus">
+            <summary>
+            lblStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblStatusName">
+            <summary>
+            lblStatusName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblErrorM">
+            <summary>
+            lblErrorM control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblErrorMsg">
+            <summary>
+            lblErrorMsg control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblAdmin">
+            <summary>
+            lblAdmin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblCompleted">
+            <summary>
+            lblCompleted control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.linkAllStatus">
+            <summary>
+            linkAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblAllStatus">
+            <summary>
+            lblAllStatus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.linkReSubmit">
+            <summary>
+            linkReSubmit control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblReSubmit">
+            <summary>
+            lblReSubmit control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.JobStatus.lblUpdate">
+            <summary>
+            lblUpdate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:MecWise.ReportWeb.Default.form1">
+            <summary>
+            form1 control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+    </members>
+</doc>

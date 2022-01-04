@@ -1,0 +1,193 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@using System.Collections.ObjectModel
+@using System.Data;
+@using System.ComponentModel.DataAnnotations
+@using MecWise.Blazor.Workflow;
+
+@inject IJSRuntime JSRuntime;
+@inject SessionState Session;
+
+
+<div class="clsContainer">
+    <div id="OUTER_WRAPPER" class="col-md-12">
+        <div id="WRAPPER" class="row form-group">
+            <div id="LABEL_1" class="col-md-2">
+                <div id="LABEL_CLARIFY" class="row">
+                    <span class="lbl-normal">Clarify (Select)</span>
+                </div>
+            </div>
+
+            <div id="RIGHT_CONTENT" class="col-md-10">
+                <div id="RECIPS_LIST_BROW" class="row form-group">
+                    <div id="RECIPS_LIST_BCOL" class="col-md-8">
+                        <DxListBox Data="@Cities" @bind-Values="@Values">
+                        </DxListBox>
+                    </div>
+                </div>
+
+                <div id="RECIPS_BUTTON_BROW" class="row">
+                    <div id="BUTTON_LIST" class="col-md-8">
+                        <div id="BTN_SELECT_BROW" class="row">
+                            <div id="BTN_SELECT_BCOL" class="col-md-4">
+                                <span>
+                                    <button id="BTN_SELECT" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_SELECT">
+                                        SELECT
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="BTN_UP_BCOL" class="col-md-4">
+                                <span>
+                                    <button id="BTN_UP" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_UP">
+                                        MOVE UP
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="BTN_DOWN_BCOL" class="col-md-4">
+                                <span>
+                                    <button id="BTN_DOWN" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_DOWN">
+                                        MOVE DOWN
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="MIDDLE_WRAPPER" class="row form-group">
+            <div id="LABEL_2" class="col-md-2">
+                <div id="LABEL_COMMENTS" class="row">
+                    <span class="lbl-normal">Comments</span>
+                </div>
+            </div>
+
+            <div id="RIGHT_CONTENT_2" class="col-md-10">
+                <div id="COMMENTS_BROW" class="row form-group">
+                    <div id="COMMENTS_BCOL" class="col-md-12">
+                        <textarea class="form-control input-md"></textarea>
+                    </div>
+                </div>
+                <div id="CLARIFY_BUTTONS_BROW" class="row form-group">
+                    <div id="CLARIFY_BUTTONS_BCOL" class="col-md-12">
+                        <div id="CLARIFY_BUTTONS_ROW" class="row form-group">
+                            <div id="BTN_CLARIFY_BCOL" class="col-md-4">
+                                <span>
+                                    <button id="BTN_CLARIFY" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_CLARIFY">
+                                        CLARIFY
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="BTN_CLARIFY_SELECT_BCOL" class="col-md-4">
+                                <span>
+                                    <button id="BTN_CLARIFY_SELECT" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_CLARIFY_SELECT">
+                                        CLARIFY (SELECT)
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="BTN_CLARIFY_ALL_BCOL" class="col-md-4">
+                                <span>
+                                    <button id="BTN_CLARIFY_ALL" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_CLARIFY_ALL">
+                                        CLARIFY ALL (QUERY)
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="LAST_BUTTONS_BROW" class="row form-group">
+                    <div id="LAST_BUTTONS_BCOL" class="col-md-12">
+                        <div id="LAST_BUTTONS_ROW" class="row form-group">
+                            <div id="BTN_SUBMIT_BCOL" class="col-md-2">
+                                <span>
+                                    <button id="BTN_SUBMIT" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_SUBMIT" @onclick="BTN_SUBMIT_OnClick">
+                                        Submit
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="BTN_APPROVE_BCOL" class="col-md-2">
+                                <span>
+                                    <button id="BTN_APPROVE" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_APPROVE">
+                                        Approve
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="BTN_REJECT_BCOL" class="col-md-2">
+                                <span>
+                                    <button id="BTN_REJECT" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_REJECT">
+                                        Reject
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div id="BTN_RETURN_BCOL" class="col-md-2">
+                                <span>
+                                    <button id="BTN_RETURN" type="button" class="btn btn-primary btn-md col-md-12" name="BTN_RETURN">
+                                        Return
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+@code {
+    private JObject _dataSource;
+
+    [Parameter]
+    public FieldWorkflow WorkflowField { get; set; }
+
+    IEnumerable<string> Cities = new List<string>() {
+    "London",
+    "Berlin",
+    "Paris",
+  };
+
+    IEnumerable<string> Values { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        _dataSource = WorkflowField.ParentScreen.DataSource;
+        base.OnInitialized();
+    }
+
+    private async void BTN_SUBMIT_OnClick()
+    {
+        FieldWorkflowActionEventArgs e = new FieldWorkflowActionEventArgs();
+        await WorkflowField.InvokeOnBeforeSubmitAsync(WorkflowField, e);
+        if (e.Cancel)
+        {
+            return;        
+        }
+    
+
+
+        string appId = _dataSource["APP_ID"].ToStr();
+        string docType = _dataSource["DOC_TYPE"].ToStr();
+        string deptCode = _dataSource["DEPT_CODE"].ToStr();
+        string runNo = _dataSource["RUN_NO"].ToStr();
+        string empeId = _dataSource["EMPE_ID"].ToStr();
+        string formText = _dataSource["FORM_TEXT"].ToStr();
+
+        WorkflowClient wfClient = new WorkflowClient(Session, appId, docType, deptCode);
+        await wfClient.StartRoutAsync(runNo, empeId, formText);
+
+    }
+
+}

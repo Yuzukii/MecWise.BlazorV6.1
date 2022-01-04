@@ -1,0 +1,24 @@
+﻿@using MecWise.Blazor.Pages;
+
+@inject SessionState Session;
+@inject NavigationManager NavigationManager;
+
+<div class="sidebar @NavSideMenuExpandCssClass side-menu-bar">
+    <NavSideMenuExpand SideToogleEvent="ToogleEventHandler"></NavSideMenuExpand>
+</div>
+
+<div class="sidebar-collapse @NavSideMenuCollapseCssClass side-menu-bar">
+    <NavSideMenuCollapse SideToogleEvent="ToogleEventHandler"></NavSideMenuCollapse>
+</div>
+
+@code {
+    private bool sidebarToogle = true;
+    private string NavSideMenuExpandCssClass => !sidebarToogle ? "sidebar-hide" : null;
+    private string NavSideMenuCollapseCssClass => sidebarToogle ? "sidebar-hide" : null;
+
+    private void ToogleEventHandler() {
+        sidebarToogle = !sidebarToogle;
+    }
+
+
+}

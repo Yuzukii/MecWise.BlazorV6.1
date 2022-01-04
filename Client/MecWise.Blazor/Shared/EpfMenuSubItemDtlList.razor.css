@@ -1,0 +1,9 @@
+﻿
+.menuListText {
+    padding: 8px;
+    font-size: 1.1rem;
+}
+
+    .menuListText:hover {
+        background-color: #f5f5f5;
+    }

@@ -1,0 +1,11 @@
+﻿
+
+.navbar, .navbar-brand {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+.navbar-toggler {
+    color: white !important;
+    font-size: 15px;
+}

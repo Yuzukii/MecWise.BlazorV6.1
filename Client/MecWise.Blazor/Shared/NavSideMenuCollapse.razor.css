@@ -1,0 +1,95 @@
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.side-navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1);
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    display: flex;
+}
+
+.side-navbar-toggler-icon {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    content: "";
+    background: no-repeat center center;
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin: auto;
+}
+
+.toogle-icon {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: #fff;
+}
+
+.top-row {
+    background-color: rgba(0,0,0,0.4);
+    height: 5.5rem;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.oi {
+    width: 2rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item {
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+}
+
+    .nav-item:first-of-type {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item ::deep a {
+        color: #d7d7d7;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+.nav-item ::deep a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item ::deep a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.navlink-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 10px;
+    background-image: url(./images/icon-menu/menu-item-white.png);
+    background-size: cover;
+}
+
+@media (min-width: 641px) {
+    
+    .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}

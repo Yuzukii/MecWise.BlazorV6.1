@@ -1,0 +1,2215 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ePlatform.CommonClasses</name>
+    </assembly>
+    <members>
+        <member name="T:ePlatform.CommonClasses.SqlParser">
+            <summary>
+            Parses a SQL Select Statement and returns its column expression,
+            table list, where clause as well as adding/replacing where clause
+            conditions easily.
+            </summary>
+            <remarks>
+            Note: Assumed existing SQL clause consists of following keywords:
+                      <br>SELECT <i>field_lists</i> FROM <i>table</i></br>
+                      <br>[WHERE <i>condition1</i> [OR|AND] <i>cond...</i>]</br>
+                      <br>[GROUP BY ...]</br>
+                      <br>[ORDER BY ...]</br>
+            </remarks> 
+        </member>
+        <member name="M:ePlatform.CommonClasses.SqlParser.#ctor">
+            <summary>
+            Creates a SqlParser instance.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.SqlParser.#ctor(System.String)">
+            <summary>
+            Creates a SqlParser instance
+            </summary>
+            <param name="sqlStatement">SQL Select Statement to be parsed</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.SqlParser.AddWhereClause(System.String)">
+             <summary>
+             Adding where criteria conditions to existing SQL Select statement.
+             </summary>
+             <remarks>
+             <example>For example:
+             <code>
+             Dim oSql as New SqlParser(sSql)
+             
+             newSql = oSql.AddWhereClause("EMPE_ID='ABC'")
+            
+             </code>
+             </example></remarks>
+             <param name="whereOrderByClause">Additional conditions to be added to the SQL Statement</param>
+             <returns>A SQL Select Statement with the newly added conditions.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.SqlParser.ReplaceWhereClause(System.String)">
+            <summary>
+            Adding/replacing SQL Select statement where criteria conditions
+            </summary>
+            <param name="whereOrderByClause">Where/Order by clause</param>
+            <returns>Returns a formatted SQL Seelct Statement</returns>
+            <remarks>
+            If Where clause begin with OR|AND then
+            existing Where clause is appended with the new Where clause
+            else it is replaced with the new Where clause
+            <br></br>
+            <example>For example:
+            <br></br>
+            <code>
+            Dim oSql as New SqlParser(sSql)
+            
+            ' replace existing Where clause
+            newSql = oSql.ReplaceWhereClause("EMPE_ID='ABC'")
+            
+            ' adding new where clause condition
+            newSql = oSql.ReplaceWhereClause("AND EMPE_ID='ABC'")
+            </code>
+            </example></remarks>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.Sql">
+            <summary>
+            Gets/Sets the SQL Select statement used for parsing.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.Distinct">
+            <summary>
+            Returns true if DISTINCT key word specified.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.FieldArray">
+            <summary>
+            Returns field expression in an array of string expression.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.FieldList">
+            <summary>
+            Returns field expression.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.TableList">
+            <summary>
+            Returns the table list.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.WhereClause">
+            <summary>
+            Returns the Where clause.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.GroupByClause">
+            <summary>
+            Returns the Group By clause.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.SqlParser.OrderByClause">
+            <summary>
+            Returns the Order By clause.
+            </summary>
+        </member>
+        <member name="T:ePlatform.Security.EPCryptoHelper">
+            <summary>
+            Summary description for EPSymmetricHelper.
+            </summary>
+        </member>
+        <member name="T:ePlatform.Security.EPDeriveKeys">
+            <summary>
+            Symmetric keys and IV generation
+            </summary>
+        </member>
+        <member name="T:ePlatform.Security.EPDefaultKeys">
+            <summary>
+            Class to retrieve default keys...
+            </summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.IEPDataAccess">
+            <summary>
+            Data Access Interface for various database providers
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.GetSpParameters(System.String,System.String)">
+            <summary>
+            Gets an array of parameters for the stored procedure 
+            with the connection string and stored procedure name.
+            </summary>
+            <param name="connectionString">A valid connection string used to connect to the database.</param>
+            <param name="spName">The stored procedure name.</param>
+            <returns>An array of stored procedure parameters.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.GetSpParameters(System.Data.IDbConnection,System.String)">
+            <summary>
+            Gets an array of parameters for the stored procedure 
+            with the connection object and stored procedure name.
+            </summary>
+            <param name="connection">A valid connection instance for the database.</param>
+            <param name="spName">The stored procedure name.</param>
+            <returns>An array of stored procedure parameters.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.GetSpParameters(System.String,System.String,System.Boolean)">
+            <summary>
+            Gets an array of parameters for the stored procedure 
+            with the connection string, stored procedure name and 
+            a boolean flag to indicate whether return value is included 
+            in the parameter array.
+            </summary>
+            <param name="connectionString">A valid connection string used to connect to the database.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="includeReturnValueParameter">A boolean value to indicate whether return value parameter to be included in the return array.</param>
+            <returns>An array of stored procedure parameters.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.GetSpParameters(System.Data.IDbConnection,System.String,System.Boolean)">
+            <summary>
+            Gets an array of parameters for the stored procedure 
+            with the connection object, stored procedure name and 
+            a boolean flag to indicate whether return value is included 
+            in the parameter array.
+            </summary>
+            <param name="connection">A valid connection instance for the database.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="includeReturnValueParameter">A boolean value to indicate whether return value parameter to be included in the return array.</param>
+            <returns>An array of stored procedure parameters.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.GetSpParameterCollection(System.Data.IDataParameter[],System.Boolean)">
+            <summary>
+            Returns a EPParameterCollection class for the parameter array, 
+            with an option to strip the parameter names' leading character.
+            </summary>
+            <param name="spParameters">An array of stored procedure parameters.</param>
+            <param name="stripLeadingChar">A boolean value to determines whether to strip the leading character off the parameter names.</param>
+            <returns>A EPParameterCollection parameter collection.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.GetConnection">
+            <summary>
+            Gets the connection instance used by this session.
+            </summary>
+            <returns>A IDbConnection instance.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.GetConnection(System.String)">
+            <summary>
+            Gets the connection object used by this session
+            with the connection string.
+            </summary>
+            <param name="connectionString">A valid connection string used to connect to the database.</param>
+            <returns>A IDbConnection instance.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteNonQuery(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure and 
+            returns the number rows affected.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteNonQuery(System.Data.IDbConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure and 
+            returns the number rows affected.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteNonQuery(System.String,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the provided parameters and 
+            returns the number rows affected 
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteNonQuery(System.Data.IDbConnection,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the provided parameters and 
+            returns the number rows affected 
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteNonQuery(System.String,System.String,System.Object[])">
+            <summary>
+            Executes a stored procedure with the procedure name
+            and corresponding parameter values.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            <example>For example:
+            
+            <code>
+             int result = ExecuteNonQuery(connString, "PublishOrders", 24, 36);
+            </code>
+            </example>  
+            </remarks>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteNonQuery(System.Data.IDbConnection,System.String,System.Object[])">
+            <summary>
+            Executes a stored procedure with the procedure name
+            and corresponding parameter values.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            <example>For example:
+            
+            <code>
+             int result = ExecuteNonQuery(connection, "PublishOrders", 24, 36);
+            </code>
+            </example>  
+            </remarks>
+            <param name="connection">A connection instance.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteDataSet(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            and returns a dataset containing the resultset.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>A dataset containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteDataSet(System.Data.IDbConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            and returns a dataset containing the resultset.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>A dataset containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteDataSet(System.String,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the provided parameters
+            and returns a dataset containing the resultset.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>A dataset containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteDataSet(System.Data.IDbConnection,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the provided parameters
+            and returns a dataset containing the resultset.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>A dataset containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteDataSet(System.String,System.String,System.Object[])">
+            <summary>
+            Executes a stored procedure with the procedure name
+            and corresponding parameter values, 
+            returns a dataset contraining the resultset.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            </remarks>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>A dataset containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteDataSet(System.Data.IDbConnection,System.String,System.Object[])">
+            <summary>
+            Executes a stored procedure with the procedure name
+            and corresponding parameter values, 
+            returns a dataset contraining the resultset.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            </remarks>
+            <param name="connection">A connection instance.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>A dataset containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteReader(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            and returns an IDataReader instance containing the resultset.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>A IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteReader(System.Data.IDbConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            and returns an IDataReader instance containing the resultset.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>A IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteReader(System.String,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the provided parameters
+            and returns an IDataReader instance containing the resultset.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>A IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteReader(System.Data.IDbConnection,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the provided parameters
+            and returns an IDataReader instance containing the resultset.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>A IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteReader(System.String,System.String,System.Object[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the stored procedure name and corresponding parameter values, 
+            returns an IDataReader instance containing the resultset.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            </remarks>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>A IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteReader(System.Data.IDbConnection,System.String,System.Object[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the stored procedure name and corresponding parameter values, 
+            returns an IDataReader instance containing the resultset.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            </remarks>
+            <param name="connection">A connection instance.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>A IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteScalar(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            and returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>The first column of the first row in the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteScalar(System.Data.IDbConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            and returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <returns>The first column of the first row in the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteScalar(System.String,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the the provided parameters 
+            and returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>The first column of the first row in the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteScalar(System.Data.IDbConnection,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the the provided parameters  
+            and returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="commandType">A value indicating how the commandText is to be interpreted.</param>
+            <param name="commandText">The SQL statement or stored procedure to execute at the data source.</param>
+            <param name="commandParameters">An array of parameters used to execute the command.</param>
+            <returns>The first column of the first row in the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteScalar(System.String,System.String,System.Object[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the stored procedure name and corresponding parameter values, 
+            returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            </remarks>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>The first column of the first row in the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ExecuteScalar(System.Data.IDbConnection,System.String,System.Object[])">
+            <summary>
+            Executes a SQL statement or stored procedure 
+            with the stored procedure name and corresponding parameter values, 
+            returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            </remarks>
+            <param name="connection">A connection instance.</param>
+            <param name="spName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>The first column of the first row in the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.UserID(System.String)">
+            <summary>
+            Gets the database user id.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <returns>A string represents the user ID.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.UserID(System.Data.IDbConnection)">
+            <summary>
+            Gets the database user id.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <returns>A string represents the user ID.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ServerTime(System.String)">
+            <summary>
+            Gets the database server current time.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <returns>A date/time value of the current database server time.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.ServerTime(System.Data.IDbConnection)">
+            <summary>
+            Gets the database server current time.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <returns>A date/time value of the current database server time.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.DateFormatExpr(System.DateTime)">
+            <summary>
+            Returns a SQL formatted date expression to be used in SQL query.
+            </summary>
+            <param name="dateTimeValue">A date/time value.</param>
+            <returns>A string representing the date expression for current database.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.SetPassword(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets new user password.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <param name="userId">A valid database user id.</param>
+            <param name="oldPassword">The old password.</param>
+            <param name="newPassword">The new password.</param>
+            <returns>A boolean value indicating password change is sucessful.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.IEPDataAccess.SetPassword(System.Data.IDbConnection,System.String,System.String,System.String)">
+            <summary>
+            Sets new user password.
+            </summary>
+            <param name="connection">A connection instance.</param>
+            <param name="userId">A valid database user id.</param>
+            <param name="oldPassword">The old password.</param>
+            <param name="newPassword">The new password.</param>
+            <returns>A boolean value indicating password change is sucessful.</returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.IEPDataAccess.CommandTimeout">
+            <summary>
+            Gets or sets the wait time before terminating an attempt to execute 
+            a command and generating an error.
+            </summary>
+            <returns>
+            The time (in seconds) to wait for the command to execute. 
+            The default is 300 seconds.
+            </returns>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPDateCalc">
+             <summary>
+             This class is used to compute the interval/duration between two dates.
+             </summary>
+             <remarks>
+             Usage:<br></br>
+             <code>
+             
+            ' Initialise class, create an instance with two dates and ignore time computation.
+            ' If time is ignored, the start date assumed to be at 00:00 hours,
+            ' and end date assumed to be 00:00 hours of next day.
+            
+            Dim dateCalc as New EPDateCalc(startDate, endDate)
+            	
+            ' returns years,months and days durations,
+            ' in double precision number including fraction of years, months, or days
+            
+            Dim numYears, numMonths, numDays as Double
+            numYears = dateCalc.Diff("yyyy")
+            numMonths = dateCalc.Diff("m")
+            numDays = dateCalc.Diff("d")
+            
+            ' reset to include time computation
+            dateCalc.Dates (startDate, endDate, True)
+            				
+            ' use .Years, .Months, .Days, .Hours, .Minutes, and .Seconds property
+            ' to return year/month/day/hour/minute/second portion of the duration.
+            
+            Dim str as String
+            str = String.Format("Duration: {0} years, {1} months, {2} days, {3}:{4}:{5}", _
+            						dateCalc.Years, dateCalc.Months, dateCalc.Days, _
+            						dateCalc.Hours, dateCalc.Minutes, dateCalc.Seconds)
+            MsgBox str
+            		
+             </code>
+             </remarks>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.#ctor">
+            <summary>
+            Initialise a new instance of the EPDateCalc class 
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.#ctor(System.DateTime,System.DateTime)">
+            <summary>
+            Initialise a new instance of the EPDateCalc class 
+            using specified date values and ignore time values.
+            </summary>
+            <param name="dateValue1">A valid date value for starting date.</param>
+            <param name="dateValue2">A valid date value for ending date.</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.#ctor(System.DateTime,System.DateTime,System.Boolean)">
+            <summary>
+            Initialise a new instance of the EPDateCalc class 
+            using specified date values.
+            </summary>
+            <param name="dateValue1">A valid date value for starting date.</param>
+            <param name="dateValue2">A valid date value for ending date.</param>
+            <param name="includeTimeValue">
+            A boolean value specifies whether time values of the dates are 
+            used for computation. Default is false.
+            If False, Start date is defaulted to 0000 hours, and end date
+            is defaulted to 0000 hours of next day.
+            </param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.Dates(System.DateTime,System.DateTime,System.Boolean)">
+            <summary>
+            Initialise start and end dates used for computation.
+            </summary>
+            <param name="dateValue1">A valid date value for starting date.</param>
+            <param name="dateValue2">A valid date value for ending date.</param>
+            <param name="includeTimeValue">
+            A boolean value specifies whether time values of the dates are 
+            used for computation. Default is false.
+            If False, Start date is defaulted to 0000 hours, and end date
+            is defaulted to 0000 hours of next day.
+            </param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.Dates(System.DateTime,System.DateTime)">
+            <summary>
+            Initialise start and end dates used for computation. Ignore the time values.
+            </summary>
+            <param name="dateValue1">A valid date value for starting date.</param>
+            <param name="dateValue2">A valid date value for ending date.</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.Trunc(System.Double)">
+            <summary>
+            Implementing VB Fix() function
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.Add(System.String,System.Double)">
+            <summary>
+            Returns a Date value containing a date and time value to which a specified time interval has been added.
+            </summary>
+            <remarks>
+            The Interval argument can have one of the following settings.
+            <br></br>
+            <code>
+            <u>String      Unit of time interval to add</u><br></br>
+            <b>yyyy</b>        Year<br></br>
+            <b>q</b>           Quarter<br></br>
+            <b>m</b>           Month<br></br>
+            <b>ww</b>          Week<br></br>
+            <b>d</b>           Day<br></br>
+            <b>w</b>           Day of week<br></br>
+            <b>y</b>           Day of year<br></br>
+            <b>h</b>           Hour<br></br>
+            <b>n</b>           Minute<br></br>
+            <b>s</b>           Second<br></br>
+            </code>
+            </remarks>
+            <param name="interval">String expression representing the time interval you want to add.</param>
+            <param name="number">Floating-point expression representing the number of intervals you want to add. Number can be positive (to get date/time values in the future) or negative (to get date/time values in the past).</param>
+            <returns>A Date value.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPDateCalc.Diff(System.String)">
+            <summary>
+            Returns a Double value specifying the number of time intervals between two Date values.
+            </summary>
+            <remarks>
+            The Interval argument can have one of the following settings.
+            <br></br>
+            <code>
+            <u>String      Unit of time interval to add</u><br></br>
+            <b>yyyy</b>        Year<br></br>
+            <b>q</b>           Quarter<br></br>
+            <b>m</b>           Month<br></br>
+            <b>ww</b>          Week<br></br>
+            <b>d</b>           Day<br></br>
+            <b>w</b>           Day of week<br></br>
+            <b>y</b>           Day of year<br></br>
+            <b>h</b>           Hour<br></br>
+            <b>n</b>           Minute<br></br>
+            <b>s</b>           Second<br></br>
+            </code>
+            </remarks>
+            <param name="interval">String expression representing the time interval you want to use as the unit of difference between the two Dates</param>
+            <returns>A double value</returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPDateCalc.Years">
+            <summary>
+            Returns the Year portion of the time intervals between two dates.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPDateCalc.Months">
+            <summary>
+            Returns the Month portion of the time intervals between two dates.
+            Range between 0 and 11
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPDateCalc.Days">
+            <summary>
+            Returns the Day portion of the time intervals between two dates.
+            Range between 0 and 30
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPDateCalc.Hours">
+            <summary>
+            Returns the Hour portion of the time intervals between two dates.
+            Range between 0 and 23
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPDateCalc.Minutes">
+            <summary>
+            Returns the Minutes portion of the time intervals between two dates.
+            Range between 0 and 59
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPDateCalc.Seconds">
+            <summary>
+            Returns the Second portion of the time intervals between two dates.
+            Range between 0 and 59
+            </summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPParameterCollection">
+            <summary>
+            A stored procedure parameters collection.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPParameterCollection.Contains(System.String)">
+            <summary>
+            Determines whether a parameter is in the collection.
+            </summary>
+            <param name="parameterName">A parameter name to locate.</param>
+            <returns><b>True</b> if the parameter is found in the collection; otherwise <b>false</b>.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPParameterCollection.IndexOf(System.String)">
+            <summary>
+            Returns the zero-based index of the parameter in the collection.
+            </summary>
+            <param name="parameterName">A parameter name to locate.</param>
+            <returns>A zero-based index of the parameter.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPParameterCollection.RemoveAt(System.String)">
+            <summary>
+            Removes the parameter in the collection.
+            </summary>
+            <param name="parameterName">The name of the parameter to remove.</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPParameterCollection.Add(System.Data.IDataParameter)">
+            <summary>
+            Adds a new parameter to the collection.
+            </summary>
+            <param name="value">The new parameter to add to the collection.</param>
+            <returns>The index at which the parameter has been added.</returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPParameterCollection.Item(System.String)">
+            <summary>
+            Gets or sets the parameter at the specific parameter name.
+            </summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPOracleClient">
+            <summary>
+            Implementation of SQL data provider
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.AttachParameters(System.Data.IDbCommand,System.Data.IDataParameter[])">
+            <summary>
+            This method is used to attach array of SqlParameters to a SqlCommand.
+            
+            This method will assign a value of DbNull to any parameter with a direction of
+            InputOutput and a value of null.  
+            
+            This behavior will prevent default values from being used, but
+            this will be the less common case than an intended pure output parameter (derived as InputOutput)
+            where the user provided no input value.
+            </summary>
+            <param name="command">The command to which the parameters will be added</param>
+            <param name="commandParameters">an array of SqlParameters tho be added to command</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.AssignParameterValues(System.Data.IDataParameter[],System.Object[])">
+            <summary>
+            This method assigns an array of values to an array of SqlParameters.
+            </summary>
+            <param name="commandParameters">array of SqlParameters to be assigned values</param>
+            <param name="parameterValues">array of objects holding the values to be assigned</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.PrepareCommand(System.Data.IDbCommand,System.Data.IDbConnection,System.Data.IDbTransaction,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            This method opens (if necessary) and assigns a connection, transaction, command type and parameters 
+            to the provided command.
+            </summary>
+            <param name="command">the SqlCommand to be prepared</param>
+            <param name="connection">a valid SqlConnection, on which to execute this command</param>
+            <param name="transaction">a valid SqlTransaction, or 'null'</param>
+            <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">the stored procedure name or T-SQL command</param>
+            <param name="commandParameters">an array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.DiscoverSpParameterSet(System.String,System.String,System.Boolean)">
+            <summary>
+            resolve at run time the appropriate set of SqlParameters for a stored procedure
+            </summary>
+            <param name="connectionString">a valid connection string for a SqlConnection</param>
+            <param name="spName">the name of the stored procedure</param>
+            <param name="includeReturnValueParameter">whether or not to include their return value parameter</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.DiscoverSpParameterSet(System.Data.IDbConnection,System.String,System.Boolean)">
+            <summary>
+            resolve at run time the appropriate set of SqlParameters for a stored procedure
+            </summary>
+            <param name="connection">a valid connection object for a SqlConnection</param>
+            <param name="spName">the name of the stored procedure</param>
+            <param name="includeReturnValueParameter">whether or not to include their return value parameter</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.ExecuteReader(System.Data.IDbConnection,System.Data.IDbTransaction,System.Data.CommandType,System.String,System.Data.IDataParameter[],ePlatform.CommonClasses.EPOracleClient.SqlConnectionOwnership)">
+            <summary>
+            Create and prepare a SqlCommand, and call ExecuteReader with the appropriate CommandBehavior.
+            </summary>
+            <remarks>
+            If we created and opened the connection, we want the connection to be closed when the DataReader is closed.
+            
+            If the caller provided the connection, we want to leave it to them to manage.
+            </remarks>
+            <param name="connection">a valid SqlConnection, on which to execute this command</param>
+            <param name="transaction">a valid SqlTransaction, or 'null'</param>
+            <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">the stored procedure name or T-SQL command</param>
+            <param name="commandParameters">an array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+            <param name="connectionOwnership">indicates whether the connection parameter was provided by the caller, or created by SqlHelper</param>
+            <returns>SqlDataReader containing the results of the command</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.UserID(System.String)">
+            <summary>
+            Gets the database user id.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.ServerTime(System.String)">
+            <summary>
+            Gets the database server current time.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.DateFormatExpr(System.DateTime)">
+            <summary>
+            Returns a SQL formatted date expression to be used in SQL query.
+            </summary>
+            <param name="dateTimeValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.SetPassword(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets new user password.
+            </summary>
+            <param name="connectionString"></param>
+            <param name="userId">Database user id</param>
+            <param name="oldPassword">Old password</param>
+            <param name="newPassword">New password</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPOracleClient.SetPassword(System.Data.IDbConnection,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="userId"></param>
+            <param name="oldPassword"></param>
+            <param name="newPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPOracleClient.CommandTimeout">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPOracleClient.SqlConnectionOwnership">
+            <summary>
+            this enum is used to indicate whether the connection was provided by the caller, or created by SqlHelper, so that
+            we can set the appropriate CommandBehavior when calling ExecuteReader()
+            </summary>
+        </member>
+        <member name="F:ePlatform.CommonClasses.EPOracleClient.SqlConnectionOwnership.Internal">
+            <summary>Connection is owned and managed by SqlHelper</summary>
+        </member>
+        <member name="F:ePlatform.CommonClasses.EPOracleClient.SqlConnectionOwnership.External">
+            <summary>Connection is owned and managed by the caller</summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPSqlClient">
+            <summary>
+            Implementation of SQL data provider
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.AttachParameters(System.Data.IDbCommand,System.Data.IDataParameter[])">
+            <summary>
+            This method is used to attach array of SqlParameters to a SqlCommand.
+            
+            This method will assign a value of DbNull to any parameter with a direction of
+            InputOutput and a value of null.  
+            
+            This behavior will prevent default values from being used, but
+            this will be the less common case than an intended pure output parameter (derived as InputOutput)
+            where the user provided no input value.
+            </summary>
+            <param name="command">The command to which the parameters will be added</param>
+            <param name="commandParameters">an array of SqlParameters tho be added to command</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.AssignParameterValues(System.Data.IDataParameter[],System.Object[])">
+            <summary>
+            This method assigns an array of values to an array of SqlParameters.
+            </summary>
+            <param name="commandParameters">array of SqlParameters to be assigned values</param>
+            <param name="parameterValues">array of objects holding the values to be assigned</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.PrepareCommand(System.Data.IDbCommand,System.Data.IDbConnection,System.Data.IDbTransaction,System.Data.CommandType,System.String,System.Data.IDataParameter[])">
+            <summary>
+            This method opens (if necessary) and assigns a connection, transaction, command type and parameters 
+            to the provided command.
+            </summary>
+            <param name="command">the SqlCommand to be prepared</param>
+            <param name="connection">a valid SqlConnection, on which to execute this command</param>
+            <param name="transaction">a valid SqlTransaction, or 'null'</param>
+            <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">the stored procedure name or T-SQL command</param>
+            <param name="commandParameters">an array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.DiscoverSpParameterSet(System.String,System.String,System.Boolean)">
+            <summary>
+            resolve at run time the appropriate set of SqlParameters for a stored procedure
+            </summary>
+            <param name="connectionString">a valid connection string for a SqlConnection</param>
+            <param name="spName">the name of the stored procedure</param>
+            <param name="includeReturnValueParameter">whether or not to include their return value parameter</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.DiscoverSpParameterSet(System.Data.IDbConnection,System.String,System.Boolean)">
+            <summary>
+            resolve at run time the appropriate set of SqlParameters for a stored procedure
+            </summary>
+            <param name="connection">a valid connection object for a SqlConnection</param>
+            <param name="spName">the name of the stored procedure</param>
+            <param name="includeReturnValueParameter">whether or not to include their return value parameter</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.ExecuteReader(System.Data.IDbConnection,System.Data.IDbTransaction,System.Data.CommandType,System.String,System.Data.IDataParameter[],ePlatform.CommonClasses.EPSqlClient.SqlConnectionOwnership)">
+            <summary>
+            Create and prepare a SqlCommand, and call ExecuteReader with the appropriate CommandBehavior.
+            </summary>
+            <remarks>
+            If we created and opened the connection, we want the connection to be closed when the DataReader is closed.
+            
+            If the caller provided the connection, we want to leave it to them to manage.
+            </remarks>
+            <param name="connection">a valid SqlConnection, on which to execute this command</param>
+            <param name="transaction">a valid SqlTransaction, or 'null'</param>
+            <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">the stored procedure name or T-SQL command</param>
+            <param name="commandParameters">an array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+            <param name="connectionOwnership">indicates whether the connection parameter was provided by the caller, or created by SqlHelper</param>
+            <returns>SqlDataReader containing the results of the command</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.UserID(System.String)">
+            <summary>
+            Gets the database user id.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.ServerTime(System.String)">
+            <summary>
+            Gets the database server current time.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.DateFormatExpr(System.DateTime)">
+            <summary>
+            Returns a SQL formatted date expression to be used in SQL query.
+            </summary>
+            <param name="dateTimeValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.SetPassword(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets new user password.
+            </summary>
+            <param name="connectionString"></param>
+            <param name="userId">Database user id</param>
+            <param name="oldPassword">Old password</param>
+            <param name="newPassword">New password</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSqlClient.SetPassword(System.Data.IDbConnection,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="userId"></param>
+            <param name="oldPassword"></param>
+            <param name="newPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSqlClient.CommandTimeout">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPSqlClient.SqlConnectionOwnership">
+            <summary>
+            this enum is used to indicate whether the connection was provided by the caller, or created by SqlHelper, so that
+            we can set the appropriate CommandBehavior when calling ExecuteReader()
+            </summary>
+        </member>
+        <member name="F:ePlatform.CommonClasses.EPSqlClient.SqlConnectionOwnership.Internal">
+            <summary>Connection is owned and managed by SqlHelper</summary>
+        </member>
+        <member name="F:ePlatform.CommonClasses.EPSqlClient.SqlConnectionOwnership.External">
+            <summary>Connection is owned and managed by the caller</summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPSession">
+            <summary>
+            ePlatform Session Class
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.#ctor">
+            <summary>
+            Initialises a new instance of the EPSession class.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.#ctor(System.String,System.String)">
+            <summary>
+            Initialise a new instance of the EPSession class 
+            using specified DBMS and database owner.
+            </summary>
+            <param name="dbms">DBMS type, either "MSSQL" or "ORACLE"</param>
+            <param name="dbOwner">Database or schema owner</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initialise a new instance of the EPSession class 
+            using specified DBMS, Database owner and connection string values.
+            </summary>
+            <param name="dbms">DBMS type, either "MSSQL" or "ORACLE"</param>
+            <param name="dbOwner">Database or schema owner</param>
+            <param name="connectionString">Connection string</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initialise a new instance of the EPSession class 
+            using specified DBMS, database owner,
+            connection string and company ID values.
+            </summary>
+            <param name="dbms">DBMS type, either "MSSQL" or "ORACLE"</param>
+            <param name="dbOwner">Database or schema owner</param>
+            <param name="connectionString">Connection string</param>
+            <param name="companyId">Company ID</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.#ctor(System.String,System.String,System.Data.IDbConnection)">
+            <summary>
+            Initialise a new instance of the EPSession class 
+            using external connection, specified DBMS and database owner.
+            </summary>
+            <param name="dbms">DBMS type, either "MSSQL" or "ORACLE"</param>
+            <param name="dbOwner">Database or schema owner</param>
+            <param name="connection">Connection object</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.#ctor(System.Data.IDbConnection)">
+            <summary>
+            Initialise a new instance of the EPSession class 
+            using external connection
+            </summary>
+            <param name="connection">Connection object</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.Finalize">
+            <summary>
+            Cleans up before the <b>Object</b> is reclaimed by garbage collection.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.Dispose">
+            <summary>
+            Releases all resources used by the EPSession class.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.OnDeserialization(System.Object)">
+            <summary>
+            Runs when the entire object graph has been deserialized.
+            </summary>
+            <param name="sender">The object that initiated the callback. The functionality for the this parameter is not currently implemented.</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.DecodeConnectString(System.String)">
+            <summary>
+            Decode the EncID= key in the connection string.
+            </summary>
+            <param name="connectString">a valid or an encoded connection string</param>
+            <returns>returns a decoded connection string</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.EncodeConnectString(System.String)">
+            <summary>
+            Encode connection string user id and password and replace with new EncID key
+            </summary>
+            <param name="connectString">a valid connection string</param>
+            <returns>Returns an encoded connection string</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.IsValidConnection">
+            <summary>
+            Check if connection string is valid.
+            </summary>
+            <returns>Returns True if connection string is valid.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.Logon(System.Boolean)">
+            <summary>
+            Logon to the database using current settings,
+            returns true if connection is successful.
+            </summary>
+            <param name="keepConnectionOpen">A boolean value to determine whether to cache the connection object.</param>
+            <returns>A boolean value to determine if the connection is successful.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.Logoff">
+            <summary>
+            Logoff the database and release all resources.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.DbObj(System.String)">
+            <summary>
+            Gets the fully qualified database object name.
+            </summary>
+            <param name="databaseObjectName">A database object name.</param>
+            <returns>A string that represents fully qualified database object name.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.SqlDateExpr(System.DateTime)">
+            <summary>
+            Retruns the formatted date/time expression for 
+            the current database.
+            </summary>
+            <param name="dateTimeValue">Date/time value used to format</param>
+            <returns>Returns the formatted date/time expression</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.SqlExpr(System.String,System.Object[])">
+            <summary>
+            Formats a SQL Select statement based on templates.
+            </summary>
+            <param name="sqlTemplate">A SQL Select statement template.</param>
+            <param name="parameterArray">An object array parameter used to resolve the template variables found in the SQL template string.</param>
+            <returns>A formatted SQL Select statement</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.ExecSQL(System.String)">
+            <summary>
+            Executes a SQL statement and returns number of rows affected.
+            </summary>
+            <param name="sqlString">A SQL Statement to execute.</param>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.GetARow(System.Object[]@,System.String)">
+            <summary>
+            Executes a SQL statement and returns first row of the resultset.
+            </summary>
+            <param name="rowArray">An object array used to return the first row of the resultset.</param>
+            <param name="sqlString">A SQL statement to execute.</param>
+            <returns>A boolean value indicates if a row is successfully retrieved.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.GetAVal(System.String)">
+            <summary>
+            Executes a SQL statement and returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <param name="sqlString">A SQL statement to execute.</param>
+            <returns>The first column of the first row in the resultset, returns a blank string if no record found.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.GetAVal(System.String,System.Object)">
+            <summary>
+            Executes a SQL statement and returns the first column of the first row
+            in the resultset. Extra columns or rows are ignored.
+            </summary>
+            <param name="sqlString">A SQL statement to execute.</param>
+            <param name="defaultValue">Default value to return if no record found.</param>
+            <returns>The first column of the first row in the resultset, returns the default value if no record found.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.GetRows(System.Data.DataRowCollection@,System.String)">
+            <summary>
+            Executes a SQL Statement and returns data rows.
+            </summary>
+            <param name="dataRows">A DataRow collection containing the resultset.</param>
+            <param name="sqlString">A SQL Statement to execute.</param>
+            <returns>A boolean value indicates if rows are successfully retrieved.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.GetDataSet(System.String)">
+            <summary>
+            Executes a SQL Statement and returns a DataSet.
+            </summary>
+            <param name="sqlString">A SQL statement to execute.</param>
+            <returns>A DataSet containing the resultsets of the query.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.GetDataReader(System.String)">
+            <summary>
+            Executes a SQL Statement and returns a DataReader instance.
+            </summary>
+            <param name="sqlString">A SQL statement to execute.</param>
+            <returns>A DataReader containing the resultset of the query.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.ServerTime">
+            <summary>
+            Returns current database server system time
+            </summary>
+            <returns>A datetime value</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPSession.Message(System.String,System.String)">
+            <summary>
+            Returns a message string based on specified message code,
+            returns default message if the message code is not found in the database.
+            </summary>
+            <param name="messageCode">A message code.</param>
+            <param name="defaultMessage">Default message to return if not found.</param>
+            <returns>A string value.</returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.ConnectionString">
+            <summary>
+            Gets or sets connection string for the database provider.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.Connection">
+            <summary>
+            Gets the cached connection object
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.IsCachedConnection">
+            <summary>
+            Check if the connection object is cached.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.CoyID">
+            <summary>
+            Gets or sets company id.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DBMS">
+            <summary>
+            Gets or sets DBMS type, either "MSSQL" or "ORACLE".
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DefaultUnicodeString">
+            <summary>
+            Gets or sets the default unicode settings for subsequent EPSession instance
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.UnicodeString">
+            <summary>
+            Gets or sets the unicode settings for current EPSession instance
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DefaultBrowseLib">
+            <summary>
+            Gets or sets the default browse library name.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DefaultMessageLib">
+            <summary>
+            Gets or sets the default message table name.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DefaultScreenLib">
+            <summary>
+            Gets or sets the default screen library name.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DefaultLanguage">
+            <summary>
+            Gets or sets the current language number.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.LanguageCount">
+            <summary>
+            Gets the number of languages supported for current session.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DbClient">
+            <summary>
+            Gets the database client provider for the session.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.DbOwner">
+            <summary>
+            Gets or sets database/schema owner.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.Props">
+            <summary>
+            Gets or sets session object properties.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.ProviderType">
+            <summary>
+            Returns the database provider type for the current DBMS setting.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.LogonUser">
+            <summary>
+            Gets or Sets the Logon User ID
+            if not assign, it will returns currently connected database user.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPSession.EmployeeID">
+            <summary>
+            Gets the employee ID defined in user profile for currently logged on user
+            </summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPProperty">
+            <summary>
+            EPSession object property
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPProperty.#ctor">
+            <summary>
+            Initialises a new instance of the EPProperty class.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPProperty.#ctor(System.String,System.Object)">
+            <summary>
+            Initialise a new instance of the EPProperty class using specified name and value.
+            </summary>
+            <param name="name">The name of the property</param>
+            <param name="propertyValue">The value of the property</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPProperty.#ctor(System.String,System.Object,System.String)">
+            <summary>
+            Initialise a new instance of the EPProperty class with specified property name,value and attribute.
+            </summary>
+            <param name="name">The name of the property</param>
+            <param name="propertyValue">The value of the property</param>
+            <param name="attributeString">The perperty attributes</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPProperty.ToString">
+            <summary>
+            The string representation of the perperty value.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPProperty.Name">
+            <summary>
+            The name of the perperty.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPProperty.Value">
+            <summary>
+            The value of the perperty.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPProperty.Attribute">
+            <summary>
+            The attributes of the property.
+            </summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPPropertyCollection">
+            <summary>
+            The collection of EPProperty objects.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPPropertyCollection.#ctor">
+            <summary>
+            Initialises a new instance of the EPPropertyCollection class.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPPropertyCollection.GetEnumerator">
+            <summary>
+            Returns an IDictionaryEnumerator that can iterate through the properties.
+            </summary>
+            <returns>An IDictionaryEnumerator for the EPProperties</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPPropertyCollection.Add(ePlatform.CommonClasses.EPProperty)">
+            <summary>
+            Adds a property object to the collection.
+            </summary>
+            <param name="propertyItem">A property object</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPPropertyCollection.Add(System.String,System.Object)">
+            <summary>
+            Adds a property with specified property name and value.
+            </summary>
+            <param name="propertyName">The name of the property</param>
+            <param name="propertyValue">The value of the property</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPPropertyCollection.Add(System.String,System.Object,System.String)">
+            <summary>
+            Adds a property with specified property name, value and attributes.
+            </summary>
+            <param name="propertyName">The name of the property</param>
+            <param name="propertyValue">The value of the property</param>
+            <param name="attributeString">The perperty attributes</param>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPPropertyCollection.Item(System.String)">
+            <summary>
+            Gets or sets the value associated with the specified property name.
+            </summary>
+        </member>
+        <member name="T:ePlatform.Security.EPEncrypt">
+            <summary>
+            ePlatform Encryption class, support symmetric and RSA asymmetric keys encryption.
+            </summary>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.#ctor">
+            <summary>
+            Initialise a new instance of EPEncrypt class.
+            
+            </summary>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.#ctor(System.String)">
+            <summary>
+            Initialise a new instance of EPEncrypt class 
+            using specified symmetric key as default key.
+            </summary>
+            <param name="defaultKey">A string value used as default symmetric key for encryption.</param>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.EncryptBytes(System.Byte[])">
+            <summary>
+            Encrypt a byte array into a byte array using default encryption key.
+            </summary>
+            <param name="clearBytes">A source byte array.</param>
+            <returns>Returns an encrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.EncryptBytes(System.Byte[],System.String)">
+            <summary>
+            Encrypt a byte array into a byte array using a specifited key.
+            </summary>
+            <param name="clearBytes">A source byte array.</param>
+            <param name="encryptKey">A string value used for encryption.</param>
+            <returns>Returns an encrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.EncryptObject(System.Object)">
+            <summary>
+            Serializes and encrypt an object into a byte array using default key.
+            </summary>
+            <remarks>
+            Example:<br></br>
+            <example>
+            <code>
+            &lt;Serializable()&gt; _
+            Public Class LoginInfo
+            Public UserName As String
+                Public PasswordHash() As Byte
+                Public CreatedTime As DateTime
+            
+                Public Sub New()
+                    '
+                End Sub
+            
+                Public Sub New(ByVal usrName As String, ByVal pwdHash() As Byte, ByVal created As DateTime)
+                    UserName = usrName
+                    PasswordHash = pwdHash
+                    CreatedTime = created
+                End Sub
+            End Class
+            
+            Public Class SecureSession()
+                Dim _userInfo as LoginInfo
+                
+                Public Sub New(user As String, password() as Byte, serverDate As DateTime)
+                    _userInfo = New LoginInfo(user, password, serverDate)
+                End Sub
+                
+                Public Function EncryptUserInfo() As Byte()
+                    Dim crypto As New EPEncrypt
+                    Return crypto.EncryptObject(_userInfo)
+                End Function
+            
+                Public Function DecryptUserInfo(ByVal encryptedObject() As Byte) As LoginInfo
+                    Dim crypto As New EPEncrypt
+                    _userInfo = DirectCast(crypto.DecryptObject(encryptedObject), LoginInfo)
+                    Return _userInfo
+                End Function
+                
+            End Class
+            
+            </code>
+            </example></remarks>
+            <param name="objectToEncrypt">An object to encrypt.</param>
+            <returns>Returns a serialized encrypted byte array of the object.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.EncryptObject(System.Object,System.String)">
+            <summary>
+            Serializes and encrypt an object into a byte array 
+            using specified symmetric key and initialization vector.
+            </summary>
+            <param name="objectToEncrypt">An object to encrypt.</param>
+            <param name="encryptKey">A string value used for encryption.</param>
+            <returns>Returns a serialized encrypted byte array of the object.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.EncryptString(System.String,System.String)">
+            <summary>
+            Encrypt a string into a string using specified encryption key.
+            </summary>
+            <param name="clearText">A string to encrypt.</param>
+            <param name="encryptKey">A string used as encryption key.</param>
+            <returns>Retruns an encrypted Base64 string.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.EncryptString(System.String)">
+            <summary>
+            Encrypt a string into a string using default encryption key.
+            </summary>
+            <param name="clearText">A string to encrypt.</param>
+            <returns>Retruns an encrypted Base64 string.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.DecryptBytes(System.Byte[])">
+            <summary>
+            Decrypt a byte array into a byte array using default key.
+            </summary>
+            <param name="cipherBytes">An encrypted byte array.</param>
+            <returns>Returns a decrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.DecryptBytes(System.Byte[],System.String)">
+            <summary>
+            Decrypt a byte array into a byte array using default key.
+            </summary>
+            <param name="cipherBytes">An encrypted byte array.</param>
+            <param name="decryptKey">A string used as decryption key.</param>
+            <returns>Returns a decrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.DecryptString(System.String)">
+            <summary>
+            Decrypt an encrypted string into a string using default decryption key.
+            </summary>
+            <param name="cipherText">An encrypted Base64 string.</param>
+            <returns>Returns a decrypted string.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.DecryptString(System.String,System.String)">
+            <summary>
+            Decrypt an encrypted string into a string using specified decryption key.
+            </summary>
+            <param name="cipherText">An encrypted Base64 string.</param>
+            <param name="decryptKey">A string used as decryption key.</param>
+            <returns>Returns a decrypted string.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.DecryptObject(System.Byte[])">
+            <summary>
+            Decrypt a byte array into an object using default key.
+            </summary>
+            <param name="dataToDecrypt">An encypted byte array.</param>
+            <returns>A decrypted and de-serialized object.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.DecryptObject(System.Byte[],System.String)">
+            <summary>
+            Decrypt a byte array into an object using specified key and initialization vector.
+            </summary>
+            <param name="dataToDecrypt">An encypted byte array.</param>
+            <param name="decryptKey">A string used as decryption key.</param>
+            <returns>A decrypted and de-serialized object.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaPublicKey(System.String)">
+            <summary>
+            Parses and returns the public key of a XML string representation of RSA keys.
+            </summary>
+            <param name="xmlString">A XML string containing the RSA keys.</param>
+            <returns>Returns a XML string containing the public key.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaGenerateKey">
+            <summary>
+            Creates a RSA keys.
+            </summary>
+            <returns>Returns a XML string representation of RSA keys.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaEncryptBytes(System.Byte[],System.String)">
+            <summary>
+            Encrypt a byte array into a byte array using RSA encryption 
+            with a specified public key.
+            </summary>
+            <param name="clearData">A byte array.</param>
+            <param name="publicKeyXml">A public key XML string.</param>
+            <returns>Returns an encrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaEncryptBytes(System.Byte[])">
+            <summary>
+            Encrypt a byte array into a byte array using RSA encryption 
+            with the default public key.
+            </summary>
+            <param name="clearData">A byte array.</param>
+            <returns>Returns an encrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaEncryptString(System.String,System.String)">
+            <summary>
+            Encrypt a string into a string using RSA encryption
+            with a specified public key.
+            </summary>
+            <param name="clearText">A string to encrypt.</param>
+            <param name="publicKeyXml">A public key XML string.</param>
+            <returns>Returns an encrypted Base64 string.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaEncryptString(System.String)">
+            <summary>
+            Encrypt a string into a string using RSA encryption
+            with the default public key.
+            </summary>
+            <param name="clearText">A string to encrypt.</param>
+            <returns>Returns an encrypted Base64 string.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaDecryptBytes(System.Byte[],System.String)">
+            <summary>
+            Decrypt a byte array into a byte array using RSA encryption
+            with a specified private key.
+            </summary>
+            <param name="cipherData">An encrypted byte array.</param>
+            <param name="privateKeyXml">A private key XML string.</param>
+            <returns>Returns a decrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaDecryptBytes(System.Byte[])">
+            <summary>
+            Decrypt a byte array into a byte array using RSA encryption
+            with the default private key.
+            </summary>
+            <param name="cipherData">An encrypted byte array.</param>
+            <returns>Returns a decrypted byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaDecryptString(System.String,System.String)">
+            <summary>
+            Decrypt a string into a string using RSA encryption
+            with a specified private key.
+            </summary>
+            <param name="cipherText">An encrypted Base64 string.</param>
+            <param name="privateKeyXml">A private key XML string.</param>
+            <returns>Returns a decrypted string.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPEncrypt.RsaDecryptString(System.String)">
+            <summary>
+            Decrypt a string into a string using RSA encryption
+            with the default private key.
+            </summary>
+            <param name="cipherText">An encrypted Base64 string.</param>
+            <returns>Returns a decrypted string.</returns>
+        </member>
+        <member name="T:ePlatform.Security.EPPasswordHash">
+            <summary>
+            A password hash helper class.
+            </summary>
+        </member>
+        <member name="M:ePlatform.Security.EPPasswordHash.GetRandomBytes(System.Int32)">
+            <summary>
+            Returns random byte array
+            </summary>
+            <param name="numberOfBytes">Number of bytes to return</param>
+            <returns>A byte array</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPPasswordHash.GetRandomString(System.Int32)">
+            <summary>
+            Returns a random string
+            </summary>
+            <param name="numberOfCharacters">Number of characters to return</param>
+            <returns>A string value</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPPasswordHash.CreatePassword(System.String)">
+            <summary>
+            Creates a salted password hash.
+            </summary>
+            <param name="passwordText">A password text string.</param>
+            <returns>Returns a salted hash string in base64 format.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPPasswordHash.CreateHash(System.String)">
+            <summary>
+            Creates a basic (unsalted) password hash.
+            </summary>
+            <param name="passwordText">A password text string.</param>
+            <returns>Returns an unsalted hash byte array.</returns>
+        </member>
+        <member name="M:ePlatform.Security.EPPasswordHash.ComparePasswords(System.String,System.String)">
+            <summary>
+            Compares the password with stored base64 password hash.
+            </summary>
+            <param name="storedPassword">A base64 salted hash string.</param>
+            <param name="passwordText">A clear text used to compare with the stored hash.</param>
+            <returns>Returns true if the password hash are the same.</returns>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPRecordSet">
+            <summary>
+            Table/Recordset wrapper class
+            It supports retrieval of rows through view or 
+            SQL Select statement as well as calling stored procedure.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.#ctor(ePlatform.CommonClasses.EPSession,System.String)">
+            <summary>
+            Initialise a new instance of the EPRecordSet class 
+            using specified view name/SQL Statement.
+            </summary>
+            <param name="session">a valid EPSession object</param>
+            <param name="viewName">a valid database view/table name or a SQL Select statement</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.#ctor(ePlatform.CommonClasses.EPSession,System.String,System.String)">
+            <summary>
+            Initialise a new instance of the EPRecordSet class 
+            using specified view name/SQL Statement and procedure name.
+            </summary>
+            <param name="session">a valid EPSession object</param>
+            <param name="viewName">a valid database view/table name or a SQL Select statement</param>
+            <param name="procedureName">a valid database stored procedure name</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.Finalize">
+            <summary>
+            Cleans up before the <b>Object</b> is reclaimed by garbage collection.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.Dispose">
+            <summary>
+            Releases all resources used by the EPRecordSet class.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.Fetch">
+            <summary>
+            Retrieves the data rows from the database
+            </summary>
+            <returns><b>True</b> if fetched successfully.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.Fetch(System.String)">
+            <summary>
+            Retrieves the data rows from the database
+            using where clause.
+            </summary>
+            <param name="whereClause">additional where clause to apply to current settings</param>
+            <returns><b>True</b> if data rows were fetched successfully.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.Fetch(System.String,System.String)">
+            <summary>
+            Retrieves the data rows from the database
+            using where clause and field list specified.
+            </summary>
+            <param name="whereClause">additional where clause to apply to current settings</param>
+            <param name="fieldList">list of columns to retrun, apply only to view name specified</param>
+            <returns><b>True</b> if data rows were fetched successfully.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.MoveFirst">
+            <summary>
+            Moves to first row of the list.
+            </summary>
+            <returns><b>True</b> if the recordset was successfully positioned to the first row.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.MoveLast">
+            <summary>
+            Moves to last row of the data rows.
+            </summary>
+            <returns><b>True</b> if the recordset was successfully advanced to the last row.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.MoveNext">
+            <summary>
+            Moves the row position to next row.
+            If moved past the last row, row position is invalid and
+            EOF is true.
+            </summary>
+            <returns><b>True</b> if the recordset was successfully advanced to the next row; 
+            <b>false</b> if the recordset has passed the end of the data rows.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.MovePrevious">
+            <summary>
+            Moves the row position to previous row.
+            If current row position is at the beginning of the list,
+            row position is not changed.
+            </summary>
+            <returns><b>True</b> if the recordset was successfully positioned to the last row; 
+            <b>false</b> if the row position was already at the beginning of the data rows.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.RecExists(System.String)">
+            <summary>
+            Check if record exists using the where clause criteria.
+            </summary>
+            <param name="whereClause">An additional criteria for the current view or SQL statement.</param>
+            <returns><b>True</b> if record exists for the command executed.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.Execute">
+            <summary>
+            Executes the stored procedure and returns the number of rows affected.
+            </summary>
+            <returns>The number of rows affected.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.ExecuteReader">
+            <summary>
+            Executes the stored procedure and 
+            returns an IDataReader instance containing the resultset.
+            </summary>
+            <remarks>
+            <example>
+            For example:
+            <code>
+            
+            Dim session As EPSession = New EPSession(sDBMS, dbOwner, connectString, companyCode)
+            Dim rs As EPRecordSet
+            Dim dr As IDataReader
+            										
+            rs = New EPRecordSet(session, "", "RP_GET_EMPE")
+            rs.Params("COMP_CODE").Value = companyCode
+            rs.Params("EMPE_ID").Value = "S77%"
+            dr = rs.ExecuteReader()
+            
+            </code>
+            </example>
+            </remarks>
+            <returns>An IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.ExecuteReader(System.String,System.Object[])">
+             <summary>
+             Executes a stored procedure 
+             with the stored procedure name and corresponding parameter values, 
+             returns an IDataReader instance containing the resultset.
+             </summary>
+             <remarks>
+             This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+             <example>
+             <br></br><br></br>
+             For example:
+             <code>
+             
+             Dim session As EPSession = New EPSession(sDBMS, dbOwner, connectString, companyCode)
+             Dim rs As EPRecordSet
+             Dim dr As IDataReader
+            											
+             rs = New EPRecordSet(session, "")
+             dr = rs.ExecuteReader("RP_GET_EMPE", companyCode, "S77%")
+             
+             </code>
+             </example>
+             </remarks>
+             <param name="storedProcedureName">The stored procedure name.</param>
+             <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+             <returns>An IDataReader instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.ExecuteDataSet">
+            <summary>
+            Executes the stored procedure and 
+            returns a DataSet instance containing the resultset.
+            </summary>
+            <remarks>
+            <example>
+            For example:
+            <code>
+            
+            Dim session As EPSession = New EPSession(sDBMS, dbOwner, connectString, companyCode)
+            Dim rs As EPRecordSet
+            Dim ds As DataSet
+            										
+            rs = New EPRecordSet(session, "", "RP_GET_EMPE")
+            rs.Params("COMP_CODE").Value = companyCode
+            rs.Params("EMPE_ID").Value = "S77%"
+            ds = rs.ExecuteDataSet()
+            
+            </code>
+            </example>
+            </remarks>
+            <returns>A DataSet instance containing the resultset.</returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPRecordSet.ExecuteDataSet(System.String,System.Object[])">
+            <summary>
+            Executes a stored procedure 
+            with the stored procedure name and corresponding parameter values, 
+            returns a DataSet instance containing the resultset.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            <example>
+            <br></br><br></br>
+            For example:
+            <code>
+            
+            Dim session As EPSession = New EPSession(sDBMS, dbOwner, connectString, companyCode)
+            Dim rs As EPRecordSet
+            Dim ds As DataSet
+            										
+            rs = New EPRecordSet(session, "")
+            ds = rs.ExecuteDataSet("RP_GET_EMPE", companyCode, "S77%")
+            
+            </code>
+            </example>
+            </remarks>
+            <param name="storedProcedureName">The stored procedure name.</param>
+            <param name="parameterValues">an array of objects to be assigned as the input values of the stored procedure parameters.</param>
+            <returns>A DataSet instance containing the resultset.</returns>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.ViewName">
+            <summary>
+            Returns the database view name or SQL Statement.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.ProcName">
+            <summary>
+            Returns the database stored procedure name.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.StripLeadingChar">
+            <summary>
+            Gets or sets the flag to determine whether to strip the 
+            stored procedure parameters leading character.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.BOF">
+            <summary>
+            Returns true if current row position is at the beginning of the data rows.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.EOF">
+            <summary>
+            Returns true if current row position is past the end of the data rows.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.Fields">
+            <summary>
+            Gets the current data row.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.FieldCount">
+            <summary>
+            Gets the number of columns for the current data row.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.RecordSet">
+            <summary>
+            Gets the data rows collection.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.DbTable">
+            <summary>
+            Gets the data table returned by Fetch method.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.Item(System.Int32)">
+            <summary>
+            Gets the column object for the current data row
+            using the column index.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.Item(System.String)">
+            Gets the column object for the current data row
+            using the column name.
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.Params">
+            <summary>
+            Gets the stored procedure parameters collection for the stored procedure.
+            </summary>
+        </member>
+        <member name="P:ePlatform.CommonClasses.EPRecordSet.ParamCount">
+            <summary>
+            Gets the number of parameters for the current stored procedure.
+            </summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.DataAccessFactory">
+            <summary>
+            Summary description for DataAccessFactory.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.DataAccessFactory.GetConnection(ePlatform.CommonClasses.DataAccessFactory.ProviderType)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.DataAccessFactory.GetConnection(ePlatform.CommonClasses.DataAccessFactory.ProviderType,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.DataAccessFactory.GetCommand(ePlatform.CommonClasses.DataAccessFactory.ProviderType)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.DataAccessFactory.GetDataAdapter(ePlatform.CommonClasses.DataAccessFactory.ProviderType)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonClasses.DataAccessFactory.GetParameter(ePlatform.CommonClasses.DataAccessFactory.ProviderType)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ePlatform.CommonClasses.DataAccessFactory.ProviderType">
+            <summary>
+            Provider type.
+            </summary>
+        </member>
+        <member name="F:ePlatform.CommonClasses.DataAccessFactory.ProviderType.SQL">
+            <summary>
+            MS SQL Server provider
+            </summary>
+        </member>
+        <member name="F:ePlatform.CommonClasses.DataAccessFactory.ProviderType.OLEDB">
+            <summary>
+            OLE DB Provider
+            </summary>
+        </member>
+        <member name="F:ePlatform.CommonClasses.DataAccessFactory.ProviderType.Oracle">
+            <summary>
+            Microsoft Oracle provider
+            </summary>
+        </member>
+        <member name="T:ePlatform.CommonClasses.EPParameterCache">
+            <summary>
+            SqlHelperParameterCache provides functions to leverage a static cache of procedure parameters, and the
+            ability to discover parameters for stored procedures at run-time.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPParameterCache.CacheParameterSet(System.String,System.Data.IDataParameter[])">
+            <summary>
+            add parameter array to the cache
+            </summary>
+            <param name="hashKey">a key string for the parameter cache</param>
+            <param name="commandParameters">an array of SqlParamters to be cached</param>
+        </member>
+        <member name="M:ePlatform.CommonClasses.EPParameterCache.GetCachedParameterSet(System.String)">
+            <summary>
+            retrieve a parameter array from the cache
+            </summary>
+            <param name="hashKey">a key string for the parameter cache</param>
+            <returns>an array of SqlParamters</returns>
+        </member>
+        <member name="T:ePlatform.CommonFunctions">
+            <summary>
+            Common functions used by application.
+            </summary>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmParseStr(System.Int32@,System.String,System.String)">
+            <summary>
+            	Returns a token string beginning at <paramref name="start"/> position.
+            	Update <paramref name="start"/> position to next token position after call.
+            </summary>
+            <param name="start">The string position to begin searching, starting from 1.</param>
+            <param name="sourceString">The string to search.</param>
+            <param name="tokenDelimiter">The token string delimiter.</param>
+            <returns>returns a token string</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmGetToken(System.String@,System.String)">
+            <summary>
+            Parses a string and returns a token delimitated by <paramref name="tokenDelimiter"/>.
+            The token found will be removed from the string parsed.
+            </summary>
+            <see cref="M:ePlatform.CommonFunctions.cmParseStr(System.Int32@,System.String,System.String)"/>
+            <param name="sourceString">The string to parse.</param>
+            <param name="tokenDelimiter">The token string delimiter.</param>
+            <returns>Returns next token string.</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmCountToken(System.String,System.String)">
+            <summary>
+            Parses a string and returns a token delimitated by <paramref name="tokenDelimiter"/>.
+            </summary>
+            <param name="sourceString">The string to parse</param>
+            <param name="tokenDelimiter">The token string delimiter</param>
+            <returns></returns> 
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmGetTokenNo(System.String,System.String,System.String)">
+            <summary>
+            Parses a string and returns token position
+            </summary>
+            <param name="sourceString">The string to parse</param>
+            <param name="token">The token string to search for</param>
+            <param name="tokenDelimiter">The token string delimiter</param>
+            <returns>Returns an integer indicating token position</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmGetTokenNo(System.String,System.String)">
+            <summary>
+            Parses a string delimited by "," and returns token position
+            </summary>
+            <param name="sourceString">The string to parse</param>
+            <param name="token">The token string to search for</param>
+            <returns>Returns an integer indicating token position</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmGetNthTokenPos(System.String,System.String,System.Int32)">
+            <summary>
+            Returns string token character position based on token number
+            </summary>
+            <param name="sourceString">The string to parse</param>
+            <param name="tokenDelimiter">The token string delimiter</param>
+            <param name="tokenNo">The token string number</param>
+            <returns>Returns an integer indicating character position of the token string</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmGetNthToken(System.String,System.String,System.Int32)">
+            <summary>
+            Returns Nth token string 
+            </summary>
+            <param name="sourceString">The string to parse</param>
+            <param name="tokenDelimiter">The token string delimiter</param>
+            <param name="tokenNo">The token string number</param>
+            <returns>Returns the number Nth token string</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmReplaceToken(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Returns a string after replacing with new token string passed in
+            </summary>
+            <param name="sourceString">The string to parse</param>
+            <param name="tokenDelimiter">The token string delimiter</param>
+            <param name="tokenNo">Token string number</param>
+            <param name="newToken">New token string to replace</param>
+            <returns>Returns replaced string</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmFileExists(System.String)">
+            <summary>
+            Check if file exists
+            </summary>
+            <param name="pathName">File name to check</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmLogToFile(System.String,System.String,System.Boolean)">
+            <summary>
+            Saves message to log file
+            </summary>
+            <param name="logFileName">Log file name</param>
+            <param name="logMessage">Message to log</param>
+            <param name="prefixTimeStamp">Prefix message with current time stamp</param>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmLogToFile(System.String,System.String)">
+            <summary>
+            Saves message with current time stamp to log file
+            </summary>
+            <param name="logFileName">Log file name</param>
+            <param name="logMessage">Message to log</param>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmReadIni(System.String,System.String,System.String,System.String)">
+            <summary>
+            Returns string from INI file entry
+            </summary>
+            <param name="section">INI Section</param>
+            <param name="key">Key in INI Section</param>
+            <param name="defaultValue">Default string to return if not found</param>
+            <param name="iniFile">INI file name</param>
+            <returns></returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmNetUserID">
+            <summary>
+            Returns network user id for current session
+            </summary>
+            <returns>Returns an integer indicating which button user clicked</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmSerializeToMemory(System.Object)">
+            <summary>
+            Serialises object to memory stream.
+            </summary>
+            <remarks>
+            <example>For example:
+            <code>
+            Dim oMem As System.IO.MemoryStream
+            
+            ' assuming oSession is an EPSession object
+            ' to serialise it...
+            oMem = cmSerializeToMemory(oSession)
+            
+            ...
+            
+            ' to de-serialise the object...
+            Dim oSess2 As EPSession
+            oSess2 = CType(cmDeserializeFromMemory(oMem), EPSession)
+            
+            </code>
+            </example>
+            </remarks>
+            <param name="objGraph">Object to be serialised</param>
+            <returns>Returns a binary stream object containing the serialised object.</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmDeserializeFromMemory(System.IO.Stream)">
+            <summary>
+            De-serialises object from memory stream
+            </summary>
+            <remarks>
+            <example>For example:<br></br>
+            <code>
+            Dim oMem As System.IO.MemoryStream<br></br>
+            
+            ' assuming oSession is an EPSession object
+            ' to serialise it...
+            
+            oMem = cmSerializeToMemory(oSession)
+            
+            ...<br></br>
+            ' to de-serialise the object...
+            Dim oSess2 As EPSession
+            oSess2 = CType(cmDeserializeFromMemory(oMem), EPSession)
+            
+            </code>
+            </example>
+            </remarks>
+            <param name="stream">memory stream containing the serialised object</param>
+            <returns>Returns the object</returns>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmSerializeToFile(System.Object,System.String)">
+            <summary>
+            Serialises object to file.
+            </summary>
+            <param name="objGraph">Object to be serialised</param>
+            <param name="fileName">File name to store the serialised object</param>
+        </member>
+        <member name="M:ePlatform.CommonFunctions.cmDeserializeFromFile(System.String)">
+            <summary>
+            De-serialises object from file.
+            </summary>
+            <param name="fileName">File name containing the serialised object</param>
+            <returns>Returns the de-serialised object</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,117 @@
+﻿@page "/"
+
+@using MecWise.Blazor
+@using MecWise.Blazor.Common
+@using Microsoft.Extensions.Configuration
+
+@inject IConfiguration Configuration
+
+@namespace MecWise.Blazor.Host.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <title>MecWise</title>
+    <base href="~/" id="baseUrl" />
+
+    <style>
+        html, body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.35715;
+        }
+    </style>
+
+
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="lib/bootstrap/css/bootstrap-dialog.min.css" rel="stylesheet" />
+
+    <link href="lib/open-iconic/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+    <link href="lib/fontawesome/css/all.min.css" rel="stylesheet" />
+
+    <link href="lib/dx-blazor/css/dx.light.custom.css" rel="stylesheet" />
+
+    <!-- For DevExpress Blazor Controls -->
+    <link href="_content/DevExpress.Blazor/dx-blazor.css" rel="stylesheet" />
+
+    <!-- For CSS Isolation -->
+    <link href="MecWise.Blazor.styles.css" rel="stylesheet">
+
+    <!-- For PWA Feature -->
+    @if (Configuration["PWA"].ToBool()) {
+        <link id="pwaManifest" rel="manifest" href="./manifest.json" />
+    }
+
+
+</head>
+<body>
+    @if (Configuration["RunOnServer"].ToBool()) {
+        <component type="typeof(App)" render-mode="Server" />
+    }
+    else {
+        <component type="typeof(App)" render-mode="WebAssemblyPrerendered" />
+    }
+
+
+    <div id="blazor-error-ui" style="display:none;">
+        <div id="error-content">
+            <div class="title">
+                <span class="fa fa-exclamation-triangle text-danger"></span>
+                Error
+            </div>
+            <hr>
+            <div class="message">
+                <environment include="Staging,Production,Development">
+                    An error has occurred. For assistance, please contact your system administrator.
+                    Click <a href="" onclick="Blazor.navigateTo('', true);" style="color: dodgerblue;">HERE</a> to refresh the page.
+                </environment>
+            </div>
+        </div>
+    </div>
+
+    @*[27/05/2021, PhyoZin] Added for Azure AD (OpenIDConnect)*@
+    @*Save user_id from Azure AD in hidden field to read from login screen*@
+    @if (Configuration["AzureAdSSO"].ToBool()) {
+        <input type="hidden" id="oidc_user" value="@CommonFunctions.GetTokenforOpenIDConnect(User.Identity.Name)" />
+    }
+
+    <script src="lib/jquery/jquery.min.js" ></script>
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js" ></script>
+    <script src="lib/bootstrap/js/bootstrap-dialog.min.js" ></script>
+    <script src="lib/dx-blazor/js/polyfill.min.js" ></script>
+    <script src="lib/dx-blazor/js/exceljs.min.js" ></script>
+    <script src="lib/dx-blazor/js/FileSaver.min.js" ></script>
+    <script src="lib/dx-blazor/js/jszip.min.js" ></script>
+    <script src="lib/dx-blazor/js/dx.all.js" async></script>
+    <script src="js/MecWise.Blazor.Common.js" async></script>
+    <script src="js/MecWise.Blazor.Login.js" async></script>
+    <script src="js/MecWise.Blazor.DXHelper.js" async></script>
+    <script src="js/MecWise.Blazor.Utilities.js" async></script>
+    <script src="js/MecWise.Blazor.ScriptLoader.js" async></script>
+    <script src="index.js" async></script>
+
+
+    @if (Configuration["RunOnServer"].ToBool()) {
+        <script src="_framework/blazor.server.js"></script>
+
+        @* Force reload the page if SignalR disconnect *@
+        @*<script>
+                Blazor.defaultReconnectionHandler._reconnectCallback = function (d) {
+                    document.location.reload();
+                }
+            </script>*@
+    }
+    else {
+        <script src="_framework/blazor.webassembly.js" async></script>
+    }
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿@page "/logout"
+
+
+@inject SessionState Session;
+@inject IJSRuntime JSRuntime;
+@inject NavigationManager NavigationManager
+
+@code{
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("Logout - OnInitializedAsync");
+
+        // Unregister iOS Push Noti
+        if (await Session.ExecJSAsync<bool>("IsIOS")) {
+            await Session.ExecJSAsync("ExecIOSFunc", "UnregisterPushNoti", "");
+        }
+
+        // Unregister Android Push Noti
+        if (await Session.ExecJSAsync<bool>("IsAndroid")) {
+            Console.WriteLine("request_for_action#deregister_push_notification");
+        }
+
+        // Unsubscribe Web Push Noti
+        if (!await Session.ExecJSAsync<bool>("IsIOS") && !await Session.ExecJSAsync<bool>("IsAndroid")) {
+            await Session.ExecJSAsync("unsubscribeUser");
+        }
+
+        Session.UserID = string.Empty;
+        string sessionKey = await Session.GetSessionKeyAsync();
+        await Session.RemoveLocalStorageItem(sessionKey).ContinueWith(async x => {
+            string displayMenuKey = await Session.GetSessionKeyAsync() + "-display-menu";
+            string menu = await Session.GetLocalStorageItem(displayMenuKey);
+            if (string.IsNullOrEmpty(menu)) {
+                NavigationManager.NavigateTo("", true);
+            }
+            else {
+                NavigationManager.NavigateTo("Index?MENU=" + menu.ToInt().ToStr(), true);
+            }
+        });
+
+    }
+}

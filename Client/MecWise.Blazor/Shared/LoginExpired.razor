@@ -1,0 +1,29 @@
+﻿@inject SessionState Session;
+
+    <div class="login-container" style="font-size:1.2rem;min-height:300px">
+        <div class="container p-4 text-center">
+            <div class="login-logo-container"></div>
+            <p style="margin-top:10px;color:red">Your session have been logout due to inactivity.</p>
+            <a href="javascript:window.location.replace('');">Click here to login again.</a>
+        </div>
+    </div>
+
+@code{
+
+    JObject _formDataSrouce = new JObject();
+    FieldCollection _fields = new FieldCollection();
+
+    [Parameter]
+    public List<SV_MF_COMP> DataSource { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Session.AppConfig.expireRedirect))
+        {
+            Session.NavigateWithoutHistory(Session.AppConfig.expireRedirect);
+        }
+        return base.OnInitializedAsync();
+    }
+
+
+}

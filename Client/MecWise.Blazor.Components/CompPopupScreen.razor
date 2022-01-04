@@ -1,0 +1,106 @@
+﻿
+@using System.Web;
+
+
+@inject SessionState Session;
+@inject NavigationManager NavigationManager;
+@inject IJSRuntime JSRuntime;
+
+@if (PopupScreenField != null) {
+    <!-- Modal -->
+    <div id="@PopupScreenField.ElementID" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header dialog-title">
+                    <h6 class="modal-title">@PopupScreenField.Title</h6>
+                    <button id="@(PopupScreenField.ElementID + "_btnPopupClose")" type="button" class="close" data-dismiss="#@PopupScreenField.ElementID" @onclick="ClosePopup">&times;</button>
+                </div>
+                <div class="modal-body p-0">
+                    @if (!string.IsNullOrEmpty(PopupScreenField.ScreenId)) {
+                        <EpfScreen CURRENT_URL="@PopupScreenField.URL"
+                                   SCRN_ID="@PopupScreenField.ScreenId"
+                                   MODE="@PopupScreenField.Mode"
+                                   KEYS="@PopupScreenField.Keys"
+                                   PARENT_KEYS="@PopupScreenField.ParentKeys"
+                                   PARAM="@PopupScreenField.Param"
+                                   SCRN_TYPE="@EpfScreen.ScreenType.Popup"
+                                   CALLER_SCREEN="@PopupScreenField.CallerScreen"
+                                   CALLER_SCRN_ID="@PopupScreenField.CallerScreen.SCRN_ID"
+                                   OnClose="@ClosePopup">
+                        </EpfScreen>
+                        }
+                    @*<iframe id="popupframe" class="modal-frame" src="@_src"></iframe>*@
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" style="font-size: inherit" class="btn btn-outline-primary text-nowrap" data-dismiss="#@PopupScreenField.ID" @onclick="ClosePopup">Close</button>
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+}
+
+
+
+@code{
+    private string _src;
+    bool _isiniFrame = false;
+
+    [Parameter]
+    public FieldPopupScreen PopupScreenField { get; set; }
+
+
+    protected override async Task OnInitializedAsync() {
+        _isiniFrame = await Session.ExecJSAsync<bool>("iniFrame");
+        if (_isiniFrame) {
+            _src = "";
+        }
+        else {
+            _src = NavigationManager.BaseUri + "Blank";
+        }
+
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        string url = "";
+        if (string.IsNullOrEmpty(PopupScreenField.URL)) {
+            url = PopupScreenField.BuildUri(NavigationManager);
+        }
+        else {
+            url = PopupScreenField.BuildUri(NavigationManager, PopupScreenField.URL);
+        }
+
+        if (string.IsNullOrEmpty(url)) {
+            url = _src;
+        }
+
+        await Session.ExecJSAsync("_navigatePopupTo", url);
+
+    }
+
+    private async void ClosePopup() {
+        await PopupScreenField.Hide(Session, NavigationManager);
+        StateHasChanged();
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender) {
+        PopupScreenField.Render = false;
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override bool ShouldRender() {
+
+        if (PopupScreenField.Render) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+
+
+}

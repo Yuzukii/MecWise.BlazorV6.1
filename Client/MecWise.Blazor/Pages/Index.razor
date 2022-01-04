@@ -1,0 +1,32 @@
+﻿@page "/"
+@page "/Index"
+
+@inject NavigationManager NavigationManager
+@inject SessionState Session;
+
+
+@code{
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Session.ClearNavigationHistory();
+        
+        Uri uri = new Uri(NavigationManager.Uri);
+        string menu = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("MENU");
+        string param = "";
+        if (!string.IsNullOrEmpty(menu)) {
+            param= "?MENU=" + menu;
+        }
+
+        if (!string.IsNullOrEmpty(Session.AppConfig.homePageUrl)) {
+            NavigationManager.NavigateTo(Session.AppConfig.homePageUrl + param);
+        }
+        else {
+            NavigationManager.NavigateTo("Home" + param);
+        }
+
+        await base.OnInitializedAsync();
+
+    }
+}

@@ -1,0 +1,191 @@
+﻿@using Newtonsoft.Json.Linq;
+
+
+@if (Fields != null) {
+    if ((_containerField != null)) {
+        <div class="container-fluid d-flex px-0">
+            <CompContainer ContainerField="@_containerField" OnChange="@Change" />
+        </div>
+    }
+}
+
+
+@code {
+
+    FieldContainer _containerField;
+
+    [Parameter]
+    public JObject DataSource { get; set; }
+
+    [Parameter]
+    public FieldCollection Fields { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldChangeEventArgs> OnChange { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Fields != null) {
+            Fields.Render = true;
+        }
+
+        try {
+            await InitLogInfoAsync("CREA_BY", "CREA_DATE");
+            await InitLogInfoAsync("USER_LOG", "TIME_LOG");
+            await IntiFieldDataAsync();
+        }
+        catch (Exception ex){
+            Console.WriteLine("CompForm-OnInitializedAsync-Error: " + ex.Message);
+        }
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Fields != null) {
+            if (Fields.Render) {
+
+                try {
+                    await InitLogInfoAsync("CREA_BY", "CREA_DATE");
+                    await InitLogInfoAsync("USER_LOG", "TIME_LOG");
+                    await IntiFieldDataAsync();
+                }
+                catch (Exception ex) {
+                    Console.WriteLine("CompForm-OnInitializedAsync-Error: " + ex.Message);
+                }
+            }
+        }
+
+    }
+
+    private Task InitLogInfoAsync(string userLogId, string timeLogId) {
+        if (DataSource != null) {
+            if (DataSource.ContainsKey(userLogId) && DataSource.ContainsKey(timeLogId)) {
+                string userLog = DataSource[userLogId].ToStr();
+                string timeLog = "";
+                if (DataSource[timeLogId].IsDate()) {
+                    timeLog = DataSource[timeLogId].ToDate().ToString("dd/MM/yyyy HH:mm:ss");
+                }
+
+                string logInfo = string.Format("{0} - {1}", userLog, timeLog);
+
+                Field userLogField = Fields.Search(userLogId);
+                if (userLogField != null) {
+                    userLogField.ID = "__CompForm_" + userLogId;
+                    userLogField.Value = logInfo;
+                }
+
+            }
+
+            Field timeLogField = Fields.Search(timeLogId);
+            if (timeLogField != null) {
+                timeLogField.StyleClassWidth = "d-none";
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task IntiFieldDataAsync() {
+
+        FieldContainer container = new FieldContainer();
+        container.StyleClass = "container-fluid d-flex px-0";
+        if (Fields != null && DataSource != null) {
+            foreach (Field field in Fields) {
+                if (field is FieldTabContainer) {
+                    FieldTabContainer tabContainerField = (FieldTabContainer)field;
+                    foreach (FieldTabPage tabPage in tabContainerField.TabPages)
+                        InitiContainerFieldData(tabPage);
+                }
+                else if (field is FieldContainer) {
+                    FieldContainer containerField = (FieldContainer)field;
+                    InitiContainerFieldData(containerField);
+                }
+                else {
+                    if (DataSource.ContainsKey(field.ID)) {
+                        field.Value = DataSource[field.ID];
+                    }
+                    else {
+                        if (!field.ID.Contains("__CompForm_")) {
+                            field.Value = JToken.FromObject("");
+                        }
+                    }
+                }
+
+                container.Fields.Add(field);
+            }
+            _containerField = container;
+            _containerField.TopBuffer = false;
+
+            Fields.Render = true;
+            StateHasChanged();
+
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private void InitiContainerFieldData(FieldContainer parentField) {
+        foreach (Field field in parentField.Fields) {
+            if (field is FieldTabContainer) {
+                FieldTabContainer tabContainerField = (FieldTabContainer)field;
+                foreach (FieldTabPage tabPage in tabContainerField.TabPages)
+                    InitiContainerFieldData(tabPage);
+            }
+            else if (field is FieldContainer) {
+                FieldContainer containerField = (FieldContainer)field;
+                InitiContainerFieldData(containerField);
+            }
+            else {
+                if (DataSource.ContainsKey(field.ID)) {
+                    field.Value = DataSource[field.ID];
+                }
+                else {
+                    if (!field.ID.Contains("__CompForm_")) {
+                        field.Value = JToken.FromObject("");
+                    }
+                }
+            }
+        }
+    }
+
+
+    private async void Change(FieldChangeEventArgs args) {
+        this.DataSource[args.FieldId] = JToken.FromObject(args.Value);
+        await this.InvokeAsync(() => this.OnParametersSetAsync());
+        //await this.OnParametersSetAsync();
+
+        //args.DataSource = JObject.Parse(this.DataSource.ToString());
+        args.DataSource = this.DataSource;
+        await OnChange.InvokeAsync(args);
+    }
+
+    protected override bool ShouldRender()
+    {
+        if (Fields != null) {
+            if (Fields.Render) {
+                if (_containerField != null) {
+                    _containerField.Render = true;
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (Fields != null) {
+            if (_containerField != null) {
+                _containerField.Render = false;
+            }
+
+            Fields.Render = false;
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+
+
+}

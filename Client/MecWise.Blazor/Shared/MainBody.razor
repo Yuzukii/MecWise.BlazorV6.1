@@ -1,0 +1,92 @@
+﻿
+@inject NavigationManager  NaviManager;
+@inject SessionState Session;
+@inject IJSRuntime JSRuntime;
+
+
+@if (LayoutComponentBody != null) {
+
+    if (_sideMenu && !(Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen())) {
+        <div class="main-body-side-menu page">
+            @*//hide navigation bar if the website is in iframe*@
+            @if (_displayMenu) {
+                <NavSideMenu />
+            }
+
+            <div id="appBodyContainer" class="main">
+                @*//hide top bar if the website is in iframe*@
+                @if (_displayMenu) {
+                    <div class="top-row px-4 side-menu-body-top-row">
+                        <span class="welcome-text">Welcome, @Session.UserID</span>
+                        <div class="ml-auto">
+                            <a href="" class="ml-auto pl-4">Help</a>
+                            <a href="" class="ml-auto pl-4">About</a>
+                            @*<a href="" target="_blank" class="ml-auto pl-4">About</a>*@
+                        </div>
+
+                    </div>
+                }
+
+                <div class="container-fluid app-body side-menu-body">
+                    @LayoutComponentBody
+                </div>
+
+            </div>
+            
+        </div>
+    }
+    else {
+        <div id="appBodyContainer" class="main-body-top-menu">
+            @*//hide navigation bar if the website is in iframe*@
+            @if (_displayMenu) {
+                if (Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen()) {
+                    <NavMenuMobile />
+                }
+                else {
+                    <NavMenu />
+                }
+            }
+
+            <div class="container-fluid app-body">
+                @LayoutComponentBody
+            </div>
+        </div>
+    }
+
+
+}
+
+
+@code{
+    bool _isiniFrame = false;
+    bool _displayMenu = false;
+    bool _sideMenu = true;
+
+    [Parameter]
+    public RenderFragment LayoutComponentBody { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        _sideMenu = Session.AppConfig.sideMenuLayout;
+        _isiniFrame = await JSRuntime.InvokeAsync<bool>("iniFrame");
+
+        string displayMenuKey = await Session.GetSessionKeyAsync() + "-display-menu";
+        await Session.RemoveLocalStorageItem(displayMenuKey);
+
+        Uri uri = new Uri(NaviManager.Uri);
+        string menu = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("MENU");
+        if (_isiniFrame) {
+            _displayMenu = menu.ToBool();
+            await Session.SetLocalStorageItem(displayMenuKey, _displayMenu.ToStr());    // store menu show/hide to storage to reuse when logout
+        }
+        else {
+            if (string.IsNullOrEmpty(menu)) { // no MENU param in url, display menu by default
+                _displayMenu = true;
+            }
+            else {
+                _displayMenu = menu.ToBool();
+                await Session.SetLocalStorageItem(displayMenuKey, _displayMenu.ToStr()); 
+            }
+        }
+    }
+
+}

@@ -1,0 +1,37 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+
+@if (LabelField == null)
+{
+    <p>Loading</p>
+}
+else
+{
+    <div id ="@LabelField.ElementID" class="px-0 @LabelField.StyleClass">
+        <span class="text-info">@LabelField.Description:</span> @GetFormattedValue()
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public FieldCaptionLabel LabelField { get; set; }
+
+    [Parameter]
+    public string DateFormat { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        DateFormat = LabelField.DateFormat;
+    }
+
+    private string GetFormattedValue() {
+        if (LabelField.Value.IsDate()) {
+            return LabelField.Value.ToDate().ToString(DateFormat);
+        }
+
+        return LabelField.Value.ToStr();
+    }
+}
+

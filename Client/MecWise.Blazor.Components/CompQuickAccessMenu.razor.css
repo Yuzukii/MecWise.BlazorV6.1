@@ -1,0 +1,18 @@
+﻿
+.field-quickaccess {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    background-color: #fff;
+}
+
+.field-quickaccess-header {
+    border-radius: 5px 5px 0px 0px;
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #7AA6CA;
+    font-weight: bold;
+    color: white;
+}

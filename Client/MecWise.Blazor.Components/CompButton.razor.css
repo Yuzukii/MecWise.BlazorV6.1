@@ -1,0 +1,15 @@
+﻿
+.field-button {
+    font-size: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 27px;
+    min-height: 30px;
+}
+
+
+.field-button-label {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+

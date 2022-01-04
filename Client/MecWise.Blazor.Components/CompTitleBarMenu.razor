@@ -1,0 +1,29 @@
+﻿<div class="dropdown">
+    <button class="@GetDropBtnClass()">
+    </button>
+    <div class="dropdown-content">
+        @*<a href="" @onclick="">Google</a>
+        <a href="">Facebook</a>
+        <a href="">YouTube</a>*@
+
+        @foreach (FieldTitleBarMenuItem item in TitleBarField.MenuItemList) {
+            if (item.Visible) {
+                <CompTitleBarMenuItem MenuItem="item" OnMenuItemClick="@(e=> onMenuItemClick.InvokeAsync(item))"></CompTitleBarMenuItem>
+            }
+
+        }
+
+    </div>
+</div>
+
+@code{
+
+    [Parameter] public EventCallback<FieldTitleBarMenuItem> onMenuItemClick { get; set; }
+    [Parameter] public FieldTitleBar TitleBarField { get; set; }
+
+    private string GetDropBtnClass() {
+        if(TitleBarField.SubTitle)
+            return "dropbtn-small oi oi-menu";
+        return "dropbtn fa fa-bars";
+    }
+}

@@ -1,0 +1,458 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+@inject SessionState Session;
+
+<div id="@CustomListField.ElementID" class="container px-2 field-custom-list">
+
+    <div class="field-custom-list-header">
+        @if (!string.IsNullOrEmpty(CustomListField.FilterDateField)) {
+
+            <div class="row filter-date-panel">
+
+                <div class="filter-month">
+                    <select id="@(CustomListField.ID + "_monthFilter")" class="form-control" @onchange="@_filterMonth_OnChange">
+                        @foreach (DateTime dateTime in _filterMonths) {
+                            if (dateTime.ToString("MMMM yyyy") == _selectedMonth.ToString("MMMM yyyy")) {
+                                <option value="@dateTime.ToStr()" selected>@dateTime.ToString("MMMM yyyy")</option>
+                            }
+                            else {
+                                <option value="@dateTime.ToStr()">@dateTime.ToString("MMMM yyyy")</option>
+                            }
+                        }
+                    </select>
+                    @*<span class="fa fa-chevron-down"></span>*@
+                </div>
+
+                @if (CustomListField.ShowDayFilter) {
+                    <div class="filter-day">
+                        <select id="@(CustomListField.ID + "_dayFilter")" class="form-control" @onchange="@_filterDay_OnChange">
+                            @foreach (int day in _filterDays) {
+                                if (day == 1) {
+                                    <option value="@day" selected>Day @day</option>
+                                }
+                                else {
+                                    <option value="@day">Day @day</option>
+                                }
+                            }
+                        </select>
+                        @*<span class="fa fa-chevron-down"></span>*@
+                    </div>
+                }
+
+            </div>
+
+        }
+
+        @if (CustomListField.ShowMultiPickFilter && CustomListField.FilterMultiPickDataSource != null) {
+            <div class="row filter-multipick-panel">
+                <CompMultiPick MultiPickField="@_filterMultiPick" />
+            </div>
+        }
+    </div>
+
+    @if (_dataSource == null || _dataSource.Count == 0) {
+        <p style="margin-left: 8px; margin-top: 10px; color: gray;">The list is empty.</p>
+    }
+    else {
+
+        <div class="field-custom-list-body">
+
+            @foreach (var item in _dataSource) {
+                string highlight = "";
+                if (!string.IsNullOrEmpty(CustomListField.HighlightRowBoolFieldName)) {
+
+                    if (CustomListField.HighlightRowBoolFieldIsFalse) {
+
+                        if (!item[CustomListField.HighlightRowBoolFieldName].ToBool()) {
+                            highlight = "highlight";
+                        }
+                    }
+                    else {
+                        if (item[CustomListField.HighlightRowBoolFieldName].ToBool()) {
+                            highlight = "highlight";
+                        }
+                    }
+                }
+
+            <div class="row rounded item @highlight" @onclick="@(x => rowClick(JObject.FromObject(item)))">
+
+                @if (!string.IsNullOrEmpty(CustomListField.Column1.DataField)) {
+                    <div class="col-2 col-sm-2 col-md-1 first">
+                        <div class="circle">
+                            <div class="circle-item" style="color:@GetColor(CustomListField.Column1,item[CustomListField.Column1.DataField].ToStr())">
+                                @GetShortDateString(item[CustomListField.Column1.DataField].ToString())
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="col-7 col-sm-7 col-md-9 main">
+                    <div class="row content-header">
+                        @if (!string.IsNullOrEmpty(CustomListField.Column2.DataField)) {
+                            <div class="col field1">
+                                <span style="color:@GetColor(CustomListField.Column2,item[CustomListField.Column2.DataField].ToStr())">
+                                    @GetHTMLDeCodedString(item[CustomListField.Column2.DataField].ToString())
+                                </span>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(CustomListField.Column3.DataField)) {
+                            <div class="col field2">
+                                <span style="color:@GetColor(CustomListField.Column3,item[CustomListField.Column3.DataField].ToStr())">
+                                    @GetHTMLDeCodedString(item[CustomListField.Column3.DataField].ToString())
+                                </span>
+                            </div>
+                        }
+                    </div>
+                    <div class="row content-body">
+                        @if (!string.IsNullOrEmpty(CustomListField.Column4.DataField)) {
+                            <div class="col field1">
+                                <span style="color:@GetColor(CustomListField.Column4,item[CustomListField.Column4.DataField].ToStr())">
+                                    @GetHTMLDeCodedString(item[CustomListField.Column4.DataField].ToString())
+                                </span>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(CustomListField.Column5.DataField)) {
+                            <div class="col field2">
+                                <span style="color:@GetColor(CustomListField.Column5,item[CustomListField.Column5.DataField].ToStr())">
+                                    @GetHTMLDeCodedString(item[CustomListField.Column5.DataField].ToString())
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(CustomListField.Column6.DataField)) {
+                    <div class="col-3 col-sm-3 col-md-2 last">
+                        <span style="color:@GetColor(CustomListField.Column6,item[CustomListField.Column6.DataField].ToStr())">
+                            @item[CustomListField.Column6.DataField]
+                        </span>
+                    </div>
+                }
+
+            </div>
+            }
+
+        </div>
+
+        @if (CustomListField.PageSize != 0 ) {
+            <div class="container mt-4 field-custom-list-pager">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" @onclick="@(x => page_onChange(--_currPage))">Previous</a></li>
+                    @for (int i = 1; i <= _totalPages; i++) {
+                        int pageNo = i;
+                        string active = "";
+                        active = pageNo == _currPage ? "btn-primary text-white" : "";
+                        <li class="page-item @active"><a class="page-link @active" @onclick="@(x => page_onChange(pageNo))">@pageNo</a></li>
+                    }
+                    <li class="page-item"><a class="page-link" @onclick="@(x => page_onChange(++_currPage))">Next</a></li>
+                </ul>
+            </div>
+        }
+    }
+
+</div>
+
+
+    @code{
+
+        [Parameter]
+        public FieldCustomList CustomListField { get; set; }
+
+        List<DateTime> _filterMonths = new List<DateTime>();
+        List<int> _filterDays = new List<int>();
+
+        FieldMultiPick _filterMultiPick;
+        string _selectedMultiPickData;
+        DateTime _selectedMonth;
+        int _selectedDay;
+        int _currPage = 1;
+        int _totalPages = 1;
+        JArray _dataSource;
+
+
+        protected override Task OnInitializedAsync() {
+
+            RefreshFilterMonths();
+            if (_filterMonths.Count > 0) {
+                _selectedMonth = CustomListField.CurrentDate.AddDays(-CustomListField.CurrentDate.Day + 1)
+                    .AddHours(-CustomListField.CurrentDate.Hour)
+                    .AddMinutes(-CustomListField.CurrentDate.Minute)
+                    .AddSeconds(-CustomListField.CurrentDate.Second)
+                    .AddMilliseconds(-CustomListField.CurrentDate.Millisecond);
+                RereshFilterDays();
+            }
+            RefreshDataSource();
+
+            if (CustomListField.FilterMultiPickDataSource != null && CustomListField.FilterMultiPickDataSource.Count > 0) {
+                _filterMultiPick = new FieldMultiPick("_filterMultiPick", "", "");
+                _filterMultiPick.OnMultiPickClick += _filterMultiPick_OnClick;
+                _filterMultiPick.OnSelectionChange += _filterMultiPick_OnSelectionChanged;
+            }
+
+            return base.OnInitializedAsync();
+        }
+
+        protected override Task OnParametersSetAsync() {
+            if (CustomListField.Render) {
+                RefreshDataSource();
+            }
+            return base.OnParametersSetAsync();
+        }
+
+        protected override bool ShouldRender() {
+            return CustomListField.Render;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender) {
+            _selectedMonth = CustomListField.CurrentDate.AddDays(-CustomListField.CurrentDate.Day + 1)
+                    .AddHours(-CustomListField.CurrentDate.Hour)
+                    .AddMinutes(-CustomListField.CurrentDate.Minute)
+                    .AddSeconds(-CustomListField.CurrentDate.Second)
+                    .AddMilliseconds(-CustomListField.CurrentDate.Millisecond);
+
+            _selectedDay = CustomListField.CurrentDate.Day;
+
+            await Session.ExecJSAsync("_setSelectValue", CustomListField.ID + "_monthFilter", _selectedMonth.ToStr());
+            await Session.ExecJSAsync("_setSelectValue", CustomListField.ID + "_dayFilter", _selectedDay);
+
+            if (firstRender) {
+                RefreshDataSource();
+            }
+
+            CustomListField.Render = false;
+
+        }
+
+
+        private void page_onChange(int pageNo) {
+            pageNo = pageNo < 1 ? 1 : pageNo;
+            pageNo = pageNo > _totalPages ? _totalPages : pageNo;
+            _currPage = pageNo;
+            RefreshDataSource();
+        }
+
+
+        private string GetHTMLDeCodedString(string html) {
+            string step1 = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]*>", " ");
+            string step2 = System.Web.HttpUtility.HtmlDecode(step1);
+            return step2;
+        }
+
+        private void rowClick(JObject rowData) {
+            FieldClickEventArgs args = new FieldClickEventArgs();
+            args.DataSource = rowData;
+            CustomListField.InvokeOnRowClick(CustomListField, args);
+        }
+
+
+        private async void _filterMultiPick_OnClick(object sender, FieldClickEventArgs e) {
+            FieldMultiPick multiPick = (FieldMultiPick)sender;
+            await multiPick.ShowPopup(Session);
+
+            multiPick.BrwsGrid = new FieldGridView();
+            multiPick.BrwsGrid.SelectionMode = FieldGridViewSelectionMode.multiple;
+            multiPick.BrwsGrid.ShowTitleBar = false;
+            multiPick.BrwsGrid.DataSource = CustomListField.FilterMultiPickDataSource;
+
+            foreach (JProperty prop in JObject.FromObject(CustomListField.FilterMultiPickDataSource[0]).Properties()) {
+                multiPick.BrwsGrid.Columns.Add(new FieldGridViewColumn() {
+                    dataField = prop.Name,
+                    caption = prop.Name
+                });
+            }
+
+            multiPick.ShowGrid();
+            StateHasChanged();
+        }
+
+        private void _filterMultiPick_OnSelectionChanged(object sender, FieldChangeEventArgs e) {
+            JArray selectedRows = JArray.Parse(e.Value);
+            _selectedMultiPickData = "";
+            foreach (var row in selectedRows) {
+                _selectedMultiPickData = _selectedMultiPickData + "," + row[CustomListField.FilterMultiPickDataField].ToStr();
+            }
+            if (_selectedMultiPickData.Length > 0) {
+                _selectedMultiPickData = _selectedMultiPickData.Substring(1, _selectedMultiPickData.Length - 1);
+            }
+
+            RefreshDataSource();
+            StateHasChanged();
+        }
+
+        private string GetShortDateString(string dateStr) {
+            if (dateStr.IsDate()) {
+                DateTime date = dateStr.ToDate();
+                return date.ToString("dd") + " " + date.DayOfWeek.ToString("G").Substring(0, 3);
+            }
+
+            return dateStr;
+        }
+
+
+        private void _filterMonth_OnChange(ChangeEventArgs args) {
+            //clear multi pick filter
+            _selectedMultiPickData = "";
+
+            _selectedMonth = args.Value.ToDate();
+            _selectedDay = 1;
+            CustomListField.CurrentDate = new DateTime(_selectedMonth.Year, _selectedMonth.Month, _selectedDay);
+
+            RereshFilterDays();
+            RefreshDataSource();
+        }
+
+        private void _filterDay_OnChange(ChangeEventArgs args) {
+            //clear multi pick filter
+            _selectedMultiPickData = "";
+            _selectedDay = args.Value.ToInt();
+            CustomListField.CurrentDate = new DateTime(_selectedMonth.Year, _selectedMonth.Month, _selectedDay);
+
+            RefreshDataSource();
+        }
+
+        private string GetColor(FieldCustomListColumn Column, string value) {
+            foreach (var setting in Column.ColorSettings) {
+                if (setting.MatchValue == value) {
+                    return setting.ColorString;
+                }
+            }
+            return "#333";
+        }
+
+        private void RefreshDataSource() {
+
+            // filtering for date
+            if (!string.IsNullOrEmpty(CustomListField.FilterDateField)) {
+                DateTime startDate = _selectedMonth;
+                DateTime endDate = _selectedMonth.AddMonths(1).AddDays(-1).AddMinutes(1439);
+
+                // filtering for selected month
+                var filterResult = CustomListField.DataSource.ToList().FindAll(x => x[CustomListField.FilterDateField].ToDate() >= startDate
+                    && x[CustomListField.FilterDateField].ToDate() <= endDate);
+
+
+                if (filterResult != null) {
+                    _dataSource = JArray.FromObject(filterResult);
+                }
+                else {
+                    _dataSource = null;
+                }
+
+
+                // filtering for selected day
+                if (CustomListField.ShowDayFilter && _dataSource != null) {
+
+                    filterResult = _dataSource.ToList().FindAll(x => x[CustomListField.FilterDateField].ToDate().Day == _selectedDay);
+                    if (filterResult != null) {
+                        _dataSource = JArray.FromObject(filterResult);
+                    }
+                    else {
+                        _dataSource = null;
+                    }
+                }
+            }
+            else {
+                // no date filtering
+                _dataSource = CustomListField.DataSource;
+            }
+
+
+
+            // filtering for multipick
+            if (!string.IsNullOrEmpty(CustomListField.FilterMultiPickDataField)) {
+                if (CustomListField.ShowMultiPickFilter && _dataSource != null) {
+                    if (!string.IsNullOrEmpty(_selectedMultiPickData)) {
+                        var filterResult = _dataSource.ToList().FindAll(x => x[CustomListField.FilterMultiPickDataField].ToStr().In(_selectedMultiPickData.Split(',')));
+                        if (filterResult != null) {
+                            _dataSource = JArray.FromObject(filterResult);
+                        }
+                        else {
+                            _dataSource = null;
+                        }
+                    }
+
+                }
+            }
+            
+
+            // filtering for pagination
+            if (CustomListField.PageSize != 0 && _dataSource != null) {
+                _totalPages = _dataSource.Count / CustomListField.PageSize;
+                if (_dataSource.Count % CustomListField.PageSize > 0) {
+                    _totalPages += 1;
+                }
+
+
+                int index = ((_currPage - 1) * CustomListField.PageSize);
+                index = index < 0 ? 0 : index;
+
+                int count = CustomListField.PageSize;
+                int lastIndex = _dataSource.Count();
+                if (lastIndex - index < CustomListField.PageSize) {
+                    count = lastIndex - index;
+                }
+                //if (count == 0) {
+                //    count = 1;
+                //}
+
+                if (count > 0) {
+                    var filterResult = _dataSource.ToList().GetRange(index, count);
+                    if (filterResult != null) {
+                        _dataSource = JArray.FromObject(filterResult);
+                    }
+                    else {
+                        _dataSource = null;
+                    }
+                }
+                else {
+                    _dataSource = null;
+                }
+
+            }
+
+            CustomListField.Render = true;
+            StateHasChanged();
+        }
+
+        private void RefreshFilterMonths() {
+
+            _filterMonths = new List<DateTime>();
+            DateTime tempDate = CustomListField.MonthFilterStartDate
+                .AddDays(-CustomListField.MonthFilterStartDate.Day)
+                .AddDays(1)
+                .AddHours(-CustomListField.MonthFilterStartDate.Hour)
+                .AddMinutes(-CustomListField.MonthFilterStartDate.Minute)
+                .AddSeconds(-CustomListField.MonthFilterStartDate.Second);
+
+            DateTime tempEndDate = CustomListField.MonthFilterEndDate
+                .AddDays(-CustomListField.MonthFilterEndDate.Day)
+                .AddDays(1)
+                .AddHours(-CustomListField.MonthFilterEndDate.Hour)
+                .AddMinutes(-CustomListField.MonthFilterEndDate.Minute)
+                .AddSeconds(-CustomListField.MonthFilterEndDate.Second);
+
+
+            while (tempDate <= tempEndDate) {
+                _filterMonths.Add(tempDate);
+                tempDate = tempDate.AddMonths(1);
+            }
+
+        }
+
+        private void RereshFilterDays() {
+            DateTime date = _selectedMonth;
+            _filterDays = new List<int>();
+            int day = 1;
+            int month = date.Month;
+            while (month == date.Month) {
+                _filterDays.Add(day);
+                day = day + 1;
+                date = date.AddDays(1);
+            }
+        }
+
+    }

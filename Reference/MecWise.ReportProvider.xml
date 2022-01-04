@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MecWise.ReportProvider</name>
+    </assembly>
+    <members>
+        <member name="T:AppFilesAccessService">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.#ctor">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.ReadFile(System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.BeginReadFile(System.String,System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.EndReadFile(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.ReadFileAsync(System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.ReadFileAsync(System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.WriteFile(System.Byte[],System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.BeginWriteFile(System.Byte[],System.String,System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.EndWriteFile(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.WriteFileAsync(System.Byte[],System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.WriteFileAsync(System.Byte[],System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:AppFilesAccessService.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="E:AppFilesAccessService.ReadFileCompleted">
+            <remarks/>
+        </member>
+        <member name="E:AppFilesAccessService.WriteFileCompleted">
+            <remarks/>
+        </member>
+        <member name="T:ReadFileCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:ReadFileCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:ReadFileCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:WriteFileCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:WriteFileCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:WriteFileCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:LaunchReport">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.#ctor">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.AddReportJob(ReportJob,System.Object[])">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.BeginAddReportJob(ReportJob,System.Object[],System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.EndAddReportJob(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.AddReportJobAsync(ReportJob,System.Object[])">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.AddReportJobAsync(ReportJob,System.Object[],System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.Execute(System.String,ReportJob)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.BeginExecute(System.String,ReportJob,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.EndExecute(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.ExecuteAsync(System.String,ReportJob)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.ExecuteAsync(System.String,ReportJob,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:LaunchReport.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="E:LaunchReport.AddReportJobCompleted">
+            <remarks/>
+        </member>
+        <member name="E:LaunchReport.ExecuteCompleted">
+            <remarks/>
+        </member>
+        <member name="T:ReportJob">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.Dbms">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.DbOwner">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.ConnectString">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.CoyId">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.LangId">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobType">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobDesc">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobOwner">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.ReportId">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.ReportDsn">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobStatus">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobParams">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobConnect">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobOutputFormat">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.ReportSelectCriteria">
+            <remarks/>
+        </member>
+        <member name="P:ReportJob.JobCriteria">
+            <remarks/>
+        </member>
+        <member name="T:AddReportJobCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:AddReportJobCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:AddReportJobCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:ExecuteCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:ExecuteCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:ExecuteCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:MecRptService">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.#ctor">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.AddJob(System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.BeginAddJob(System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.EndAddJob(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.AddJobAsync(System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.AddJobAsync(System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.GetJobInfo(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.BeginGetJobInfo(System.String,System.String,System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.EndGetJobInfo(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.GetJobInfoAsync(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.GetJobInfoAsync(System.String,System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:MecRptService.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="E:MecRptService.AddJobCompleted">
+            <remarks/>
+        </member>
+        <member name="E:MecRptService.GetJobInfoCompleted">
+            <remarks/>
+        </member>
+        <member name="T:JobInfo">
+            <remarks/>
+        </member>
+        <member name="P:JobInfo.JobID">
+            <remarks/>
+        </member>
+        <member name="P:JobInfo.Success">
+            <remarks/>
+        </member>
+        <member name="P:JobInfo.Reason">
+            <remarks/>
+        </member>
+        <member name="T:JobResult">
+            <remarks/>
+        </member>
+        <member name="P:JobResult.BrwsID">
+            <remarks/>
+        </member>
+        <member name="P:JobResult.BrwsSQL">
+            <remarks/>
+        </member>
+        <member name="P:JobResult.ColHdr">
+            <remarks/>
+        </member>
+        <member name="P:JobResult.ColWidth">
+            <remarks/>
+        </member>
+        <member name="P:JobResult.ColAlign">
+            <remarks/>
+        </member>
+        <member name="P:JobResult.ResultSet">
+            <remarks/>
+        </member>
+        <member name="T:AddJobCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:AddJobCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:AddJobCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:GetJobInfoCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:GetJobInfoCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:GetJobInfoCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,28 @@
+﻿
+@if (Item != null)
+{
+
+    <div class="row text-secondary">
+        @Item.MENU_ITEM_NAME
+    </div>
+
+    _index = 0;
+    @while (_index < Item.MENU_SUBITEMS.Count)
+    {
+        <div class="row">
+            <EpfMenuSubItem SubItem="@Item.MENU_SUBITEMS[_index]" />
+        </div>
+        _index += 1;
+    }
+}
+
+@code{
+
+    int _index = 0;
+    //List<EPF_BLZ_MNU_SUBITEM> _allSubItems = new List<EPF_BLZ_MNU_SUBITEM>();
+    //List<EPF_BLZ_MNU_SUBITEM> _subItems = new List<EPF_BLZ_MNU_SUBITEM>();
+
+    [Parameter]
+    public EPF_BLZ_MNU_ITEM Item { get; set; }
+
+}

@@ -1,0 +1,26 @@
+#EPF_REPORT_BLZ {
+    /*background-color: #fafad2; #4D5787*/
+    display: flex;
+    height: 93vh;
+}
+
+    #EPF_REPORT_BLZ #EPF_REPORT_BLZ__lblHeaderOutput {
+        margin-top: 0px;
+    }
+
+    #EPF_REPORT_BLZ #EPF_REPORT_BLZ__lblHeaderOutput, #EPF_REPORT_BLZ__lblHeaderParam {
+        /*border-radius: 5px 5px 0px 0px;
+        background-color: #4D5787;
+        color: white;
+        font-size: 1.1em;*/
+        border-bottom: 2px solid #4D5787;
+        color: #4D5787;
+        font-weight: bold;
+        font-size: 1.1em;
+        padding-left: 5px;
+    }
+
+    #EPF_REPORT_BLZ #EPF_REPORT_BLZ__EpfSubContainer1, #EPF_REPORT_BLZ__D {
+        padding-left: 10px;
+    }
+

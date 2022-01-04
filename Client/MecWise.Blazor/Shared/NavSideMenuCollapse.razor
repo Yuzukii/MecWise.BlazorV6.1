@@ -1,0 +1,109 @@
+﻿@using MecWise.Blazor.Pages;
+
+@inject SessionState Session;
+@inject NavigationManager NavigationManager;
+
+
+@if (menuPages != null) {
+
+    <div class="top-row navbar navbar-dark side-menu-top-row">
+        @*<button class="navbar-toggler" @onclick="InvokeToggleEvent">
+            <span class="oi oi-arrow-right toogle-icon"></span>
+        </button>*@
+
+        <button class="side-navbar-toggler side-menu-toggler" @onclick="SideToogleEvent">
+            <span class="oi oi-menu side-navbar-toggler-icon side-menu-toggler-icon"></span>
+        </button>
+    </div>
+
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+        <ul class="nav flex-column">
+
+            <li class="nav-item px-3 w-100 side-menu-item">
+                <NavLink class="nav-link" href="#">
+                    <span class="navlink-icon mx-auto" style="background-image: url(./images/icon-menu/home-white.png)" aria-hidden="true"></span>
+                </NavLink>
+            </li>
+
+            @foreach (EPF_BLZ_MNU_PAGE menuPage in menuPages) {
+                if (string.IsNullOrEmpty(menuPage.SCRN_ID)) {
+                    string menuPageUri = "EpfMenuPage/" + menuPage.MENU_ID.ToInt();
+                    string backgroundImg = menuPage.MENU_ATTR;
+                    @if (string.IsNullOrEmpty(backgroundImg)) {
+                        backgroundImg = "./images/icon-menu/menu-item-white.png";
+                    }
+                    <li class="nav-item px-3 w-100 side-menu-item">
+                        <NavLink class="nav-link" href="@menuPageUri">
+                            <span class="navlink-icon mx-auto" style="background-image: url(@backgroundImg)" aria-hidden="true"></span>
+                        </NavLink>
+                    </li>
+                }
+                else {
+                    string backgroundImg = menuPage.MENU_ATTR;
+                    @if (string.IsNullOrEmpty(backgroundImg)) {
+                        backgroundImg = "./images/icon-menu/menu-item-white.png";
+                    }
+                    <li class="nav-item px-3 side-menu-item">
+                        <NavLink class="nav-link" @onclick="@(x => menuPage_OnClick(menuPage))">
+                            <span class="navlink-icon mx-auto" style="cursor: pointer; background-image: url( @backgroundImg )" aria-hidden="true"></span>
+                        </NavLink>
+                    </li>
+                }
+            }
+
+            <li class="nav-item px-3 w-100 side-menu-item">
+                <NavLink class="nav-link" href="Logout">
+                    <span class="navlink-icon mx-auto" style="background-image: url(./images/icon-menu/logout-white.png)" aria-hidden="true"></span>
+                </NavLink>
+            </li>
+
+        </ul>
+    </div>
+
+
+}
+
+@code {
+    private List<EPF_BLZ_MNU_PAGE> menuPages;
+    private string logoutUri = "logout";
+    private bool collapseNavMenu = true;
+
+    [Parameter]
+    public EventCallback SideToogleEvent { get; set; }
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu() {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async void InvokeSideToogleEvent() {
+        await SideToogleEvent.InvokeAsync();
+    }
+
+
+    protected override async Task OnInitializedAsync() {
+        bool mobile = false;
+        if (Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen()) {
+            mobile = true;
+        }
+        string url = string.Format("Menu/GetMenu/{0}/{1}/{2}/{3}", Session.UserID, Session.LangId, false, mobile);
+        menuPages = await Session.GetJsonAsync<List<EPF_BLZ_MNU_PAGE>>(Session.GetAbsoluteApiUrl(url));
+
+        string oidc_user = await Session.GetStorageItemAsync("oidc_user");
+        if (!string.IsNullOrEmpty(oidc_user)) {
+            logoutUri = "MicrosoftIdentity/Account/SignOut";
+        }
+    }
+
+    private void menuPage_OnClick(EPF_BLZ_MNU_PAGE menuPage) {
+
+        if (string.IsNullOrEmpty(menuPage.SCRN_ID)) {
+            return;
+        }
+
+        Session.PushNavigationHistory(NavigationManager.BaseUri, NavigationManager.Uri);
+        string uri = string.Format(menuPage.URL_TMP, menuPage.SCRN_ID);
+        NavigationManager.NavigateTo(uri);
+    }
+}

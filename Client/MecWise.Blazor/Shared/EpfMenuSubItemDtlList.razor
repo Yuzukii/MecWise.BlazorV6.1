@@ -1,0 +1,112 @@
+﻿@page "/EpfMenuSubItemDtlList"
+@page "/EpfMenuSubItemDtlList/{MENU_ID:int}/{MENU_ITEM_ID:int}/{MENU_SUB_ITEM_ID:int}"
+@page "/EpfMenuSubItemDtlList/{MENU_ID:int}/{MENU_ITEM_ID:int}/{MENU_SUB_ITEM_ID:int}/{ROW_PER_COL:int}"
+
+@using Microsoft.JSInterop
+
+@inject SessionState Session;
+@inject IJSRuntime JSRuntime;
+@inject NavigationManager  NavigationManager;
+
+@if (_subMenuItemDtls != null) {
+
+    <div class="container-fluid d-flex flex-column">
+        <div class="">
+            <CompTitleBar TitleBarField="@_mtbar" />
+        </div>
+
+
+        <div class="container-fluid pt-2" style="width: 100%;margin: 0 auto;padding: 20px;">
+
+            @{
+                int itemIndex = 0;
+                if (ROW_PER_COL == 0) {
+                    ROW_PER_COL = 9999;
+                }
+                decimal colCount = _subMenuItemDtls.Count / ROW_PER_COL;
+                if (_subMenuItemDtls.Count % ROW_PER_COL > 0) {
+                    colCount = colCount.ToInt() + 1;
+                }
+                else {
+                    colCount = colCount.ToInt();
+                }
+            }
+            
+            <div class="row">
+                @for (int colIndex = 1; colIndex <= colCount; colIndex++) {
+                    <div class="col-md col-sm col-12 px-0">
+                        @for (int i = 1; i <= ROW_PER_COL && itemIndex < _subMenuItemDtls.Count; i++) {
+                            <div class="row">
+                                @{
+                                    EPF_BLZ_MNU_SUBITEM_DTL menuItemDtl = _subMenuItemDtls[itemIndex];
+                                    itemIndex = itemIndex + 1; ;
+                                }
+                                <div class="col">
+                                    <NavLink class="nav-link text-nowrap border-bottom menuListText" href="@(string.Format(menuItemDtl.URL_TMP, menuItemDtl.SCRN_ID))"
+                                             @onclick="@(x=>OnItemClick(menuItemDtl))">
+                                        <img src="images/menu-list-item.gif" class="pr-2" alt="" border="0"> @menuItemDtl.MENU_SUB_ITEM_DTL_NAME
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+            
+
+
+        </div>
+    </div>
+
+}
+
+@code{
+    string defImgSrc = "images/icon-menu/default.gif";
+    FieldTitleBar _mtbar = new FieldTitleBar();
+
+    [Parameter]
+    public int MENU_ID { get; set; }
+    [Parameter]
+    public int MENU_ITEM_ID { get; set; }
+    [Parameter]
+    public int MENU_SUB_ITEM_ID { get; set; }
+    [Parameter]
+    public int ROW_PER_COL { get; set; } = 9999;
+
+    List<EPF_BLZ_MNU_PAGE> _menuPages = new List<EPF_BLZ_MNU_PAGE>();
+    List<EPF_BLZ_MNU_SUBITEM_DTL> _subMenuItemDtls = new List<EPF_BLZ_MNU_SUBITEM_DTL>();
+
+
+    protected override async Task OnParametersSetAsync() {
+        bool mobile = false;
+        if (Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen()) {
+            mobile = true;
+        }
+        string url = string.Format("Menu/GetMenu/{0}/{1}/{2}/{3}/{4}/{5}", Session.UserID, Session.LangId, MENU_ID, MENU_ITEM_ID, MENU_SUB_ITEM_ID, mobile);
+        _menuPages = await Session.GetJsonAsync<List<EPF_BLZ_MNU_PAGE>>(Session.GetAbsoluteApiUrl(url));
+        if (_menuPages.Count > 0) {
+            if (_menuPages[0].MENU_ITEMS.Count > 0) {
+                if (_menuPages[0].MENU_ITEMS[0].MENU_SUBITEMS.Count > 0) {
+                    _subMenuItemDtls = _menuPages[0].MENU_ITEMS[0].MENU_SUBITEMS[0].MENU_SUBITEM_DTLS;
+                    _mtbar.TitleText = _menuPages[0].MENU_ITEMS[0].MENU_SUBITEMS[0].MENU_SUB_ITEM_NAME;
+                }
+            }
+        }
+        Session.ClearNavigationHistory();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await base.OnAfterRenderAsync(firstRender);
+        await JSRuntime.InvokeAsync<object>("FixBrokenMenuImages", defImgSrc);
+        await JSRuntime.InvokeAsync<object>("CloseErrorMessage");
+    }
+
+
+    private void OnItemClick(EPF_BLZ_MNU_SUBITEM_DTL ItemDtl) {
+        Session.PushNavigationHistory(NavigationManager.BaseUri, NavigationManager.Uri);
+        string uri = string.Format(ItemDtl.URL_TMP, ItemDtl.SCRN_ID);
+        NavigationManager.NavigateTo(uri);
+    }
+
+
+}

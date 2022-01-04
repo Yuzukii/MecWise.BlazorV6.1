@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>6.0.0.0</Version>
+    <Company>StarVisionIt</Company>
+    <Copyright>Copyright ©  2021</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.JSInterop">
+      <HintPath>..\..\Reference\Microsoft.JSInterop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Reference\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>..\..\Reference\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

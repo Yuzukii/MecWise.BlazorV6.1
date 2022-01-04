@@ -1,0 +1,57 @@
+﻿
+
+@if (ItemDetl != null) {
+    <div class="menuIconContainer"
+         @onmouseover="@OnMouseOver" @onmouseout="@OnMouseOut" @onclick="@(e=> OnItemClick.InvokeAsync(ItemDetl))"
+         @onmousedown="@OnMouseDown" @onmouseup="@OnMouseUp">
+        <div>
+            @{ string menuImgSrc = "images/icon-menu/" + ItemDetl["MENU_ATTR"].ToStr(); }
+            <img class="@_iconCss" field-type="menuImage" src="@menuImgSrc">
+        </div>
+        <div class="@_textCss">
+            @ItemDetl["MENU_SUB_ITEM_DTL_NAME"].ToStr()
+        </div>
+    </div>
+}
+
+@code{
+    string _iconCss = "menuIcon";
+    string _textCss = "menuText";
+
+    [Parameter]
+    public JObject ItemDetl { get; set; }
+
+    [Parameter]
+    public EventCallback<JObject> OnItemClick { get; set; }
+
+
+    protected override void OnParametersSet() {
+        if (string.IsNullOrEmpty(ItemDetl["MENU_ATTR"].ToStr())) {
+            ItemDetl["MENU_ATTR"] = "/default.gif";
+        }
+        base.OnParametersSet();
+    }
+
+    private void OnMouseOver() {
+        _iconCss = "menuIcon-shadow";
+        _textCss = "menuText-shadow";
+    }
+
+    private void OnMouseOut() {
+        _iconCss = "menuIcon";
+        _textCss = "menuText";
+    }
+
+
+    private void OnMouseDown() {
+        _iconCss = "menuIcon";
+        _textCss = "menuText";
+    }
+
+    private void OnMouseUp() {
+        _iconCss = "menuIcon";
+        _textCss = "menuText";
+    }
+
+
+}

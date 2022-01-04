@@ -1,0 +1,152 @@
+﻿
+.field-custom-list {
+    width: 100%;
+    /*max-width: 375px;*/
+}
+
+    .field-custom-list .field-custom-list-header {
+    }
+
+        .field-custom-list .field-custom-list-header .filter-date-panel {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+            .field-custom-list .field-custom-list-header .filter-date-panel .filter-month {
+            }
+
+                .field-custom-list .field-custom-list-header .filter-date-panel .filter-month select {
+                    border: 0px;
+                    background: none;
+                    font-size: 1.4rem;
+                    font-weight: bolder;
+                }
+
+                    .field-custom-list .field-custom-list-header .filter-date-panel .filter-month select option {
+                        font-size: 1rem;
+                    }
+
+            .field-custom-list .field-custom-list-header .filter-date-panel .filter-day {
+                margin-left: 20px;
+            }
+
+                .field-custom-list .field-custom-list-header .filter-date-panel .filter-day select {
+                    border: 0px;
+                    background: none;
+                    font-size: 1.4rem;
+                    font-weight: bolder;
+                }
+
+                    .field-custom-list .field-custom-list-header .filter-date-panel .filter-day select option {
+                    }
+
+        .field-custom-list .field-custom-list-header .filter-multipick-panel {
+            display: flex;
+            align-items: center;
+            padding: 0px 10px 10px 10px;
+        }
+
+            .field-custom-list .field-custom-list-header .filter-multipick-panel .field-button-container {
+                padding: 0px;
+            }
+
+            .field-custom-list .field-custom-list-header .filter-multipick-panel .field-button-wrapper {
+                padding: 0px;
+            }
+
+            .field-custom-list .field-custom-list-header .filter-multipick-panel .field-button {
+                margin-top: 0px;
+                width: 50px;
+            }
+
+
+
+    .field-custom-list .field-custom-list-body {
+        width: 100%;
+    }
+
+        .field-custom-list .field-custom-list-body .item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+            height: 70px;
+            cursor: pointer;
+        }
+
+            .field-custom-list .field-custom-list-body .item:hover {
+                background-color: #F7BF95;
+                border-bottom: 1px solid #FF7C1A;
+            }
+
+            .field-custom-list .field-custom-list-body .item.highlight {
+                background-color: #F4F4C3;
+            }
+
+                .field-custom-list .field-custom-list-body .item.highlight:hover {
+                    background-color: #F7BF95;
+                    border-bottom: 1px solid #FF7C1A;
+                }
+
+            .field-custom-list .field-custom-list-body .item .first {
+            }
+
+                .field-custom-list .field-custom-list-body .item .first .circle {
+                    background-color: #E5E9F2;
+                    border-radius: 50%;
+                    text-align: center;
+                    width: 45px;
+                    height: 45px;
+                    margin: auto;
+                }
+
+                    .field-custom-list .field-custom-list-body .item .first .circle .circle-item {
+                        width: 20px;
+                        height: 40px;
+                        text-align: center;
+                        margin-left: 12px;
+                        padding-top: 5px;
+                    }
+
+            .field-custom-list .field-custom-list-body .item .main {
+            }
+
+                .field-custom-list .field-custom-list-body .item .main .content-header {
+                    font-weight: bolder;
+                }
+
+                    .field-custom-list .field-custom-list-body .item .main .content-header .field1 {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .field-custom-list .field-custom-list-body .item .main .content-header .field2 {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                .field-custom-list .field-custom-list-body .item .main .content-body {
+                }
+
+                    .field-custom-list .field-custom-list-body .item .main .content-body .field1 {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .field-custom-list .field-custom-list-body .item .main .content-body .field2 {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+
+            .field-custom-list .field-custom-list-body .item .last {
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }

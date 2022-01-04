@@ -1,0 +1,129 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject SessionState Session;
+
+@if (RadioField == null) {
+    <p>Loading</p>
+}
+else {
+    string description = RadioField.Description;
+    if (string.IsNullOrEmpty(description.ToStr().Trim())) {
+        description = " ";
+    }
+    else {
+        if (description.Substring(description.Length - 1, 1) != ":")
+            description += ":";
+    }
+    
+    <div id="@RadioField.ElementID" class="top-buffer-medium @RadioField.StyleClass" value="@RadioField.Value">
+        <span class="@_lableTextColor" style="white-space:pre">@description</span>
+        <div class="px-0 pt-1 col" style="min-height:36px;margin-top:4px;">
+
+            @foreach (var item in RadioField.Items) {
+            
+                <label class="container-checkmark @_driectionClass">
+                    @item.Text
+                    @if (RadioField.Disabled) {
+                        if (RadioField.Value.ToStr() == item.ID) {
+                            <input class="checkmark" type="radio" name="@RadioField.ElementID" value="@item.ID" disabled checked>
+                        }
+                        else { 
+                            <input class="checkmark" type="radio" name="@RadioField.ElementID" value="@item.ID" disabled>
+                        }
+                    
+                    }
+                    else { 
+                        if (RadioField.Value.ToStr() == item.ID) {
+                            @*<input class="checkmark" type="radio" name="@RadioField.ID" value="@item.ID" checked
+                                   @onblur="@(x => Blur(RadioField))" @onfocus="@(x => Focus(RadioField))" @onchange="@(x => Change(item.ID))">*@
+                            <input class="checkmark" type="radio" name="@RadioField.ElementID" value="@item.ID" checked
+                                   @onchange="@(x => Change(item.ID))">
+                        }
+                        else { 
+                            @*<input class="checkmark" type="radio" name="@RadioField.ID" value="@item.ID" 
+                                   @onblur="@(x => Blur(RadioField))" @onfocus="@(x => Focus(RadioField))" @onchange="@(x => Change(item.ID))">*@
+                            <input class="checkmark" type="radio" name="@RadioField.ElementID" value="@item.ID" 
+                                   @onchange="@(x => Change(item.ID))">
+                        }
+                    
+                    }
+                </label>
+            }
+
+        </div>
+
+    </div>
+}
+
+
+@code {
+    string _value;
+    string _lableTextColor = "text-info";
+    string _driectionClass = "d-block";
+
+    [Parameter]
+    public FieldRadio RadioField { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldChangeEventArgs> OnChange { get; set; }
+
+    protected override Task OnInitializedAsync() {
+        if (RadioField != null) {
+            if (RadioField.ListDirection == FieldRadioListDirection.Vertical) {
+                _driectionClass = "d-block";
+            }
+            else {
+                _driectionClass = "";
+            }
+
+        }
+        StateHasChanged();
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnParametersSetAsync() {
+        if (!string.IsNullOrEmpty(RadioField.Value.ToStr())) {
+            if (_value != RadioField.Value.ToStr()) {
+                _value = RadioField.Value.ToStr();
+                await Session.ExecJSAsync("_setRadioValue", RadioField.ElementID, RadioField.Value.ToString());
+                StateHasChanged();
+            }
+        }
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender) {
+            _value = RadioField.Value.ToStr();
+            await Session.ExecJSAsync("_setRadioValue", RadioField.ElementID, RadioField.Value.ToString());
+        }
+    }
+
+
+    private void Focus(object sender) {
+        RadioField.InvokeOnFocusIn(sender);
+        StateHasChanged();
+    }
+
+    private void Blur(object sender) {
+        RadioField.InvokeOnFocusOut(sender);
+        StateHasChanged();
+    }
+
+    private void Change(string selectedId) {
+        
+        RadioField.Value = selectedId;
+
+        FieldChangeEventArgs args = new FieldChangeEventArgs();
+        args.FieldId = RadioField.ID;
+        args.PreviousValue = selectedId;
+        args.Value = selectedId;
+
+        RadioField.InvokeOnChange(RadioField, args);
+        OnChange.InvokeAsync(args);
+        StateHasChanged();
+    }
+
+
+}
+

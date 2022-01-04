@@ -1,0 +1,792 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MecWise.WorkflowBase</name>
+    </assembly>
+    <members>
+        <member name="T:MecWise.WorkflowBase.CAASIntranetAlerts">
+            <summary>Summary description for CIntranetAlerts.</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.CAASIntranetAlerts.#ctor(ePlatform.CommonClasses.EPSession)">
+            <summary>Constructor</summary>
+            <param name="appSession">Appplication database connection</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.CAASIntranetAlerts.AddAlert(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Adds new alert request to database</summary>
+            <param name="appKey">Application key</param>
+            <param name="recipId">Recipient Id</param>
+            <param name="source">Source application (HRIS/ChangeRequest/ResetPassword/Payslip...)</param>
+            <param name="module">Module requesting alert (Workflow/JobMail/ResetPassword/Payslip...)</param>
+            <param name="type">Alert type (ACTN/INFO)</param>
+            <param name="state">Application state (PEND/CLSD)</param>
+            <param name="msg">Alert message</param>
+            <param name="url">Url for action link</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.CAASIntranetAlerts.CloseAlert(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Closes alert request</summary>
+            <param name="appKey">Application key</param>
+            <param name="recipId">Recipient Id</param>
+            <param name="source">Source application (HRIS/ChangeRequest/ResetPassword/Payslip...)</param>
+            <param name="module">Module requesting alert (Workflow/JobMail/ResetPassword/Payslip...)</param>
+            <param name="type">Alert type (ACTN/INFO)</param>
+            <param name="state">Application state (PEND/CLSD)</param>
+            <param name="msg">Alert message</param>
+            <param name="url">Url for action link</param>
+        </member>
+        <member name="T:MecWise.WorkflowBase.EmailTester">
+            <summary>Email tester program, to test email configuration settings on Web and App servers</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.EmailTester.ErrorMsgs">
+            <summary>Gets error messages (if any), while sending test email</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.EmailTester.#ctor">
+            <summary>Default constructor</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.EmailTester.SendEmail(System.String,System.String)">
+            <summary>Sends email with specified email subject and body (recipient email read from configuration file)</summary>
+            <param name="subject">Email subject</param>
+            <param name="body">Email body</param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.EmailTester.SendEmail(System.String,System.String,System.String)">
+            <summary>Sends email to specified email address, with specified email subject and body</summary>
+            <param name="emailAdd">Email address</param>
+            <param name="subject">Email subject</param>
+            <param name="body">Email body</param>
+            <returns></returns>
+        </member>
+        <member name="T:MecWise.WorkflowBase.IWorkflow">
+            <summary>Interface for Workflow custom classes</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflow.CoyId">
+            <summary>Gets or sets the Company Code.</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflow.AppId">
+            <summary>Gets or sets the Application Id.</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflow.WfId">
+            <summary>Gets or sets the Workflow Id.</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflow.EmpeId">
+            <summary>Gets or sets the Employee Id.</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflow.EmpeName">
+            <summary>Gets or sets the Employee Name.</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflow.EmpeEmail">
+            <summary>Gets or sets the Employee Email.</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflow.DBSession">
+            <summary>Gets or sets the Database connection.</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.IWorkflow.GetEmployeeInfo">
+            <summary>Gets employee information required by Workflow.</summary>
+            <returns>True if employee information retrieved successfully.</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.IWorkflow.PreWorkflowAction(System.String)">
+            <summary>Executes custom action before approval/denial of application.</summary>
+            <param name="recipAction">Recipient action (Y=Approve/N=Deny).</param>
+            <returns>True if custom action executed successfully.</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.IWorkflow.PostWorkflowAction(System.String)">
+            <summary>Executes custom action after approval/denial of application.</summary>
+            <param name="recipAction">Recipient action (Y=Approve/N=Deny).</param>
+            <returns>True if custom action executed successfully.</returns>
+        </member>
+        <member name="T:MecWise.WorkflowBase.IWorkflowAction">
+            <summary>WorkflowAction Interface.</summary>
+            <remarks>All custom workflow action classes will implement this interface .</remarks>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflowAction.CoyId">
+            <summary>The current comp code </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflowAction.AppId">
+            <summary>The current application id of workflow request </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflowAction.WfId">
+            <summary>The current id of workflow reqeust </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflowAction.CurrRecip">
+            <summary>The current recipient id </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflowAction.CurrRecipLNo">
+            <summary>The current recipient role id </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.IWorkflowAction.ParamPanel">
+            <summary>The object to access the parameter control on workflow action page</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.IWorkflowAction.Load">
+            <summary>It will be called on page load of the workflow action page. Initialization on paramter control can be done here</summary>
+            <returns>True if load is successfull. False otherwise</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.IWorkflowAction.PreWorkflowAction(System.String)">
+            <summary>It will be called on the click of action button on workflow action page, but before updating the workflow tables. Validation can be done here</summary>
+            <param name="action">The action invoked by user(approve, deny ,etc.)</param>
+            <returns>True if pre-workflow action is successfull. False otherwise. Returning false will cancel user action</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.IWorkflowAction.PostWorkflowAction(System.String)">
+            <summary>It will be called on the click of action button on workflow action page, but after updating the workflow tables. Post actions such as saving extra fields into transaction table can be done here.</summary>
+            <param name="action">The action invoked by user(approve, deny ,etc.)</param>
+            <returns>True if post-workflow action is successfull. False otherwise. </returns>
+        </member>
+        <member name="T:MecWise.WorkflowBase.WorkflowActionParam">
+            <summary>WorkflowActionParam</summary>
+            <remarks>The wrapper class to access eplatform BO.</remarks>
+        </member>
+        <member name="T:MecWise.WorkflowBase.JobMail">
+            <summary>
+            Class to send out mails with mail templates.
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.JobMail._mailAttachments">
+            <summary>
+            The list of the attachments that are transmitted with the message
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.JobMail._urlLink">
+            <summary>
+            The URL link to be attached to the mail
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.JobMail._mailTemplate">
+            <summary>
+            The Mail Template file path
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.JobMail._htMail">
+            <summary>
+            Dictionary object to store Mail Text
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.To">
+            <summary>
+            Gets or sets the e-mail address of the recipient
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.From">
+            <summary>
+            Gets or sets the e-mail address of the sender
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.CC">
+            <summary>
+            Gets or sets a semicolon-delimited list of e-mail addresses that receive a carbon copy (CC) of the e-mail message
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.BCC">
+            <summary>
+            Gets or sets a semicolon-delimited list of email addresses that receive a blind carbon copy (BCC) of the e-mail message
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.ReplyTo">
+            <summary>
+            Gets or sets the e-mail address for Reply To header
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.ReturnReceipt">
+            <summary>
+            Gets or sets the e-mail address for Return Receipt To header
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.Subject">
+            <summary>
+            Gets or sets the subject line of the e-mail message
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.Body">
+            <summary>
+            Gets or sets the body of the e-mail message
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.Encoding">
+            <summary>
+            Gets or sets the encoding type of the body of the e-mail message
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.IsHtml">
+            <summary>
+            Gets or sets if the content type of the body is formatted using HTML
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.MailPriority">
+            <summary>
+            Gets or sets the priority of the e-mail message.
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.Attachments">
+            <summary>
+            Specifies the list of the attachments that are transmitted with the message
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.URL">
+            <summary>
+            Gets or sets the URL link for the e-mail message.
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.MailTemplate">
+            <summary>
+            Gets or sets the Mail Template file path
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.MailText">
+            <summary>
+            Gets or sets the Mail Text Dictionary. 
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.JobMail.SendAlertsEnabled">
+            <summary>Whether to send alerts/emails by workflow (true=alerts/false=emails)</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.#ctor">
+            <summary>
+            Default Constructor for the JobMail Class
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Overloaded Constructor for the JobMail Class
+            </summary>
+            <param name="sMailTo">Mail To list</param>
+            <param name="sMailFrom">Mail From list</param>
+            <param name="sMailSubject">Mail Subject</param>
+            <param name="sMailBody">Mail Body</param>
+            <param name="sUrl">URl within the mail</param>
+            <param name="sTemplate">Mail Template</param>
+            <param name="sMailAttachments">Attachments</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.Finalize">
+            <summary>
+            Destructor for the JobMail Class
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.ResolveMailLink">
+            <summary>
+            Function to Resolve mail url link
+            </summary>
+            <param name="sTemplate">Mail Part Template</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.ReplaceTags(System.String)">
+            <summary>
+            Function to Replace Tags for Mail Templates. 
+            All tags in the template file should be in Upper case. Tag value should be added in MailText hash table, except
+            MAIL_TO, MAIL_CC,MAIL_BCC,MAIL_FROM,MAIL_SUBJECT,MAIL_BODY,MAIL_TEMPLATE,URL_LINK,REPLY_TO
+            </summary>
+            <param name="sBody">Template Body</param>
+            <returns>Body after replacing tags within the Template file</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.Validate">
+            <summary>
+            Validates the Mail parameters before sending the mail
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.GetAttachments">
+            <summary>
+            Function to Create attachements for the mail
+            </summary>
+            <param name="oMail">Mail Object to attach mails to</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.GetTemplateValue(System.String,System.String)">
+            <summary>
+            Function to get value from Mail Template file
+            </summary>
+            <param name="sMailPart">Mail part from which value to get. SUBJECT,BODY...</param>
+            <param name="sWfTerm">Workflow term within mail part. CPLT,CLSD..</param>
+            <param name="sDefValue">Default value to return if no matching value found</param>
+            <returns>Template value</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.BuildMail">
+            <summary>
+            Function to Replace Tags for Mail Templates. 
+            All tags in the template file should be in Upper case. Tag value should be added in MailText hash table, except
+            MAIL_TO, MAIL_CC,MAIL_BCC,MAIL_FROM,MAIL_SUBJECT,MAIL_BODY,MAIL_TEMPLATE,URL_LINK,REPLY_TO
+            </summary>
+            <returns>Error message if any</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.SendMail">
+            <summary>
+            Function to Send Mail
+            </summary>
+            <returns>Returns Error Message. If successful then returns Success</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.JobMail.Save(System.String)">
+            <summary>
+            Save the email to a temp  folder
+            </summary>
+            <param name="folderName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MecWise.WorkflowBase.MailTemplate">
+            <summary>Workflow mail template</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.Id">
+            <summary>Gets or sets Mail Template Id</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.Desc">
+            <summary>Gets or sets Mail Template description</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.CoyId">
+            <summary>Gets or sets Company Id</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.AppId">
+            <summary>Gets or sets Application Id</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.WfId">
+            <summary>Gets or sets Workflow Id</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.RoleId">
+            <summary>Gets or sets Recipient Role Id</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.WfState">
+            <summary>Gets or sets Workflow State</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.MailDs">
+            <summary>Gets or sets Mail Template Datasource</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.PrepProc">
+            <summary>Gets or sets Procedure executed before and after template processing</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.Subject">
+            <summary>Gets or sets mail subject</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.Body">
+            <summary>Gets or sets mail body</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.LangId">
+            <summary>Gets or sets Language Id</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.IsEnabled">
+            <summary>Gets if using custom mail templates enabled.</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.RecipId">
+            <summary>Gets or sets recipient ID, who acted upon the request</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.RecipAction">
+            <summary>Gets or sets recipient action (Y/N/C/R)</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.WfConnect">
+            <summary>Gets or sets Database connection instance</summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.MailTemplate.Errors">
+            <summary>Gets or sets errors collection instance</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.MailTemplate.#ctor(ePlatform.CommonClasses.EPSession)">
+            <summary>Default Constructor</summary>
+            <param name="sess">Database connection instance</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.MailTemplate.#ctor(ePlatform.CommonClasses.EPSession,MecWise.WorkflowBase.WorkflowErrorCollection@)">
+            <summary>Default Constructor</summary>
+            <param name="sess">Database connection instance</param>
+            <param name="errors">Errors collection instance</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.MailTemplate.#ctor(ePlatform.CommonClasses.EPSession,MecWise.WorkflowBase.WorkflowErrorCollection@,System.String)">
+            <summary>Default Constructor</summary>
+            <param name="sess">Database connection instance</param>
+            <param name="errors">Errors collection instance</param>
+            <param name="langId">Language Id</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.MailTemplate.ProcessMailTemplate(System.Collections.Hashtable)">
+            <summary>Processes mail template and resolves all mail tags</summary>
+            <param name="mailProps">Collection of standard workflow mail tags</param>
+            <returns>True if successfully processed, false otherwise</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.MailTemplate.ProcessMailUrlLink(System.String@,System.String)">
+            <summary>Processes mail url links</summary>
+            <param name="body">Mail body</param>
+            <param name="url">Mail Url</param>
+            <returns>True if successfully processed, false otherwise</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.MailTemplate.ProcessUnresolvedTags(System.String,System.Collections.Hashtable)">
+            <summary>Processes un-resolved mail template tags, to replace with blank values.</summary>
+            <param name="data">Mail subject/body, where template tags are used.</param>
+            <param name="mailProps">Collection of tags and its values.</param>
+            <returns>Processed mail subject/body, after replacing un-resolved tags with empty string.</returns>
+        </member>
+        <member name="T:MecWise.WorkflowBase.WorkflowError">
+            <summary>
+            Error class object used to store each error that occurred.
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowError.mErrorID">
+            <summary>
+            Stores the Error ID for messages from Database
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowError.mErrorText">
+            <summary>
+            Stores the Error Description
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowError.mErrorSource">
+            <summary>
+            Stores the Error Source
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowError.mSeverity">
+            <summary>
+            Stores the Error Severity. By default its Information
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowError.ErrorId">
+            <summary>
+            Property to set/get ErrorId
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowError.ErrorText">
+            <summary>
+            Property to set/get Error Text
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowError.ErrorSource">
+            <summary>
+            Property to set/get Error Source
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowError.Severity">
+            <summary>
+            Property to set/get Severity Level
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.#ctor">
+            <summary>
+            Default Constructor for WorkflowError Class. Sets the default Severity Level
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.Finalize">
+            <summary>
+            Destructor for the WorkflowError Class
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.LogEvent">
+            <summary>
+            Function to log Error Messages to Event Log
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.LogToFile(System.String)">
+            <summary>
+            Function to Log Error Messages to File
+            </summary>
+            <param name="mLogFilePrefix">Log File Prefix Name</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.LogToFile(ePlatform.CommonClasses.EPSession,System.String,System.String)">
+            <summary>Writes error messages to log file</summary>
+            <param name="sess">Database connection instance</param>
+            <param name="mLogFilePrefix">Log file name (prefix)</param>
+            <param name="jobId">Job Id (additional information for log file creating on Azure)</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.WriteToLogFile(System.String)">
+            <summary>Logs error messages to file</summary>
+            <param name="logFilePrefix">Log file name prefix</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.WriteToLogFile(ePlatform.CommonClasses.EPSession,System.String,System.String)">
+            <summary>Logs error messages to file</summary>
+            <param name="sess">Database connection instance</param>
+            <param name="logFilePrefix">Log file name prefix</param>
+            <param name="jobId">Job Id (additional information for log file creating on Azure)</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.LogToDB(ePlatform.CommonClasses.EPSession)">
+            <summary>
+            Function to Log Error Messages to Database
+            </summary>
+            <param name="oDBConn">Session Object</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.FormatMessage(ePlatform.CommonClasses.EPSession,System.Array)">
+            <summary>
+            Function to Return Error Message as a Formatted Text from Database
+            </summary>
+            <param name="oDb">Session Object</param>
+            <param name="vParam">Parameters to Message string</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.GetMessage">
+            <summary>
+            Function to return Formatted string Message
+            </summary>
+            <returns>Formatted String Message</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowError.GetMessage(System.String)">
+            <summary>
+            Function to return Formatted string Message
+            </summary>
+            <returns>Formatted String Message</returns>
+        </member>
+        <member name="T:MecWise.WorkflowBase.WorkflowErrorCollection">
+            <summary>
+            WorkflowError Collection used collect all the errors caused in an transaction
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowErrorCollection.mLogToType">
+            <summary>
+            Stores the Log Type. By default its to Event Log
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowErrorCollection.mLogFilePath">
+            <summary>
+            Log File Path
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowErrorCollection.mLogFilePrefix">
+            <summary>
+            Log File Prefix name
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.WorkflowErrorCollection.moDBConn">
+            <summary>
+            Session Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowErrorCollection.LogToType">
+            <summary>
+            Property to set/get Log Type 
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowErrorCollection.DBConnect">
+            <summary>
+            Property to set/get Session Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowErrorCollection.LogFilePath">
+            <summary>
+            Property to set/get Log File Path
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowErrorCollection.LogFilePrefix">
+            <summary>
+            Property to set/get Log File Prefix Name
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowBase.WorkflowErrorCollection.JobId">
+            <summary>Job Id (additional information for log file creating on Azure)</summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.#ctor">
+            <summary>
+            Default Constructor for WorkflowErrorCollection Class. Defaults the LogToType to EventLog and LogFilePrefix
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Finalize">
+            <summary>
+            Destructor for the WorkflowErrorCollection Class
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.AddObject(System.String,System.String,System.Diagnostics.EventLogEntryType,System.String,System.Array,ePlatform.CommonClasses.EPSession)">
+            <summary>
+            Private function to Add to collection with proper values
+            </summary>
+            <param name="sSource">Error Source</param>
+            <param name="sMessage">Error Message</param>
+            <param name="Severity">Severity Level</param>
+            <param name="sErrId">Error ID for messages from Database</param>
+            <param name="vParams">Parameters for message</param>
+            <param name="oDBConn">Session Object</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified error Message
+            </summary>
+            <param name="sMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String,System.String)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified error Source and Message
+            </summary>
+            <param name="Source">Error Source</param>
+            <param name="sMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified error message and Severity Level
+            </summary>
+            <param name="sMessage">Error Message</param>
+            <param name="Severity">Severity Level</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String,System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified error Source, Message and Severity Level
+            </summary>
+            <param name="Source">Error Source</param>
+            <param name="sMessage">Error Message</param>
+            <param name="Severity">Severity Level</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String,ePlatform.CommonClasses.EPSession)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified ErrorID for messages from Database.
+            </summary>
+            <param name="sErrorId">Error ID for messages from Database</param>
+            <param name="oDBConn">Session Object</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String,ePlatform.CommonClasses.EPSession,System.Array)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified ErrorID for messages from Database and its parameters
+            </summary>
+            <param name="sErrorId">Error ID for messages from Database</param>
+            <param name="oDBConn">Session Object</param>
+            <param name="vParams">Parameters for message</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String,ePlatform.CommonClasses.EPSession,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified ErrorID for messages from Database and Severity Level
+            </summary>
+            <param name="sErrorId">Error ID for messages from Database</param>
+            <param name="oDBConn">Session Object</param>
+            <param name="Severity">Severity Level</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Add(System.String,ePlatform.CommonClasses.EPSession,System.Array,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Overloaded. Adds an WorkflowError object to the collection with specified ErrorID for messages from Database with parameters and Severity Level
+            </summary>
+            <param name="sErrorId">Error ID for messages from Database</param>
+            <param name="oDBConn">Session Object</param>
+            <param name="vParams">Parameters for message</param>
+            <param name="Severity">Severity Level</param>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Show">
+            <summary>
+            Function to Show all the Errors
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Item(System.Int32)">
+            <summary>
+            Obtains a reference to an object in your collection by referring to the index
+            </summary>
+            <param name="Index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.Exists(System.Int32)">
+            <summary>
+            Checks if the Key Number exists in the collection
+            </summary>
+            <param name="Key">Key Number</param>
+            <returns>Boolean value</returns>
+        </member>
+        <member name="M:MecWise.WorkflowBase.WorkflowErrorCollection.IndexOf(System.Int32)">
+            <summary>
+            Gets the Index of item in the collection based on Key Number
+            </summary>
+            <param name="Key">Recipient Number</param>
+            <returns>Index</returns>
+        </member>
+        <member name="T:MecWise.WorkflowBase.ErrorDefn">
+            <summary>
+            Public structure defintion for Errors Definition
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowBase.ErrorDefn.LogType">
+            <summary>
+            Enum for the possible Log To types
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.ErrorDefn.LogType.LogToEvent">
+            <summary>
+            Log to event log
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.ErrorDefn.LogType.LogToFile">
+            <summary>
+            Log to file
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowBase.ErrorDefn.LogType.LogToDB">
+            <summary>
+             Log to Database
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowBase.WorkflowParam">
+            <summary>
+            Summary description for WorkflowParam.
+            </summary>
+        </member>
+        <member name="T:EpfFileTransfer">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.#ctor">
+            <remarks/>
+        </member>
+        <member name="E:EpfFileTransfer.ReadFileCompleted">
+            <remarks/>
+        </member>
+        <member name="E:EpfFileTransfer.WriteFileCompleted">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.ReadFile(System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.BeginReadFile(System.String,System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.EndReadFile(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.ReadFileAsync(System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.ReadFileAsync(System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.WriteFile(System.Byte[],System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.BeginWriteFile(System.Byte[],System.String,System.String,System.AsyncCallback,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.EndWriteFile(System.IAsyncResult)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.WriteFileAsync(System.Byte[],System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.WriteFileAsync(System.Byte[],System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:EpfFileTransfer.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="T:ReadFileCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:ReadFileCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:ReadFileCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:WriteFileCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:WriteFileCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:WriteFileCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+    </members>
+</doc>

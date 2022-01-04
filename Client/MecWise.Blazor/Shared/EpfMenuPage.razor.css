@@ -1,0 +1,50 @@
+﻿
+.menuPage {
+    font-size: 1.1rem;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
+.masonry-layout__panel {
+    break-inside: avoid;
+    padding: 5px;
+    display: block ruby;
+}
+
+
+.masonry-layout__panel-content {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+
+@media (max-width: 767px) {
+    
+    .masonry-layout {
+        column-count: 1;
+        column-gap: 0;
+    }
+
+}
+
+@media (min-width: 768px) {
+    
+    .masonry-layout {
+        column-count: 2;
+        column-gap: 0;
+    }
+
+}
+
+@media (min-width: 1024px) {
+    
+    .masonry-layout {
+        column-count: 3;
+        column-gap: 0;
+    }
+
+}

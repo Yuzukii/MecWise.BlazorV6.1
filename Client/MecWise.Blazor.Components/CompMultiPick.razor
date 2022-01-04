@@ -1,0 +1,139 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+@inject SessionState Session;
+
+@if (MultiPickField == null)
+{
+    <p>Loading</p>
+}
+else
+{
+
+    <CompButton ButtonField="@MultiPickField.MultiPickButton" />
+
+    <!-- Modal -->
+    <div id="_modal_@MultiPickField.ElementID" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header dialog-title">
+                    <h6 class="modal-title">Multi - Pick List</h6>
+                    <button type="button" class="close" data-dismiss="#_modal_@MultiPickField.ElementID" @onclick="CloseMultiPick">&times;</button>
+                </div>
+                <div class="modal-body">
+                    @if (MultiPickField.BrwsGrid == null || !MultiPickField.GirdVisible)
+                   {
+                        <p>Loading...</p>
+                    }
+                    else
+                    {
+                        MultiPickField.BrwsGrid.Render = true;
+                        <CompGridView GridViewField="@MultiPickField.BrwsGrid" OnSelectionChanged="BrwsGrid_OnSelectionChange"/>
+                    }
+                </div>
+                @if(!string.IsNullOrEmpty(MultiPickField.FooterText)){
+                    <div class="modal-footer">
+                        <div class="mr-auto">@MultiPickField.FooterText</div>
+                    </div>
+                }
+                <div class="modal-footer">
+                    <button type="button" style="font-size: inherit" class="btn btn-outline-primary text-nowrap" data-dismiss="#_modal_@MultiPickField.ElementID" @onclick="btnOk_OnClick">Ok</button>
+                    <button type="button" style="font-size: inherit" class="btn btn-outline-primary text-nowrap" data-dismiss="#_modal_@MultiPickField.ElementID" @onclick="CloseMultiPick">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+@code {
+
+    [Parameter]
+    public FieldMultiPick MultiPickField { get; set; }
+
+    private async void btnOk_OnClick()
+    {
+        MultiPickField.GirdVisible = false;
+        if (MultiPickField.BrwsGrid.SelectionMode == FieldGridViewSelectionMode.multiple) {
+            string jsonSelecteRows = Convert.ToString(await JSRuntime.InvokeAsync<object>("_getMultiPickSelectedRows", MultiPickField.BrwsGrid.ElementID));
+            await JSRuntime.InvokeAsync<object>("_closeBoostrapModel", "_modal_" + MultiPickField.ElementID);
+            MultiPickField.Value = jsonSelecteRows;
+
+            FieldChangeEventArgs args = new FieldChangeEventArgs();
+            args.FieldId = MultiPickField.ID;
+            args.Value = jsonSelecteRows;
+
+            MultiPickField.InvokeOnSelectionChange(MultiPickField, args);
+            MultiPickField.InvokeOnClose(MultiPickField, null);
+        }
+        else {
+            CloseMultiPick();
+        }
+    }
+
+    private async void CloseMultiPick() {
+        MultiPickField.GirdVisible = false;
+        if (MultiPickField.TwoStepMultiPick && !MultiPickField.IsGroupSelection) {
+            StateHasChanged();
+            MultiPickField.MultiPickButton.InvokeOnClick(MultiPickField, new FieldClickEventArgs());
+        }
+        else {
+            await JSRuntime.InvokeAsync<object>("_closeBoostrapModel", "_modal_" + MultiPickField.ElementID);
+            MultiPickField.InvokeOnClose(MultiPickField, null);
+        }
+    }
+
+    protected override Task OnParametersSetAsync() {
+        StateHasChanged();
+        return base.OnParametersSetAsync();
+    }
+
+    // save last event call time to check multiple calls
+    DateTime _lastEventCall = DateTime.MinValue;
+    private bool IsDuplicateCalls() {
+        DateTime now = DateTime.Now;
+        if (now.Subtract(_lastEventCall).TotalMilliseconds < 20) {
+            return true;
+        }
+        _lastEventCall = now;
+        return false;
+    }
+
+    private async void BrwsGrid_OnSelectionChange(FieldChangeEventArgs e) {
+
+        if (IsDuplicateCalls()) {
+            return;
+        }
+
+        if (MultiPickField.TwoStepMultiPick && MultiPickField.IsGroupSelection) {
+            MultiPickField.IsGroupSelection = false;
+            JObject value = JObject.Parse(e.Value);
+            JArray selectedRows = new JArray();
+            selectedRows.Add(value);
+
+            FieldChangeEventArgs args = new FieldChangeEventArgs();
+            args.FieldId = MultiPickField.ID;
+            args.Value = selectedRows.ToString();
+            MultiPickField.InvokeOnGroupSelectionChange(MultiPickField, args);
+        }
+        else {
+            if (MultiPickField.BrwsGrid.SelectionMode == FieldGridViewSelectionMode.single) {
+                JObject value = JObject.Parse(e.Value);
+                JArray selectedRows = new JArray();
+                selectedRows.Add(value);
+
+                FieldChangeEventArgs args = new FieldChangeEventArgs();
+                args.FieldId = MultiPickField.ID;
+                args.Value = selectedRows.ToString();
+                MultiPickField.InvokeOnSelectionChange(MultiPickField, args);
+                await MultiPickField.HidePopup(Session);
+            }
+        }
+
+    }
+
+}
+

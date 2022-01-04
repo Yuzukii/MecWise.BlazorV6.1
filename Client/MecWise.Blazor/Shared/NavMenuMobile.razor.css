@@ -1,0 +1,25 @@
+﻿.navlink-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 10px;
+    background-image: url(./images/icon-menu/menu-item-black.png);
+    background-size: cover;
+}
+
+
+.navbar, .navbar-brand {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            /*font-size: 18px;*/
+        }
+}

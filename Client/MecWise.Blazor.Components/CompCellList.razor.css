@@ -1,0 +1,117 @@
+﻿/*body {
+    font-family: Arial;
+    font-size: 17px;
+    padding: 8px;
+}*/
+
+* {
+    box-sizing: border-box;
+}
+
+/*.row {
+    display: -ms-flexbox;*/ /* IE10 */
+/*display: flex;
+    -ms-flex-wrap: wrap;*/ /* IE10 */
+/*flex-wrap: wrap;
+    margin: 0 -16px;
+}*/
+
+/* .col-10 {
+    -ms-flex: 10%; 
+    flex: 10%;
+}
+
+.col-50 {
+    -ms-flex: 50%; 
+    flex: 50%;
+}
+
+.col-75 {
+    -ms-flex: 75%; 
+    flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+    padding: 0 16px;
+} */
+
+.cell-item {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    padding: 5px;
+    /*text-align: center;*/
+    background: #fff;
+    border: 2px solid #b1bbbd;
+    border-radius: 5px;
+    height: 300px;
+    overflow: hidden;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.headerbox {
+    background-color: #4287f5;
+    padding: 10px 10px 0px 10px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+}
+
+.detailbox {
+    background-color: #f2f2f2;
+    padding: 5px 5px 5px 5px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    height: 220px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.cellcontainer {
+    background-color: #f2f2f2;
+    padding: 10px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+}
+
+div.detl {
+    color: #2196F3;
+}
+
+div.chrgDesc {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+p.detl {
+    color: #2196F3;
+}
+
+span.right {
+    float: right;
+}
+
+span.qnty {
+    margin-left: 150px
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+/*
+@media (max-width: 800px) {
+    .row {
+        flex-direction: column-reverse;
+    }
+
+    .col-25 {
+        margin-bottom: 20px;
+    }
+}
+*/

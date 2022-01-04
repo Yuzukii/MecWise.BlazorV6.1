@@ -1,0 +1,61 @@
+﻿@if (TitleBarField != null) {
+
+    <div class="@GetTbarClass()" style="width:100%">
+        @if (TitleBarField.MenuItemList.Count > 0 && TitleBarField.MenuVisible) {
+            string tbarmenuClass = "tbarmenu";
+            @if (TitleBarField.SubTitle) {
+                tbarmenuClass = "tbarmenu";
+            }
+
+            <div class="@tbarmenuClass">
+                <CompTitleBarMenu TitleBarField="TitleBarField" onMenuItemClick="MenuItemClick"></CompTitleBarMenu>
+            </div>
+
+            _tbartext_class = "tbartext";
+        }
+        else {
+            _tbartext_class = "tbartext";
+        }
+
+        <div class="@_tbartext_class" style="width:100%">
+            @if (TitleBarField.SubTitle) {
+                <span class="tbartext-subtitle">@TitleBarField.TitleText</span>
+            }
+            else {
+                <span class="@TitleBarField.StyleClass">@TitleBarField.TitleText</span>
+            }
+
+        </div>
+
+    </div>
+    @if (TitleBarField.ShowUnderline) {
+        @if (!TitleBarField.SubTitle && !string.IsNullOrEmpty(@TitleBarField.TitleText)) {
+            <div style="width:100%;">
+                <div class="tbar-underline"></div>
+            </div>
+        }
+    }
+
+}
+
+@code {
+
+    string _tbartext_class = "tbartext";
+
+    [Parameter] public FieldTitleBar TitleBarField { get; set; }
+
+    [Parameter] public EventCallback<FieldTitleBarMenuItem> onMenuItemClick { get; set; }
+
+    private void MenuItemClick(FieldTitleBarMenuItem menuItem) {
+        onMenuItemClick.InvokeAsync(menuItem);
+        TitleBarField.InvokeOnItemClick(null, menuItem);
+    }
+
+
+    private string GetTbarClass() {
+        if (TitleBarField.SubTitle) {
+            return "tbar-small tbar-small-color rounded-top";
+        }
+        return "tbar";
+    }
+}

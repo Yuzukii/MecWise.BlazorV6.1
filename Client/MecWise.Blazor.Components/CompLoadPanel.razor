@@ -1,0 +1,19 @@
+﻿
+<div class="rounded container-fluid" style="position: relative; top:0; height:80vh;">
+    <div class="row" style="margin: 0;position: relative;top: 50%;width:100%;-ms-transform: translateY(-50%);transform: translateY(-50%); text-align:center;">
+        <div style="margin: auto; width: 100%;">
+            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <br>
+            <span style="color:#4D5787">
+                @LoadingMessage
+            </span>
+        </div>
+    </div>
+</div>
+
+@code{
+
+    [Parameter]
+    public string LoadingMessage { get; set; } = "Loading...";
+
+}

@@ -1,0 +1,47 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime
+
+@if (FileUploadField == null) {
+    <p>Loading</p>
+}
+else {
+
+    <CompButton ButtonField="@FileUploadField.MultiPickButton" />
+
+    <!-- Modal -->
+    <div id="_modal_@FileUploadField.ElementID" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header dialog-title">
+                    <h6 class="modal-title">Multi - Pick List</h6>
+                    <button type="button" class="close" data-dismiss="#_modal_@FileUploadField.ElementID" @onclick="CloseFileUpload">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <input type="file" id="myFile" name="filename">
+                        <input type="submit">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="font-size: inherit" class="btn btn-outline-primary text-nowrap" data-dismiss="#_modal_@FileUploadField.ElementID" @onclick="CloseFileUpload">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+@code {
+
+    [Parameter]
+    public FieldFileUpload FileUploadField { get; set; }
+
+    private async void CloseFileUpload() {
+        await JSRuntime.InvokeAsync<object>("_closeBoostrapModel", "_modal_" + FileUploadField.ElementID);
+    }
+}
+

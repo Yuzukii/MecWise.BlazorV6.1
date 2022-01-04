@@ -1,0 +1,490 @@
+﻿@page "/EpfScreen"
+@page "/EpfScreen/{SCRN_ID}"
+
+
+@using Microsoft.JSInterop
+@using System.Web
+@using Newtonsoft.Json.Linq
+@using System.IO
+@using Microsoft.Extensions.Configuration
+@using System.Threading
+
+@implements IDisposable
+@inject SessionState Session;
+@inject NavigationManager  NavigationManager;
+@inject HttpClient Http
+@inject IConfiguration Configuration
+
+@using System.Text.RegularExpressions;
+
+
+<div id="@SCRN_ID" class="screen-container container-fluid d-flex px-3 pb-4">
+    @if (_screen == null) {
+        <CompLoadPanel LoadingMessage="@_loadMessage"></CompLoadPanel>
+    }
+    else {
+        string hidden = "d-flex";
+        if (_loadPanel) {
+            hidden = "d-none";
+            <CompLoadPanel LoadingMessage="@_loadMessage"></CompLoadPanel>
+        }
+
+        <div class="container-fluid px-0 @hidden">
+            <CompForm DataSource="@_screen.DataSource" Fields="@_screen.Fields"></CompForm>
+        </div>
+    }
+</div>
+
+
+@code{
+
+    object _shouldRender = false;
+
+    public enum ScreenType {
+        Main,
+        Popup,
+        None
+    }
+
+    string _currUrl = "";
+    bool _loadPanel = false;
+    string _loadMessage = "Loading...";
+    bool _reload = false;
+    private Screen _screen;
+    private Screen _parentScreen;
+    private const string _CurrUrlKey = "MecWise.Blazor.Components.EpfScreen.CurrUrl";
+    private CancellationTokenSource _cancellationTokenSource;
+
+    [Parameter]
+    public string CURRENT_URL { get; set; } = string.Empty;
+    [Parameter]
+    public string SCRN_ID { get; set; } = string.Empty;
+    [Parameter]
+    public ScreenMode MODE { get; set; } = ScreenMode.Enquiry;
+    [Parameter]
+    public string KEYS { get; set; } = string.Empty;
+    [Parameter]
+    public string PARENT_KEYS { get; set; } = string.Empty;
+    [Parameter]
+    public string PARAM { get; set; } = string.Empty;
+    [Parameter]
+    public ScreenType SCRN_TYPE { get; set; } = ScreenType.Main;
+    [Parameter]
+    public Screen CALLER_SCREEN { get; set; } = null;
+    [Parameter]
+    public string CALLER_SCRN_ID { get; set; } = string.Empty;
+    [Parameter]
+    public EventCallback<EventArgs> OnClose { get; set; }
+
+    public byte[] BOProgram { get; set; } = null;
+    public EPF_SCRN SCRN_DEF { get; set; }
+
+
+    protected override bool ShouldRender() {
+        if (_shouldRender.ToBool()) {
+            if (_screen != null) {
+                if (_screen.Fields != null) {
+                    _screen.Fields.Render = true;
+                }
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender) {
+        if (_screen != null) {
+            if (_screen.Fields != null) {
+                _screen.Fields.Render = false;
+            }
+        }
+        _shouldRender = false;
+
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    protected string GetQueryStringValue(string key, string uri = "") {
+        Uri currUri;
+        if (uri != "") {
+            currUri = new Uri(uri);
+            return HttpUtility.ParseQueryString(currUri.Query).Get(key);
+        }
+        else {
+            currUri = new Uri(NavigationManager.Uri);
+            return HttpUtility.ParseQueryString(currUri.Query).Get(key);
+        }
+    }
+
+    protected override async Task OnInitializedAsync() {
+        NavigationManager.LocationChanged += HandleLocationChanged;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrEmpty(this.CURRENT_URL)) {
+            this.CURRENT_URL = NavigationManager.Uri;
+        }
+
+        await StartInitializeAsync(this.CURRENT_URL);
+
+    }
+
+    public async Task StartInitializeAsync(string url) {
+
+        try {
+
+            if (_currUrl != url) {
+                // current URL is changed, initialzie screen for new url
+                _currUrl = url;
+                this.CURRENT_URL = url;
+
+                _cancellationTokenSource = new CancellationTokenSource();
+                InitQueryStringValues(this.CURRENT_URL);
+                await InitScreenAsync(_cancellationTokenSource.Token, this.CURRENT_URL);
+            }
+
+        }
+        catch (OperationCanceledException) {
+            // Do nothing when the Task cancelled
+        }
+    }
+
+    private async void HandleLocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e) {
+
+        if (!e.Location.Contains("/EpfScreen")) {
+            await Session.ExecJSAsync("_clear_fields"); // [09/12/2021, PhyoZin] Clear JS _formFields array when user leave the EpfScreen component 
+            return;
+        }
+
+        string[] items = e.Location.Split('/');
+        int scrnIndex = items.ToList().IndexOf("EpfScreen") + 1;
+        string newScrnID = items[scrnIndex].Split('?')[0];
+        if (SCRN_ID != newScrnID) {
+            SCRN_ID = newScrnID;
+        }
+
+        string CurrUrl = "";
+        if (Session.Items.ContainsKey(_CurrUrlKey)) {
+            CurrUrl = Session.Items[_CurrUrlKey].ToStr();
+        }
+
+        if ((CurrUrl != e.Location) || _reload) {
+            _cancellationTokenSource?.Cancel();
+            await StartInitializeAsync(NavigationManager.Uri);
+
+        }
+
+    }
+
+    private bool IsReturnUrl(string uri) {
+        var uriBuilder = new UriBuilder(uri);
+        var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+        if (query["RETURN"] == "1") {
+            return true;
+        }
+        return false;
+    }
+
+    public async Task InitScreenAsync(CancellationToken cancellationToken, string uri) {
+
+        if (string.IsNullOrEmpty(SCRN_ID)) {
+            return;
+        }
+
+        Session.ExecJS("CloseErrorMessage");
+
+        bool showLoading = Session.Loading;
+        Session.Loading = true; // always assign back to true as default
+
+        if (showLoading) {
+            ShowLoadPanel();
+        }
+
+        Session.PushNavigationHistory(NavigationManager.BaseUri, uri.Replace(NavigationManager.BaseUri, ""));
+
+        if (!string.IsNullOrEmpty(this.CALLER_SCRN_ID) && this.CALLER_SCREEN != null && this.SCRN_TYPE == ScreenType.Popup) {
+            //for popup screen assign parent screen as caller screen and push history
+            _parentScreen = this.CALLER_SCREEN;    
+        }
+        else if (_screen != null && _screen.ScrnId != SCRN_ID) {
+            
+            if (IsReturnUrl(uri)) {
+                if (_screen.ParentScreen != null) {
+                    if (_screen.ParentScreen.ParentScreen != null) {
+                        _parentScreen = _screen.ParentScreen.ParentScreen;
+                    }
+                    else {
+                        _parentScreen = null;
+                    }
+                }
+                else {
+                    _parentScreen = null;
+                }
+            }
+            else {
+                if (uri.Contains("PARENT_KEYS=")) {
+                    _parentScreen = _screen;
+                }
+                else {
+                    _parentScreen = null;
+                }
+            }
+        }
+
+
+
+        if (_screen == null || _screen.ScrnId != SCRN_ID) {
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await InitScrnDefAsync();
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            _screen.DataSource = new JObject();
+            if (this.SCRN_DEF.FORM_TYPE == "BRWS") {
+                this.MODE = ScreenMode.Enquiry;
+            }
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await _screen.InitAsync(this, Session, NavigationManager, _parentScreen, true);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await _screen.RegisterScreenJSCallBackAsync(true);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+        }
+        else {
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await _screen.InitAsync(this, Session, NavigationManager, _parentScreen, false);
+            if (_reload) {
+                _reload = false;
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                await _screen.ScreenLoadAsync();
+            }
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await _screen.RegisterScreenJSCallBackAsync(false);
+
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        Refresh();
+
+        // Save current url to check again when url changed
+        if (Session.Items.ContainsKey(_CurrUrlKey)) {
+            Session.Items[_CurrUrlKey] = uri;
+        }
+        else {
+            Session.Items.Add(_CurrUrlKey, uri);
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+    }
+
+    public void SetScreenMode(ScreenMode scrnMode) {
+        this.MODE = scrnMode;
+    }
+
+    public void InitQueryStringValues(string uri) {
+        if (string.IsNullOrEmpty(uri)) {
+            return;
+        } 
+
+        if (!uri.StartsWith("http")) { 
+            Uri baseUri = new Uri(NavigationManager.BaseUri);
+            uri = new Uri(baseUri, uri).ToString();
+        }
+            
+        Uri absoluteUri = new Uri(uri);
+        SCRN_ID = absoluteUri.Segments.Last();
+
+        MODE = (ScreenMode)GetQueryStringValue("MODE", uri).ToInt();
+        KEYS = GetQueryStringValue("KEYS", uri);
+        PARENT_KEYS = GetQueryStringValue("PARENT_KEYS", uri);
+        PARAM = GetQueryStringValue("PARAM", uri);
+        CALLER_SCRN_ID = GetQueryStringValue("CALLER_SCRN_ID", uri);
+        SCRN_TYPE = (ScreenType)GetQueryStringValue("SCRN_TYPE", uri).ToInt();
+
+        
+        this.Refresh();
+    }
+
+    private async Task<bool> InitScrnDefAsync() {
+
+        string url = string.Format("EpfScreen/GetScreen/{0}", SCRN_ID);
+        var result = await Session.GetJsonAsync<List<EPF_SCRN>>(Session.GetAbsoluteApiUrl(url));
+        if (result.Count > 0) {
+            SCRN_DEF = result.First();
+
+            string prgramId = "";
+            EPF_SCRN_EVENTS formEvent = SCRN_DEF.EVENTS.Find(x => x.OBJ_ID == "EPF_FORM" && x.EVENT_ID == "EPF_FORM" && !string.IsNullOrEmpty(x.PROG_ID));
+            if (formEvent != null) {
+                prgramId = formEvent.PROG_ID;
+            }
+
+            await LoadBOScreenClass(prgramId);
+            await LoadBOScript(SCRN_DEF.INCLUDE_FILES, SCRN_DEF.CSS_FILES);
+        }
+        else {
+            SCRN_DEF = null;
+            throw new Exception("Screen not found: " + SCRN_ID);
+        }
+        return true;
+    }
+
+    private async Task LoadBOScript(string includeFiles, string cssFiles) {
+        // ignore error from loading scriptss
+        try {
+            await Session.ExecJSAsync("_clearScreenScript", SCRN_ID);
+            await LoadBOJavaScript(includeFiles);
+            await LoadBOCss(cssFiles);
+        }
+        catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+    private async Task LoadBOJavaScript(string includeFiles) {
+        if (!string.IsNullOrEmpty(includeFiles)) {
+            foreach (string includeFile in includeFiles.Split(",")) {
+                if (!string.IsNullOrEmpty(includeFile)) {
+                    string uri = string.Format("{0}js/user-include/{1}", NavigationManager.BaseUri, includeFile);
+                    try {
+                        await Session.ExecJSAsync("_loadScreenScript", SCRN_ID, "text/javascript", uri);
+                    }
+                    catch { }
+
+                }
+            }
+        }
+
+    }
+
+    private async Task LoadBOCss(string cssFiles) {
+        if (!string.IsNullOrEmpty(cssFiles)) {
+            foreach (string cssFile in cssFiles.Split(",")) {
+                if (!string.IsNullOrEmpty(cssFile)) {
+                    string uri = string.Format("{0}styles/{1}", NavigationManager.BaseUri, cssFile);
+
+                    await Session.ExecJSAsync("_loadScreenScript", SCRN_ID, "text/css", uri);
+                }
+            }
+        }
+    }
+
+    private async Task LoadBOScreenClass(string programId) {
+
+        if (!string.IsNullOrEmpty(programId)) {
+
+            if (Configuration["RunOnServer"].ToBool()) {
+                // Blazor Server App, read BO dll from file system
+                string filePath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), @"wwwroot\_framework");
+                filePath = Path.Combine(filePath, GetAssemblyFileName(programId));
+
+                // **** bo dll bytes need to save on the component property otherwise bo assembly will disappear from AppDomain while the screen running
+                BOProgram = System.IO.File.ReadAllBytes(filePath);
+            }
+            else {
+                // WebAssembly client, read BO dll from server
+                string uri = string.Format("_framework/{0}", GetAssemblyFileName(programId));
+
+                // **** bo dll bytes need to save on the component property otherwise bo assembly will disappear from AppDomain while the screen running
+                BOProgram = await Http.GetByteArrayAsync(uri);
+            }
+
+            //load assembly
+            var assembly = AppDomain.CurrentDomain.Load(BOProgram);
+
+            // get type/method info
+            var type = assembly.GetType(programId);
+
+            // instantiate object and run method
+            _screen = (dynamic)Activator.CreateInstance(type);
+
+        }
+        else {
+            BOProgram = null;
+            _screen = new Screen();
+        }
+    }
+
+    private string GetAssemblyFileName(string programId) {
+        string fileName = "";
+
+        string[] tmpArr = programId.Split('.');
+
+        for (int i = 0; i <= tmpArr.Length - 2; i++) {
+            if (!string.IsNullOrEmpty(fileName))
+                fileName = fileName + ".";
+            fileName = fileName + tmpArr[i];
+        }
+
+        fileName = fileName + ".dll";
+
+        return fileName;
+    }
+
+    public void Reload() {
+        _reload = true;
+        NavigationManager.NavigateTo(NavigationManager.Uri);
+    }
+
+    public void Refresh() {
+        _shouldRender = true;
+        this.InvokeAsync(() => this.StateHasChanged());
+    }
+
+    public void ShowLoadPanel() {
+        ShowLoadPanel("Loading...");
+    }
+
+    public void ShowLoadPanel(string message) {
+
+        if (!_loadPanel || _loadMessage != message) {
+            _loadPanel = true;
+            _loadMessage = message;
+            this.Refresh();
+        }
+    }
+
+    public void HideLoadPanel() {
+        // ** can cause error if HideLoadPanel is call after NavigateToAsync due to state changing again
+        if (_loadPanel) {
+            _loadPanel = false;
+            _loadMessage = "Loading...";
+            this.Refresh();
+        }
+    }
+
+    public void Dispose() {
+        NavigationManager.LocationChanged -= HandleLocationChanged;
+        _cancellationTokenSource?.Cancel();
+        //_cancellationTokenSource?.Dispose();
+
+        if (_screen != null) {
+            _screen.Dispose();
+            _screen = null;
+        }
+    }
+
+
+
+
+
+
+
+
+}

@@ -1,0 +1,63 @@
+﻿
+@if (ItemDetl != null) { 
+    <div class="menuIconContainer" 
+         @onmouseover="@OnMouseOver" @onmouseout="@OnMouseOut" @onclick="@(e=> OnItemClick.InvokeAsync(ItemDetl))" 
+         @onmousedown="@OnMouseDown" @onmouseup="@OnMouseUp"
+         >
+        <div>
+            <img class="@_iconCss" field-type="menuImage" src="@menuImgSrc" @onerror="img_OnError">
+        </div>
+        <div class="@_textCss">
+            @ItemDetl.MENU_SUB_ITEM_DTL_NAME
+        </div>
+    </div>
+}
+
+@code{
+    string _iconCss = "menuIcon";
+    string _textCss = "menuText";
+    string menuImgSrc = "images/icon-menu/default.gif";
+
+
+    [Parameter]
+    public EPF_BLZ_MNU_SUBITEM_DTL ItemDetl { get; set; }
+
+    [Parameter]
+    public EventCallback<EPF_BLZ_MNU_SUBITEM_DTL> OnItemClick { get; set; }
+
+    protected override Task OnParametersSetAsync()
+    {
+        menuImgSrc = "images/icon-menu/" + ItemDetl.MENU_ATTR;
+        return base.OnParametersSetAsync();
+    }
+
+    private void img_OnError() {
+        menuImgSrc = "images/icon-menu/default.gif";
+    }
+
+    private void OnMouseOver() {
+        _iconCss = "menuIcon-shadow";
+        _textCss = "menuText-shadow";
+    }
+
+    private void OnMouseOut()
+    {
+        _iconCss = "menuIcon";
+        _textCss = "menuText";
+    }
+
+
+    private void OnMouseDown()
+    {
+        _iconCss = "menuIcon";
+        _textCss = "menuText";
+    }
+
+    private void OnMouseUp()
+    {
+        _iconCss = "menuIcon";
+        _textCss = "menuText";
+    }
+
+
+}

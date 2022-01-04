@@ -1,0 +1,63 @@
+.lblHeader {
+    color: #7f7f7f;
+    font-weight: bold;
+}
+
+#month-year-lbl, #OT_label, #EXRE_OT_HRS, #EXRE_OT_HRS_SMALL, #queryIcon {
+    font-size: large;
+    font-weight: bold;
+    color: #FF6D00;
+}
+
+#OT_label, #EXRE_OT_HRS {
+    font-size: medium;
+}
+
+#EXRE_OT_HRS_SMALL {
+    font-size: inherit;
+    font-weight: bold;
+    color: #FF6D00;
+    white-space: nowrap;
+}
+
+#clk_in_sts, #shfit_status, #OT_STS, #OT_STS_1 {
+    font-size: large;
+}
+
+#location_lbl {
+    font-size: medium;
+    word-wrap: break-word;
+    font-weight: bold;
+}
+
+#EpfSubContainer19 {
+    box-shadow: 4px 4px 8px 4px rgb(0 0 0 / 20%);
+    transition: 0.3s;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#btnClock {
+    height: 50px;
+    font-size: x-large;
+    /*margin-top: 0;*/
+}
+
+#calendar-icon, #OT_Homepage, #location_img {
+    text-align: right;
+    font-size: xxx-large;
+}
+
+.linksRedirect {
+    font-size: medium;
+    text-decoration: underline;
+    color: #333 !important;
+}
+
+#hrs_clk, #EXRE_OT_HRS_1 {
+    font-size: medium;
+    font-weight: bold;
+}
+
+
+

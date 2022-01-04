@@ -1,0 +1,148 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+
+    <div class="border rounded">
+        @if (GridViewField.ShowTitleBar) {
+            <CompTitleBar TitleBarField="GridViewField.TitleBar" onMenuItemClick="titlebar_OnMenuItemClick"></CompTitleBar>
+        }
+        <div class="container-fluid">
+            <div class="row" style="background-color: #f8f9fa">
+                @{ visibility = GridViewField.Columns.Count > 0 ? "visible" : "hidden"; }
+                <div id="@GridViewField.ElementID" style="width:100%;visibility:@visibility" field-type="@GridViewField.GetFieldType()">
+                </div>
+            </div>
+        </div>
+    </div>    
+    
+@code {
+
+    string visibility = "hidden";
+
+    [Parameter]
+    public FieldGridView GridViewField { get; set; }
+
+    //JObject dxFieldProp = new JObject();
+
+
+    [Parameter]
+    public EventCallback<FieldChangeEventArgs> OnSelectionChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldClickEventArgs> OnAddNewClick { get; set; }
+
+
+    private void titlebar_OnMenuItemClick(FieldTitleBarMenuItem item) {
+        if (item is FieldTitleBarMenuItemNew) {
+            GridViewField.InvokeOnAddNewClick(GridViewField, null);
+            OnAddNewClick.InvokeAsync(null);
+        }
+    }
+
+    protected override void OnParametersSet() {
+        if (GridViewField.Render) {
+            InitFieldProp();
+        }
+    }
+
+
+    private void InitFieldProp() {
+        if (GridViewField != null) {
+
+            if (string.IsNullOrEmpty(GridViewField.Description)) {
+                GridViewField.Description = " ";
+            }
+            else {
+                GridViewField.TitleBar.TitleText = GridViewField.Description;
+            }
+
+
+            //dxFieldProp = GridViewField.GetFieldProp();
+            GridViewField.RequireRefresh = false;
+            //await JSRuntime.InvokeAsync<object>("_assign_field_prop", GridViewField.ID, dxFieldProp.ToString());
+
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender) {
+            await JSRuntime.InvokeAsync<object>("controlEventHandler", GridViewField.ElementID, "EventCallBackMethod", DotNetObjectReference.Create(this));
+            await JSRuntime.InvokeAsync<object>("_render_field", GridViewField.ElementID, GridViewField.GetFieldProp().ToString());
+            //dxFieldProp = GridViewField.GetFieldProp();
+            //GridViewField.RequireRefresh = false;
+        }
+
+        var task = JSRuntime.InvokeAsync<object>("_assign_field_prop", GridViewField.ElementID, GridViewField.GetFieldProp().ToString());
+
+        if (GridViewField != null) {
+            GridViewField.Render = false;
+        }
+    }
+
+    protected override bool ShouldRender() {
+        if (GridViewField.Render) {
+            GridViewField.Render = false;
+            return true;
+        }
+        return false;
+    }
+
+
+    [JSInvokable]
+    public string EventCallBackMethod(string jsonEventData) {
+
+        JObject jObj = JObject.Parse(jsonEventData);
+        FieldGridActionEventType gridActionEventType = jObj["EventType"].ToString().ToEnum<FieldGridActionEventType>();
+
+        if (gridActionEventType == FieldGridActionEventType.onSelectionChanged) {
+            GridViewField.Value = jObj["Value"];
+
+            FieldChangeEventArgs args = new FieldChangeEventArgs();
+            args.FieldId = GridViewField.ID;  //jObj["FieldId"].ToString();
+            args.PreviousValue = jObj["PreviousValue"].ToString();
+            args.Value = jObj["Value"].ToString();
+            args.DataSource = JObject.FromObject(jObj["Value"]);
+            args.EventType = "onSelectionChanged";
+
+            GridViewField.InvokeOnSelectionChanged(this.GridViewField, args);
+            OnSelectionChanged.InvokeAsync(args);
+        }
+        else if (gridActionEventType == FieldGridActionEventType.onRowRemoved || gridActionEventType == FieldGridActionEventType.onRowUpdated
+            || gridActionEventType == FieldGridActionEventType.onDownloadClick) {
+            GridViewField.Value = jObj["Value"];
+
+            FieldGridActionEventArgs args = new FieldGridActionEventArgs();
+            args.FieldId = GridViewField.ID;  //jObj["FieldId"].ToString();
+            args.PreviousValue = jObj["PreviousValue"].ToString();
+            args.Value = jObj["Value"].ToString();
+            args.DataSource = JObject.FromObject(jObj["Value"]);
+            args.EventType = jObj["EventType"].ToString().ToEnum<FieldGridActionEventType>();
+
+            Console.WriteLine("EventCallBackMethod Before");
+            GridViewField.InvokeOnGridAction(this.GridViewField, args);
+            Console.WriteLine("EventCallBackMethod After");
+            return args.DataSource.ToString();
+
+        }
+        else if (gridActionEventType == FieldGridActionEventType.onButtonAction) {
+            GridViewField.Value = jObj["Value"];
+
+            FieldChangeEventArgs args = new FieldChangeEventArgs();
+            args.FieldId = GridViewField.ID;  //jObj["FieldId"].ToString();
+            args.PreviousValue = jObj["PreviousValue"].ToString();
+            args.Value = jObj["Value"].ToString();
+            args.DataSource = JObject.FromObject(jObj["Value"]);
+            args.EventType = "onButtonAction";
+            args.ButtonActionName = jObj["ButtonAction"].ToString();
+
+            GridViewField.InvokeOnSelectionChanged(this.GridViewField, args);
+            OnSelectionChanged.InvokeAsync(args);
+        }
+
+
+        return "";
+    }
+
+}
+

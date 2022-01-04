@@ -1,0 +1,48 @@
+﻿@page "/EpfLaunch"
+@page "/EpfLaunch/{SCRN_ID}"
+
+@using System.Web
+
+@inject NavigationManager  NavigationManager;
+
+@code{
+
+    [Parameter]
+    public string SCRN_ID { get; set; } = string.Empty;
+
+
+    protected override Task OnParametersSetAsync() {
+        if (string.IsNullOrEmpty(SCRN_ID)) {
+            //search for URL parameter and navigate to EpfPage if found
+            string url = GetQueryStringValue("URL", NavigationManager.Uri);
+            if (!string.IsNullOrEmpty(url)) {
+                url =  NavigationManager.Uri.Replace("EpfLaunch", "EpfPage", StringComparison.InvariantCultureIgnoreCase);   
+                NavigationManager.NavigateTo(url); 
+            }
+        }
+        else {
+            string url = NavigationManager.Uri;
+            url = url.Replace("EpfLaunch", "EpfScreen", StringComparison.InvariantCultureIgnoreCase);
+            NavigationManager.NavigateTo(url); 
+        }
+
+        return base.OnParametersSetAsync();   
+    }
+
+
+    protected override Task OnInitializedAsync() {
+        return base.OnInitializedAsync();
+    }
+
+    private string GetQueryStringValue(string key, string uri = "") {
+        Uri currUri;
+        if (uri != "") {
+            currUri = new Uri(uri);
+            return HttpUtility.ParseQueryString(currUri.Query).Get(key);
+        }
+        else {
+            currUri = new Uri(NavigationManager.Uri);
+            return HttpUtility.ParseQueryString(currUri.Query).Get(key);
+        }
+    }
+}

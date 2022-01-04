@@ -1,0 +1,178 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+
+@if (ContainerField == null)
+{
+    <p>Loading</p>
+}
+else
+{
+<div id="@ContainerField.ElementID" class="@_topBuffer @ContainerField.StyleClass">
+
+    @foreach (Field field in ContainerField.Fields)
+    {
+        if (field is FieldWorkflow)
+        {
+            FieldWorkflow workflow = (FieldWorkflow)field;
+            <CompWorkflow WorkflowField="@workflow"/>
+        }
+        else if (field is FieldDxSchedulerResource)
+        {
+            FieldDxSchedulerResource scheduler = (FieldDxSchedulerResource)field;
+            <CompDxSchedulerResource DxSchedulerFieldResource="@scheduler" />
+        }
+        else if (field is FieldGridView)
+        {
+            FieldGridView gridView = (FieldGridView)field;
+            <CompGridView GridViewField="@gridView" />
+        }
+        else if (field is FieldCustomList)
+        {
+            FieldCustomList CustomListField = (FieldCustomList)field;
+            <CompCustomList CustomListField="CustomListField"></CompCustomList>
+        }
+        else if (field is FieldScreenWrapper)
+        {
+            FieldScreenWrapper ScreenWrapperField = (FieldScreenWrapper)field;
+            <CompScreenWrapper ScreenWrapperField="ScreenWrapperField"></CompScreenWrapper>
+        }
+        else if (field is FieldQuickAccessMenu)
+        {
+            FieldQuickAccessMenu QuickAccessMenuField = (FieldQuickAccessMenu)field;
+            <CompQuickAccessMenu QuickAccessMenuField="QuickAccessMenuField"></CompQuickAccessMenu>
+        }
+        else if (field is FieldImage)
+        {
+            FieldImage imageField = (FieldImage)field;
+            <CompImage ImageField="@imageField"></CompImage>
+        }
+        else if (field is FieldRadio)
+        {
+            FieldRadio radioField = (FieldRadio)field;
+            <CompRadio RadioField="@radioField" OnChange="@Change"></CompRadio>
+        }
+        else if (field is FieldPopupScreen)
+        {
+            FieldPopupScreen popupScreen = (FieldPopupScreen)field;
+            <CompPopupScreen PopupScreenField="@popupScreen"></CompPopupScreen>
+        }
+        else if (field is FieldMultiPick)
+        {
+            FieldMultiPick multiPick = (FieldMultiPick)field;
+            <CompMultiPick MultiPickField="@multiPick" />
+        }
+        else if (field is FieldPickList)
+        {
+            FieldPickList picklist = (FieldPickList)field;
+            <CompPickList PickListField="@picklist" OnChange="@Change" />
+        }
+        else if (field is FieldTitleBar)
+        {
+            FieldTitleBar titleBar = (FieldTitleBar)field;
+            <CompTitleBar TitleBarField="@titleBar" />
+        }
+        else if (field is FieldAccordion)
+        {
+            FieldAccordion AccordionField = (FieldAccordion)field;
+            <CompAccordion AccordionField="@AccordionField" />
+        }
+        else if (field is FieldLabel)
+        {
+            FieldLabel labelField = (FieldLabel)field;
+            <CompLabel LabelField="@labelField" />
+        }
+        else if (field is FieldCaptionLabel)
+        {
+            FieldCaptionLabel labelField = (FieldCaptionLabel)field;
+            <CompCaptionLabel LabelField="@labelField" />
+        }
+        else if (field is FieldButton)
+        {
+            FieldButton buttonField = (FieldButton)field;
+            <CompButton ButtonField="@buttonField" />
+        }
+        else if (field is FieldTabContainer)
+        {
+            FieldTabContainer tabContainerField = (FieldTabContainer)field;
+            tabContainerField.Render = true;
+            <CompTabContainer TabContainerField="@tabContainerField" OnChange="@Change" />
+        }
+        else if (field is FieldContainer)
+        {
+            FieldContainer containerField = (FieldContainer)field;
+            containerField.Render = true;
+            <CompContainer ContainerField="@containerField" OnChange="@Change" />
+        }
+        else if (field is FieldImgList)
+        {
+            FieldImgList imgListField = (FieldImgList)field;
+            <CompImgList ImgListField="@imgListField"></CompImgList>
+        }
+        else if (field is FieldCellList)
+        {
+            FieldCellList cellListField = (FieldCellList)field;
+            <CompCellList CellListField="@cellListField"></CompCellList>
+        }
+        else
+        {
+            FieldEditor EditorField = (FieldEditor)field;
+            <CompEditor EditorField="@EditorField" OnChange="@Change" />
+        }
+    }
+
+</div>
+}
+
+
+@code {
+
+    string _topBuffer = "top-buffer-medium";
+
+    [Parameter]
+    public bool TopBuffer { get; set; } = true;
+
+    [Parameter]
+    public FieldContainer ContainerField { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldChangeEventArgs> OnChange { get; set; }
+
+    private void Change(FieldChangeEventArgs args)
+    {
+        this.InvokeAsync(() => OnChange.InvokeAsync(args));
+    }
+
+    protected override void OnInitialized()
+    {
+        ContainerField.Render = true;
+    }
+
+    protected override bool ShouldRender()
+    {
+        if (ContainerField.Render)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        ContainerField.Render = false;
+        base.OnAfterRender(firstRender);
+    }
+
+
+    protected override Task OnParametersSetAsync()
+    {
+        TopBuffer = ContainerField.TopBuffer;
+
+        if (!TopBuffer)
+            _topBuffer = "";
+
+        return base.OnParametersSetAsync();
+    }
+
+}
+

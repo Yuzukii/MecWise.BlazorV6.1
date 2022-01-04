@@ -1,0 +1,41 @@
+#WFAction {
+    padding-bottom: 0px !important;
+}
+
+#lblWkAction, #lblWkAction1 {
+    font-family: Comic Sans MS;
+    font-size: 16pt;
+    text-align: center;
+}
+
+#lblAppTitle {
+    margin: 0px;
+    padding-left: 0px;
+    font-size: 1.2rem;
+}
+
+#lblMsg {
+    padding-left: 0px;
+    color: red;
+    /*font-weight: bold;*/
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+#WFActionSubContainer, #txtPrevComments_Label, #txtUserComments_Label, #txtUserAttr_Label {
+    color: black !important;
+}
+
+
+#btnWfAction, #btnClose {
+    margin-top: 0px;
+}
+
+.login {
+    width: unset;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.5);
+}

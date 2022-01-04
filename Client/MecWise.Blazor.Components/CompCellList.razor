@@ -1,0 +1,298 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@using System.Text.RegularExpressions
+
+@inject IJSRuntime JSRuntime
+@inject SessionState Session
+@inject HttpClient Http
+
+@if (objPaginatedCellList.Count == 0)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="imageListContainer">
+        <div class="row">
+            @*<CompEditor EditorField="@CellSetting" OnChange="@CellSetting_OnChange" />*@
+            <div class="col" style="max-width:50%;">
+                <label class="text-info">Max Ticket Per Page:</label><br />
+                <select id="CELL_PER_PAGE" @onchange="@(e=>CellSetting_OnChange(e.Value))" style="width:inherit; height:50%;" class="dx-show-invalid-badge dx-selectbox dx-textbox dx-texteditor dx-dropdowneditor-button-visible dx-editor-outlined dx-texteditor-empty dx-widget dx-dropdowneditor dx-dropdowneditor-field-clickable">
+                    @*<option value="" selected disabled>Select...</option>*@
+                    <option value="3" selected>3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div title="" style="margin-top: 23px;" data-original-title="Arrange by" data-toggle="tooltip">
+                <div class="btn-group" data-toggle="btn-toggle">
+                    <button class="btn btn-default" id="btn-prev" @onclick="@(e=>Previous())"><i class="oi oi-chevron-left text-green"></i></button>
+                    <label class="btn btn-default">@showPage/@TotalPages</label>
+                    <button class="btn btn-default" id="btn-next" @onclick="@(e=>Next())"><i class="oi oi-chevron-right text-green"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="outer-shopping-container" style="clear:both">
+            <div class="inner-shopping-container-v">
+                <div class="shopping">
+                    <!-- Shopping items content -->
+                    <div class="shopping-content">
+                        <div class="row">
+                            @foreach (JObject currOrdr in objPaginatedCellList)
+                            {
+                                <div class="shopping-item-container-v"  @onclick="@(e => EpfCellList_OnItemClick(currOrdr))">
+                                    <div class="cell-item" style="min-width:18vw;">
+                                        <div class="headerbox">
+                                            <p>Chk # @currOrdr["DEPT_CODE"]-@currOrdr["HDR_ORDR_NO"] <span class="right" style="color:black">@currOrdr["HDR_ORDR_TIME"]</span></p>
+                                            @if (@currOrdr["HDR_TBL_NO"].ToStr() == null || @currOrdr["HDR_TBL_NO"].ToStr() == "")
+                                            {
+                                            <p style="text-align : end">@currOrdr["HDR_EMPE_CODE"]</p>
+                                            }
+                                            else
+                                            {
+                                            <p>Tbl #  @currOrdr["HDR_TBL_NO"] <span class="right" style="color:black">@currOrdr["HDR_EMPE_CODE"]</span></p>
+                                            }
+                                        </div>
+                                        <div class="detailbox">
+                                            @foreach (JObject currItem in JArray.FromObject(currOrdr["DETAIL_ARR"].ToList()))
+                                            {
+                                                if (currItem["DETL_STATUS"].ToStr() == "10") itemColor = "Gainsboro";
+                                                if (currItem["DETL_STATUS"].ToStr() == "30") itemColor = "Pink";
+                                                if (currItem["DETL_STATUS"].ToStr() == "40") itemColor = "LightGreen";
+                                                if (currItem["DETL_STATUS"].ToStr() == "50") itemColor = "Yellow";
+                                                if (currItem["DETL_STATUS"].ToStr() == "99") itemColor = "#fc03a9";
+
+                                                @if (!currItem["DETL_CHRG_CODE"].ToStr().Contains("**mod**"))
+                                                {
+                                                    <div class="row detl" style="background-color: @itemColor;">
+                                                        @*<div class="col-md-2">S-@currItem["DETL_SEAT_NO"]</div>*@
+                                                        <div class="col-md-2">@currItem["DETL_QNTY"]</div>
+                                                        <div class="col-md-7 chrgDesc">@currItem["DETL_CHRG_ITEM_DESC"]</div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    string[] qnty = currItem["DETL_QNTY"].ToString().Split("**mod**");
+                                                    @*@foreach (string modItemList in currItem["DETL_CHRG_CODE"].ToString().Split("**mod**"))*@
+                                                    @foreach (string modItemList in currItem["DETL_CHRG_ITEM_DESC"].ToString().Split("**mod**"))
+                                                    {
+                                                        if (Count > 0)
+                                                        {
+                                                            <div class="row detl" style="background-color: @itemColor;">
+                                                                <div class="col-md-2" style="color:red;font-style: italic;">@qnty[Count]</div>
+                                                                <div class="col-md-2"></div>
+                                                                <div class="col-md-7 chrgDesc" style="color:red;font-style: italic;">@modItemList</div>
+                                                            </div>
+                                                            Count += 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            Count += 1;
+                                                            <div class="row detl" style="background-color: @itemColor;">
+                                                                @*<div class="col-md-2">S-@currItem["DETL_SEAT_NO"]</div>*@
+                                                                <div class="col-md-2">@qnty[0]</div>
+                                                                <div class="col-md-7 chrgDesc">@modItemList</div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    Count = 0;
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public FieldCellList CellListField { get; set; }
+    [Parameter]
+    public EventCallback<JObject> OnCellItemClick { get; set; }
+    [Parameter]
+    public EventCallback<String> OnCellSettingClick { get; set; }
+
+    //[Parameter]
+    private JArray DataSource { get; set; }
+
+    private JArray objCellList = new JArray();
+    private JArray objPaginatedCellList = new JArray();
+    private int TotalCount = 0;
+    private int CurrentPage = 0;
+    private int showPage = 0;
+    private int PageSize = 10;
+    private int TotalPages = 0;
+
+    private int curr_page_sett = 3;
+
+    private FieldSelect CellSetting { get; set; } = new FieldSelect();
+    private string itemColor = "white";
+    //private string[] modItemLists;
+    //private string modItemList = "";
+    private int Count = 0;
+
+
+    //public JObject DataSource { get; set; }
+
+    //public Dictionary<string, JObject> DataColumnInfos { get; set; }
+
+    //string ItemImgSrc = String.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (CellListField.DataSource.Count == 0)
+        {
+            DataSource = new JArray();
+            objCellList = new JArray();
+            objPaginatedCellList = new JArray();
+        }
+        else
+        {
+            //CellSetting.Description = "Max Ticket Per Page";
+            //CellSetting.ID = "CELL_PAGE_SETT";
+            //CellSetting.StyleClassWidth = "col-md-6 col-sm-6 col-6";
+            //CellSetting.ClearDataSource();
+            //CellSetting.AddItem("3", "3");
+            //CellSetting.AddItem("4", "4");
+            //CellSetting.AddItem("5", "5");
+            //CellSetting.AddItem("6", "6");
+            //CellSetting.AddItem("8", "8");
+            //CellSetting.AddItem("10", "10");
+            //await JSRuntime.InvokeAsync<object>("_setSelectValue", "CELL_PAGE_SETT", curr_page_sett);
+
+            InitData();
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    public void Previous()
+    {
+        if (CurrentPage > 0)
+        {
+            CurrentPage = CurrentPage - 1;
+            CellListField.CurrentPage = CurrentPage;
+            objPaginatedCellList = JArray.FromObject(objCellList.Skip(CurrentPage * PageSize).Take(PageSize).ToList());
+            showPage = CurrentPage + 1;
+
+            CellListField.InvokeOnCellSettingClick(CellListField, "");
+            OnCellSettingClick.InvokeAsync("");
+        }
+    }
+
+    public void Next()
+    {
+        if (TotalPages > 0 && CurrentPage + 1 < TotalPages)
+        {
+            CurrentPage = CurrentPage + 1;
+            CellListField.CurrentPage = CurrentPage;
+            objPaginatedCellList = JArray.FromObject(objCellList.Skip(CurrentPage * PageSize).Take(PageSize).ToList());
+            showPage = CurrentPage + 1;
+
+            CellListField.InvokeOnCellSettingClick(CellListField, "");
+            OnCellSettingClick.InvokeAsync("");
+        }
+    }
+
+    private void EpfCellList_OnItemClick(JObject clickItem)
+    {
+        CellListField.InvokeOnCellItemClick(CellListField, clickItem);
+        OnCellItemClick.InvokeAsync(clickItem);
+    }
+
+    private void InitData()
+    {
+        if (CellListField.DataSource.Count != 0)
+        {
+            DataSource = CellListField.DataSource;
+            var listObj = DataSource.GroupBy(x => new
+            {
+                HDR_ORDR_NO = x["HDR_ORDR_NO"],
+                HDR_TBL_NO = x["HDR_TBL_NO"],
+                HDR_ORDR_TIME = x["HDR_ORDR_TIME"],
+                HDR_EMPE_CODE = x["HDR_EMPE_CODE"],
+                COMP_CODE = x["COMP_CODE"],
+                DOC_TYPE = x["DOC_TYPE"],
+                DEPT_CODE = x["DEPT_CODE"],
+                RUN_NO = x["RUN_NO"],
+                ORDR_DOC = x["ORDR_DOC"],
+            }).Select(y => new
+            {
+                HDR_ORDR_NO = y.Key.HDR_ORDR_NO,
+                HDR_TBL_NO = y.Key.HDR_TBL_NO,
+                HDR_ORDR_TIME = y.Key.HDR_ORDR_TIME,
+                HDR_EMPE_CODE = y.Key.HDR_EMPE_CODE,
+                COMP_CODE = y.Key.COMP_CODE,
+                DOC_TYPE = y.Key.DOC_TYPE,
+                DEPT_CODE = y.Key.DEPT_CODE,
+                RUN_NO = y.Key.RUN_NO,
+                ORDR_DOC = y.Key.ORDR_DOC,
+                DETAIL_ARR = y.ToList().Select(z => new
+                {
+                    DETL_SEAT_NO = z["DETL_SEAT_NO"],
+                    DETL_QNTY = z["DETL_QNTY"],
+                    DETL_CHRG_GRP = z["DETL_CHRG_GRP"],
+                    DETL_CHRG_CODE = z["DETL_CHRG_CODE"],
+                    DETL_CHRG_ITEM_DESC = z["DETL_CHRG_ITEM_DESC"],
+                    DETL_CHN_DESC = z["DETL_CHN_DESC"],
+                    DETL_STATUS = z["DETL_STATUS"],
+                    DETL_CREA_DATE = z["DETL_CREA_DATE"]
+                }).ToList()
+            }).ToList();
+
+            objCellList = JArray.FromObject(listObj);
+            TotalCount = objCellList.Count();
+            PageSize = CellListField.CellPageSize;
+            CurrentPage = CellListField.CurrentPage;
+            TotalPages = TotalCount / PageSize;
+            var modulo = TotalCount % PageSize;
+            if (modulo > 0) TotalPages = TotalPages + 1;
+            objPaginatedCellList = new JArray();
+            //objPaginatedCellList = JArray.FromObject(objCellList.Skip(0).Take(PageSize).ToList());
+            objPaginatedCellList = JArray.FromObject(objCellList.Skip(CurrentPage * PageSize).Take(PageSize).ToList());
+            //CurrentPage = 1;
+            showPage = CurrentPage + 1;
+        }
+    }
+
+    private async void CellSetting_OnChange(Object selectedValue)
+    {
+        if (!String.IsNullOrEmpty(Convert.ToString(selectedValue)))
+        {
+            objPaginatedCellList = new JArray();
+            CurrentPage = 0;
+            showPage = 0;
+            PageSize = Convert.ToInt32(selectedValue);
+            CellListField.CellPageSize = PageSize;
+            CellListField.CurrentPage = CurrentPage;
+            InitData();
+
+            CellListField.CellPageSize = Convert.ToInt32(selectedValue);
+            CellListField.CurrentPage = CurrentPage;
+
+            curr_page_sett = Convert.ToInt32(selectedValue);
+
+            CellListField.InvokeOnCellSettingClick(CellListField, Convert.ToString(selectedValue));
+            await OnCellSettingClick.InvokeAsync(Convert.ToString(selectedValue));
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeAsync<object>("AdjustCellContainer", CellListField.CellPageSize, CellListField.CellPageSetting, CellListField.CurrentPageCtrlName, CellListField.CurrentPage);
+    }
+
+}
+
+
+

@@ -1,0 +1,185 @@
+﻿@using Newtonsoft.Json.Linq;
+
+@inject SessionState Session;
+@inject IJSRuntime JSRuntime;
+@inject HttpClient Http;
+@inject NavigationManager NavigationManager;
+
+@if (NavigationManager.Uri.EndsWith("ChangePassword")) {
+    <LoginChangePassword></LoginChangePassword>
+}
+else if (NavigationManager.Uri.EndsWith("ResetPassword")){
+    <LoginResetPassword></LoginResetPassword>
+}
+else {
+    @if (_readyToDisplay) {
+        <div class="login-container">
+            <div class="container">
+                <div class="login-logo-container"></div>
+                <CompForm DataSource="@_formDataSrouce" Fields="@_fields" OnChange="@Form_OnChange">
+                </CompForm>
+
+                <div class="container-fluid mt-4" style="font-size: 1.1rem;">
+                    <div class="top-buffer-medium row">
+                        <div class="text-nowrap p-0 col-6">
+                            <div class="col">
+                                <a id="_cmdRstPwd" href="ResetPassword" >Reset Password</a>
+                            </div>
+                        </div>
+
+                        <div class="text-nowrap p-0 col-6 text-right">
+                            <div class="col">
+                                <a id="_cmdChgPwd" href="ChangePassword" >Change Password</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+        
+}
+
+@code {
+
+    //string _loginBtnActiveClass = "btn-primary w-100 h-100 rounded-lg";
+    //string name; string value; int days;
+
+    //string _loginBtnClass;
+    bool _readyToDisplay = false;
+    JObject _formDataSrouce = new JObject();
+    Config _config;
+
+    [Parameter] public EventCallback<bool> OnValidate { get; set; }
+
+    FieldCollection _fields = new FieldCollection();
+
+    private void InitData()
+    {
+        _formDataSrouce.Add("UserID", "");
+        _formDataSrouce.Add("UserPassword", "");
+    }
+
+    private void InitFields()
+    {
+        _fields.Clear();
+
+        //FieldTitleBar titlebar = new FieldTitleBar();
+        //titlebar.TitleText = string.Format("{0} - Login", SessionState.AppConfig.appTitle);
+        //_fields.Add(titlebar);
+
+        FieldContainer container = new FieldContainer("container-fluid d-flex-column mt-0");
+
+        FieldContainer row1 = new FieldContainer("row mt-0");
+        FieldText userID = new FieldText("UserID", "", "col-12 mt-0", false, false, "User Name", FieldTextMode.text);
+        FieldTextButton txtBtnUser = new FieldTextButton();
+        txtBtnUser.name = "btnTxtUser";
+        txtBtnUser.location = FieldTextButtonLocation.after;
+        txtBtnUser.options.disabled = true;
+        txtBtnUser.options.icon = "oi oi-person";
+        txtBtnUser.options.type = FieldTextButtonType.normal;
+        txtBtnUser.options.stylingMode = FieldTextButtonStylingMode.text;
+        userID.buttons.Add(txtBtnUser.name, txtBtnUser);
+
+        FieldText userPassword = new FieldText("UserPassword", "", "col-12 mt-0", false, false, "Password", FieldTextMode.password);
+        FieldTextButton txtBtnPswd = new FieldTextButton();
+        txtBtnPswd.name = "btnTxtPassword";
+        txtBtnPswd.location = FieldTextButtonLocation.after;
+        txtBtnPswd.options.disabled = true;
+        txtBtnPswd.options.icon = "oi oi-lock-locked";
+        txtBtnPswd.options.type = FieldTextButtonType.normal;
+        txtBtnPswd.options.stylingMode = FieldTextButtonStylingMode.text;
+        userPassword.buttons.Add(txtBtnPswd.name, txtBtnPswd);
+
+        row1.Fields.Add(userID);
+        row1.Fields.Add(userPassword);
+        container.Fields.Add(row1);
+
+
+        FieldContainer row2 = new FieldContainer("row mt-0");
+        FieldButton btnLogin = new FieldButton("btnLogin", "SIGN IN", "col-6");
+        btnLogin.StyleClass = "btn-primary";
+        btnLogin.OnClick += btnLogin_OnClick;
+        row2.Fields.Add(btnLogin);
+        container.Fields.Add(row2);
+
+        _fields.Add(container);
+
+    }
+
+    private async Task InitAsync()
+    {
+        if (_config == null) {
+            _config = await Http.GetFromJsonAsync<Config>("config.json?time=" + DateTime.Now.ToString("yyyymmddhhmmss"));
+        }
+        Session.InitConfig(JSRuntime, _config);
+
+        InitData();
+        InitFields();
+        _readyToDisplay = true;
+
+        //Session.InitAPIService();
+    }
+
+    private void Form_OnChange(FieldChangeEventArgs e)
+    {
+        _formDataSrouce = e.DataSource;
+
+    }
+
+    private async void btnLogin_OnClick(object sender, FieldClickEventArgs e)
+    {
+
+        string userId = _formDataSrouce["UserID"].ToStr();
+        string password = _formDataSrouce["UserPassword"].ToStr();
+
+
+        if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(password)) {
+            FieldText txtUserID = (FieldText)_fields.Search("UserID");
+            FieldText txtUserPassword = (FieldText)_fields.Search("UserPassword");
+
+            FieldButton loginButton = (FieldButton)sender;
+            loginButton.Disabled = true;
+            txtUserID.Disabled = true;
+            txtUserPassword.Disabled = true;
+            StateHasChanged();
+
+            if (await Session.LoginAsync(userId, password)) {
+                Session.UserID = userId;
+                await OnValidate.InvokeAsync(true);
+            }
+            else {
+                Session.ToastMessage("Invalid User Name or Password!", ToastMessageType.error);
+                loginButton.Disabled = false;
+                txtUserID.Disabled = false;
+                txtUserPassword.Disabled = false;
+                _fields.Render = true;
+                StateHasChanged();
+            }
+        }
+        else {
+            if (string.IsNullOrEmpty(userId)) {
+                Session.ToastMessage("Please enter User Name!", ToastMessageType.error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password)) {
+                Session.ToastMessage("Please enter Password!", ToastMessageType.error);
+                return;
+            }
+        }
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) {
+            await InitAsync();
+        }
+    }
+
+
+}
+
+

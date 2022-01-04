@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B9FE783-A8F4-41B7-A750-B279D2765360}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MecWise.Blazor.Api.WorkflowServer</RootNamespace>
+    <AssemblyName>MecWise.Blazor.Api.WorkflowServer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ePlatform.CommonClasses, Version=4.0.0.0, Culture=neutral, PublicKeyToken=abc30985ffb2738d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\ePlatform.CommonClasses.dll</HintPath>
+    </Reference>
+    <Reference Include="ePlatform.EpfBase, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\ePlatform.EpfBase.dll</HintPath>
+    </Reference>
+    <Reference Include="ePlatform.EpfBO, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\ePlatform.EpfBO.dll</HintPath>
+    </Reference>
+    <Reference Include="ePlatform.EpfObjects, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\ePlatform.EpfObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="MecWise.Framework">
+      <HintPath>..\..\Reference\MecWise.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="MecWise.Logon, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\MecWise.Logon.dll</HintPath>
+    </Reference>
+    <Reference Include="MecWise.Security, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\MecWise.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MecWise.WorkflowBase, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\MecWise.WorkflowBase.dll</HintPath>
+    </Reference>
+    <Reference Include="MecWise.WorkflowCommon, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\MecWise.WorkflowCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="MecWise.WorkflowEngine, Version=5.0.0.0, Culture=neutral, PublicKeyToken=196a7fed8bbe9983, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\MecWise.WorkflowEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="MecWise.WorkflowService, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\MecWise.WorkflowService.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonFunctions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WFAction.cs" />
+    <Compile Include="WF_APRV_OS_BLZ.cs" />
+    <Compile Include="WF_TRNX_FORM_ROUTE_BLZ.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MecWise.Blazor.Common\MecWise.Blazor.Common.csproj">
+      <Project>{415ce5f5-30ad-4342-9205-5f4220c55195}</Project>
+      <Name>MecWise.Blazor.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MecWise.Blazor.Api.DataAccess\MecWise.Blazor.Api.DataAccess.csproj">
+      <Project>{683afa52-1d1d-4a22-b630-c9ec060ad07f}</Project>
+      <Name>MecWise.Blazor.Api.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MecWise.Blazor.Api.Repositories\MecWise.Blazor.Api.Repositories.csproj">
+      <Project>{3e3f0b11-3524-48b1-abd5-8c9ead149ac0}</Project>
+      <Name>MecWise.Blazor.Api.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MecWise.Blazor.Api.Services\MecWise.Blazor.Api.Services.csproj">
+      <Project>{76d1b8af-9f7e-4676-82e7-e4f3480f4475}</Project>
+      <Name>MecWise.Blazor.Api.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

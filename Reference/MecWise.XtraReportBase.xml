@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MecWise.XtraReportBase</name>
+    </assembly>
+    <members>
+        <member name="T:MecWise.XtraReportBase.cmFuncs">
+            <summary>Common utility/static methods used inside XtraReports library.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportBase.cmFuncs.Serialize(System.IO.MemoryStream,MecWise.XtraReportBase.DirectReport)">
+            <summary>Serializes DirectReport instance using XmlSerializer for report generation through WebService.</summary>
+            <param name="writer">MemoryStream instance.</param>
+            <param name="report">DirectReport instance.</param>
+        </member>
+        <member name="M:MecWise.XtraReportBase.cmFuncs.Deserialize(System.IO.MemoryStream,MecWise.XtraReportBase.DirectReport@)">
+            <summary>Deserializes DirectReport instance using XmlSerializer for report generation through WebService.</summary>
+            <param name="reader">MemoryStream instance.</param>
+            <param name="report">DirectReport instance.</param>
+        </member>
+        <member name="T:MecWise.XtraReportBase.DirectReport">
+            <summary>Report Class representation for direct report generation (XtraReports).</summary>
+        </member>
+        <member name="M:MecWise.XtraReportBase.DirectReport.#ctor">
+            <summary>Default Constructor.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.DirectReport.Parameters">
+            <summary>Gets the report parameters collection.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.DirectReport.ReportFormat">
+            <summary>Gets or sets the report output format.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.DirectReport.CoyId">
+            <summary>Gets or sets the Company Code.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.DirectReport.ConnectString">
+            <summary>Gets or sets the Database connection string.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.DirectReport.ReportId">
+            <summary>Gets or sets the Report Id.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.DirectReport.ReportFileName">
+            <summary>Gets or sets the Report FileName.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.DirectReport.ReportFolderPath">
+            <summary>Gets or sets the Report folder path.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportBase.ReportFormats">
+            <summary>Represents different report output formats.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Pdf">
+            <summary>Pdf format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Excel">
+            <summary>MS-Excel format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Csv">
+            <summary>Csv format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Rtf">
+            <summary>Rtf format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Mht">
+            <summary>Mht format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Html">
+            <summary>Html format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Text">
+            <summary>Text format.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ReportFormats.Image">
+            <summary>Image format.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportBase.ParameterType">
+            <summary>Report parameter types.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ParameterType.Char">
+            <summary>Character (string) type.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ParameterType.DateTime">
+            <summary>DateTime type.</summary>
+        </member>
+        <member name="F:MecWise.XtraReportBase.ParameterType.Numeric">
+            <summary>Numeric type.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportBase.ReportParameter">
+            <summary>Represents report parameter.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportBase.ReportParameter.#ctor">
+            <summary>Initializes report parameter instance.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportBase.ReportParameter.#ctor(System.String,System.Object)">
+            <summary>Initializes report parameter instance.</summary>
+            <param name="name">Parameter name.</param>
+            <param name="value">Parameter value.</param>
+        </member>
+        <member name="M:MecWise.XtraReportBase.ReportParameter.#ctor(System.String,System.Object,MecWise.XtraReportBase.ParameterType)">
+            <summary>Initializes report parameter instance.</summary>
+            <param name="name">Parameter name.</param>
+            <param name="value">Parameter value.</param>
+            <param name="type">Parameter type.</param>
+        </member>
+        <member name="P:MecWise.XtraReportBase.ReportParameter.Name">
+            <summary>Gets or sets parameter name.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.ReportParameter.Value">
+            <summary>Gets or sets parameter value.</summary>
+        </member>
+        <member name="P:MecWise.XtraReportBase.ReportParameter.Type">
+            <summary>Gets or sets parameter type.</summary>
+        </member>
+        <member name="T:MecWise.XtraReportBase.ReportParameters">
+            <summary>Represents report parameters collection.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportBase.ReportParameters.#ctor">
+            <summary>Initializes report parameters collection.</summary>
+        </member>
+        <member name="M:MecWise.XtraReportBase.ReportParameters.AddRange(MecWise.XtraReportBase.ReportParameter[])">
+            <summary>Adds a parameter to report parameters collection.</summary>
+            <param name="parameters">Report parameter.</param>
+        </member>
+        <member name="P:MecWise.XtraReportBase.ReportParameters.Item(System.String)">
+            <summary>Gets a parameter by name from report parameters collection.</summary>
+            <param name="name">Paramter name.</param>
+            <returns>ReportParameter instance.</returns>
+        </member>
+    </members>
+</doc>

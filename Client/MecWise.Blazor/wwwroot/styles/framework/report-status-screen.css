@@ -1,0 +1,143 @@
+#EPF_REPORT_STS_BLZ {
+    background-color: #fafad2;
+    display: flex;
+    height: 93vh;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+
+    #EPF_REPORT_STS_BLZ .field-label {
+        margin-top: 5px;
+        font-size: 1.2rem;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblJobDesc {
+        color: rgb(0, 128, 128);
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblJobType {
+        color: rgb(0, 128, 128);
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblMessage3 {
+        font-weight: bold;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__EpfSubContainer4 {
+        justify-content: center;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblMessage4 {
+        font-weight: bold;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblJobId {
+        text-align: left;
+        font-weight: bold;
+        color: red;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__EpfSubContainer5 {
+        justify-content: center;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblMessage5 {
+        font-weight: bold;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblJobStatus {
+        text-align: left;
+        font-weight: bold;
+        color: red;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblErrorDesc {
+        font-weight: bold;
+        color: red;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__lblMessage6 {
+        color: #3c8dbc;
+    }
+
+    #EPF_REPORT_STS_BLZ #EPF_REPORT_STS_BLZ__EpfSubContainer10 {
+        width: 800px;
+    }
+
+
+#EPF_REPORT_STS2_BLZ {
+    background-color: white;
+    display: flex;
+    height: 93vh;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__B div {
+        margin: 0px;
+        padding: 4px;
+    }
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__StatusContent {
+        width: 900px;
+    }
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblJobType {
+        font-family: 'Times New Roman';
+        font-weight: bold;
+        color: #38BEE3;
+        font-size: 30px;
+        padding-bottom: 20px;
+    }
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__EpfSubContainer11 {
+        border-top: solid silver 2px;
+        border-bottom: solid silver 2px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage4, #EPF_REPORT_STS2_BLZ__lblJobId, #EPF_REPORT_STS2_BLZ__lblMessage9,
+    #EPF_REPORT_STS2_BLZ__lblJobDesc, #EPF_REPORT_STS2_BLZ__lblMessage5, #EPF_REPORT_STS2_BLZ__lblJobStatus, #EPF_REPORT_STS2_BLZ__lblMessage3, #EPF_REPORT_STS2_BLZ__lblSubmittedTime,
+    #EPF_REPORT_STS2_BLZ__lblMessage8, #EPF_REPORT_STS2_BLZ__lblMessage7, #EPF_REPORT_STS2_BLZ__lblMessage6, #EPF_REPORT_STS2_BLZ__lblErrorDesc, #EPF_REPORT_STS2_BLZ__lblMessage10 {
+        font-size: 14.2px;
+    }
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__EpfSubContainer4,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__EpfSubContainer1,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__EpfSubContainer5,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__EpfSubContainer3,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__EpfSubContainer8 {
+        border-bottom: solid silver 1px;
+    }
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage4,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage9,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage5,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage3,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage8,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage6 {
+        color: gray;
+    }
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblJobId,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblJobDesc,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblJobStatus,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblSubmittedTime,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblMessage7,
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__lblErrorDesc {
+        font-weight: bold;
+    }
+
+
+    #EPF_REPORT_STS2_BLZ #EPF_REPORT_STS2_BLZ__EpfSubContainer13 {
+        color: gray;
+        padding-top: 20px;
+    }

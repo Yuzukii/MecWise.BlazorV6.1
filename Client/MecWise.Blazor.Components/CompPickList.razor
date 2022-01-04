@@ -1,0 +1,266 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+@inject SessionState Session;
+
+@if (PickListField == null) {
+    <p>Loading</p>
+}
+else {
+    string description = PickListField.Description;
+    if (string.IsNullOrEmpty(description.ToStr().Trim())) {
+        description = " ";
+    }
+    else {
+        if (description.Substring(description.Length - 1, 1) != ":")
+            description += ":";
+    }
+
+    <div class="top-buffer-medium px-0 @PickListField.StyleClassWidth">
+        <div class="col @_hideTextBoxClass">
+            <span id="@(PickListField.ElementID + "_Label")" class="text-info" style="white-space:pre">@description</span>
+            <div class="input-group" style="@_picklistStyle">
+                @if (PickListField.Disabled) {
+
+                    @if (PickListField.Height > 20) {
+                        <textarea id="@PickListField.ElementID" field-type="pickList" code-desc="@PickListField.CodeDesc"
+                                  class="form-control field-picklist field-picklist-disabled field-picklist-text-area @PickListField.StyleClass"
+                                  readonly autocomplete="off" value="@_value"></textarea>
+                    }
+                    else {
+                        <input id="@PickListField.ElementID" type="text" field-type="pickList" code-desc="@PickListField.CodeDesc"
+                               class="form-control field-picklist field-picklist-disabled @PickListField.StyleClass"
+                               value="@_value" readonly autocomplete="off">
+                    }
+
+                }
+                else {
+                    @if (PickListField.Height > 20) {
+                        @if (PickListField.PickOnly) {
+                            <textarea id="@PickListField.ElementID" field-type="pickList" code-desc="@PickListField.CodeDesc" placeholder="@PickListField.PlaceHolder"
+                                      class="form-control field-picklist field-picklist-pickonly field-picklist-text-area @PickListField.StyleClass"
+                                      readonly autocomplete="off" value="@_value"></textarea>
+                        }
+                        else {
+                            <textarea id="@PickListField.ElementID" field-type="pickList" code-desc="@PickListField.CodeDesc" placeholder="@PickListField.PlaceHolder"
+                                      class="form-control field-picklist field-picklist-text-area @PickListField.StyleClass"
+                                      @onchange="Change" @onfocusin="FocusIn" @onfocusout="FocusOut" onkeydown="@_onkeydown" autocomplete="off" value="@_value"></textarea>
+                        }
+
+                    }
+                    else {
+                        @if (PickListField.PickOnly) {
+                            <input id="@PickListField.ElementID" type="@_type" field-type="pickList" code-desc="@PickListField.CodeDesc" placeholder="@PickListField.PlaceHolder"
+                                   class="form-control field-picklist field-picklist-pickonly @PickListField.StyleClass"
+                                   value="@_value" readonly autocomplete="off">
+                        }
+                        else {
+                            <input id="@PickListField.ElementID" type="@_type" field-type="pickList" code-desc="@PickListField.CodeDesc" placeholder="@PickListField.PlaceHolder"
+                                   class="form-control field-picklist @PickListField.StyleClass"
+                                   value="@_value" @onchange="Change" @onfocusin="FocusIn" @onfocusout="FocusOut" onkeydown="@_onkeydown" autocomplete="off">
+                        }
+
+
+                    }
+
+                    @if (PickListField.PickOnly) {
+                        <div class="input-group-append">
+                            <button id="@pickListButtonID" class="btn btn-outline-secondary field-picklist-button"
+                                    @onclick="InvokePickListSelectionEvent" data-toggle="modal" data-target="#@_picklistBrwsId" type="button">
+                                <span class="oi oi-list"></span>
+                            </button>
+                        </div>
+                    }
+                    else {
+                        <div class="input-group-append">
+                            <button id="@pickListButtonID" class="btn btn-outline-secondary field-picklist-button"
+                                    @onclick="InvokePickListSelectionEvent" data-toggle="modal" data-target="#@_picklistBrwsId" type="button">
+                                <span class="oi oi-list"></span>
+                            </button>
+                        </div>
+                    }
+                }
+
+
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div id="@_picklistBrwsId" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header dialog-title">
+                        <h6 class="modal-title">Pick List</h6>
+                        <button type="button" class="close" data-dismiss="#@_picklistBrwsId" @onclick="ClosePickList">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        @if (PickListField.BrwsGrid == null) {
+                            <p>Loading...</p>
+                        }
+                        else {
+                            <CompGridView GridViewField="@PickListField.BrwsGrid" OnSelectionChanged="BrwsGrid_OnSelectionChange" />
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(PickListField.FooterText)) {
+                        <div class="modal-footer">
+                            <div class="mr-auto">@PickListField.FooterText</div>
+                        </div>
+                    }
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="#@_picklistBrwsId" @onclick="ClosePickList">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+}
+
+
+
+@code {
+    object _value;
+    string[] _brwsTargets;
+    string[] _brwsAssigns;
+    private JObject _selectedRow = null;
+    private string pickListButtonID = "";
+    string _hideTextBoxClass = "";
+    string _onkeydown = "";
+    string _type = "text";
+
+    FieldPickList _pickListField;
+
+    string _picklistBrwsId = "";
+    string _picklistStyle = "";
+
+    [Parameter]
+    public FieldPickList PickListField {
+        get { return _pickListField; }
+        set {
+            _pickListField = value;
+            _picklistBrwsId = value.ElementID + "_PickListBrws";
+            ShowDesc();
+        }
+    }
+
+    [Parameter]
+    public EventCallback<FieldChangeEventArgs> OnChange { get; set; }
+
+    [Parameter]
+    public EventCallback OnFocusIn { get; set; }
+
+    [Parameter]
+    public EventCallback OnFocusOut { get; set; }
+
+
+
+    private async void ClosePickList() {
+        _pickListField.BrwsGrid = null;
+        await JSRuntime.InvokeAsync<object>("_closeBoostrapModel", _picklistBrwsId);
+    }
+
+    protected override void OnParametersSet() {
+        pickListButtonID = PickListField.ElementID + "_BTN";
+        if (PickListField.HideTextBox) {
+            _hideTextBoxClass = "d-none";
+        }
+        else {
+            _hideTextBoxClass = "";
+        }
+
+        _brwsTargets = _pickListField.BrwsTarget.Split(',');
+        _brwsAssigns = _pickListField.BrwsAssign.Split(',');
+
+        //_picklistStyle = "background-color: #fff; border:1px solid #ddd; border-style:dashed;";
+
+        if (PickListField.Height > 20) {
+            _picklistStyle = _picklistStyle + string.Format("height:{0}px;", PickListField.Height);
+        }
+
+        if (PickListField.FieldType == "N") { // numeric field, set JS function to handle
+            _type = "number";
+        }
+        _onkeydown = "return _picklist_keydown(event, '" + _type + "', " + PickListField.MaxLength + ");";
+    }
+
+    private void FocusIn(FocusEventArgs e) {
+        _value = _pickListField.Value;
+        _pickListField.InvokeOnFocusIn(_pickListField);
+        OnFocusIn.InvokeAsync(e);
+    }
+
+    private void FocusOut(FocusEventArgs e) {
+        ShowDesc();
+        _pickListField.InvokeOnFocusOut(_pickListField);
+        OnFocusOut.InvokeAsync(e);
+    }
+
+    private void ShowDesc() {
+        if (!string.IsNullOrEmpty(_pickListField.CodeDesc)) {
+            _value = string.Format("{0} ({1})", _pickListField.Value.ToString(), _pickListField.CodeDesc);
+        }
+        else {
+            _value = _pickListField.Value;
+        }
+    }
+
+    private async void Change(ChangeEventArgs e) {
+        _pickListField.CodeDesc = "";
+
+        FieldChangeEventArgs args = new FieldChangeEventArgs();
+        args.FieldId = PickListField.ID;
+        args.PreviousValue = PickListField.Value.ToString();
+        args.Value = e.Value.ToString();
+        args.DataSource = _selectedRow;
+        await this.InvokeAsync(() => OnChange.InvokeAsync(args));
+
+        args = new FieldChangeEventArgs();
+        args.FieldId = _pickListField.ID;
+        args.PreviousValue = _pickListField.Value.ToString();
+        args.Value = e.Value.ToString();
+        args.DataSource = _selectedRow;
+        //await Task.Run(() => _pickListField.InvokeOnChange(_pickListField, args));
+        await this.InvokeAsync(() => _pickListField.InvokeOnChange(_pickListField, args));
+
+        _selectedRow = null;
+    }
+
+    private void InvokePickListSelectionEvent() {
+        _pickListField.InvokeOnPickListSelection(_pickListField, new FieldClickEventArgs());
+    }
+
+    private async Task BrwsGrid_OnSelectionChange(FieldChangeEventArgs e) {
+        _pickListField.BrwsGrid = null;
+
+        ClosePickList();
+
+        _selectedRow = JObject.Parse(e.Value);
+
+        if (_selectedRow.ContainsKey(_pickListField.ID)) {
+            string value = _selectedRow[_pickListField.ID].ToString();
+            _pickListField.Value = value;
+            await Task.Run(() => Change(new ChangeEventArgs() { Value = _pickListField.Value }));
+        }
+        else if (_brwsTargets.Contains(_pickListField.ID)) {
+            int index = Array.IndexOf(_brwsTargets, _pickListField.ID);
+            string assignFieldId = _brwsAssigns[index];
+
+            if (_selectedRow.ContainsKey(assignFieldId)) {
+                string value = _selectedRow[assignFieldId].ToString();
+                _pickListField.Value = value;
+                await Task.Run(() => Change(new ChangeEventArgs() { Value = _pickListField.Value }));
+            }
+        }
+
+        _pickListField.InvokeOnPickListSelectionChanged(_pickListField, new FieldChangeEventArgs() { DataSource = _selectedRow });
+
+        await JSRuntime.InvokeAsync<object>("_set_field_focus", _pickListField.ElementID);
+
+
+    }
+}
+

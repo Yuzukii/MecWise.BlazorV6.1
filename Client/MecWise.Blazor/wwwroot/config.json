@@ -1,0 +1,69 @@
+﻿{
+
+  "#comment": "APIService Connecion",
+  "apiUrl": "http://localhost/STDV6/APIServices/",
+
+  "#comment": "Blazor site brand text",
+  "appTitle": "MecWise HR",
+
+  "#comment": "For Navigation to V5 Website",
+  "v5ConnectRoot": "http://localhost/V5PUB/ESS",
+  "v5ConnectId": "MecWise_V5",
+  "v5ConnectKey": "ePlatf0rm@MecWise",
+
+  "#comment": "App theme folder name",
+  "appTheme": "HRTheme",
+
+  "#comment": "Home Page Url",
+  "homePageUrl": "",
+
+  "#comment": "Redirect to this URL when session expire",
+  "expireRedirect": "",
+
+  "#comment": "Register Push Notification for login user",
+  "registerPushNoti": false,
+
+  "#comment": "Toast Message Position [0=top,1=left,2=bottom,3=right]",
+  "toastMessagePosition": 2,
+
+  "#comment": "Toast Message Display Time in Seconds",
+  "toastMessageDelay": 1,
+
+  "#comment": "Maximum upload file size in MB (Maximum 10)",
+  "maxUploadSize": 2,
+
+  "#comment": "Display menu on left side",
+  "sideMenuLayout": false,
+
+
+  "#comment": "Mobile Settings",
+  "#comment": "Display AccordionView instead of GridView in mobile screen size",
+  "enableAccordionView": true,
+
+  "#comment": "Display menu as right drawer in mobile screen size",
+  "mobileMenuDrawer": true,
+
+  "#comment": "Display bottom menu in mobile screen size",
+  "enableMobileMenu": true,
+
+  "#comment": "Mobile bottom menu setting",
+  "mobileNavButtons": [
+    {
+      "iconClass": "fa fa-calendar-alt",
+      "href": "",
+      "label": ""
+    },
+    {
+      "iconClass": "fa fa-clock",
+      "href": "",
+      "label": ""
+    },
+    {
+      "iconClass": "fa fa-envelope-open",
+      "href": "",
+      "label": "",
+      "showUnread": true
+    }
+  ]
+
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Version>6.0.0.0</Version>
+    <Company>StarVisionIT</Company>
+    <Copyright>Copyright ©  2021</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MecWise.Blazor.Components\MecWise.Blazor.Components.csproj" />
+    <ProjectReference Include="..\MecWise.Blazor.Workflow\MecWise.Blazor.Workflow.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Reference\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

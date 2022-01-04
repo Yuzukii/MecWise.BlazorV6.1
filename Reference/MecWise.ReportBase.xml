@@ -1,0 +1,397 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MecWise.ReportBase</name>
+    </assembly>
+    <members>
+        <member name="T:MecWise.ReportBase.cmFuncs">
+            <summary>
+            Common Static Functions
+            </summary>
+        </member>
+        <member name="M:MecWise.ReportBase.cmFuncs.IsValid(System.Object)">
+            <summary>
+            Check for null and empty string.
+            </summary>
+            <param name="value">The object to be validated.</param>
+            <returns>True if object is not null and not an empty string. False otherwise</returns>
+        </member>
+        <member name="M:MecWise.ReportBase.cmFuncs.LogEvent(System.String,System.String,System.Boolean)">
+            <summary>
+            Log the message to the eventlog
+            </summary>
+            <param name="msg">The message to be loggeg.</param>
+            <param name="source">The source of the message</param>
+            <param name="info">boolean value. true for information. False for error</param>
+        </member>
+        <member name="M:MecWise.ReportBase.cmFuncs.LogMsg(System.String,System.String)">
+            <summary>
+            Log the message to the registered event listners
+            </summary>
+            <param name="source">The source of the message</param>
+            <param name="msg">The message to be displayed</param>
+        </member>
+        <member name="M:MecWise.ReportBase.cmFuncs.LogMsg(System.String,System.String,System.Boolean)">
+            <summary>
+            Log the message to the registered event listners
+            </summary>
+            <param name="source">The source of the message</param>
+            <param name="msg">The message to be displayed</param>
+            <param name="writeLog">Whether to write to log</param>
+        </member>
+        <member name="M:MecWise.ReportBase.cmFuncs.AppSetting(System.String)">
+            <summary>
+            Gets the value from App.Config
+            </summary>
+            <param name="key">The key for which the value is to be retreived</param>
+            <returns>An Object identified by the key</returns>
+        </member>
+        <member name="T:MecWise.ReportBase.IReportScheduler">
+            <summary>
+            IReportScheduler. Interface class for Report Scheduler.
+            Classes that needs to be invoked have to implement this interface<br></br>
+            All classes should have implement the dispose method
+            </summary>
+            <remarks>Provides a forced contract. 
+            The implementing class has to contain the specific set of methods that are 
+            defined in the interface</remarks>
+        </member>
+        <member name="M:MecWise.ReportBase.IReportScheduler.Execute">
+            <summary>
+            Execute the plug-in.
+            </summary>
+            <returns>A boolean value . true if Execute is successfull. False otherwise</returns>
+        </member>
+        <member name="M:MecWise.ReportBase.IReportScheduler.ToString">
+            <summary>
+            Returns the name of the plug-in.
+            </summary>
+            <returns>A string value. The name of the plug in.</returns>
+        </member>
+        <member name="T:MecWise.ReportBase.XmlRptReader">
+            <summary>
+            Report Reader.
+            </summary>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptReader.#ctor(System.String)">
+            <summary>
+            Default constructor.
+            </summary>
+            <param name="xml">The report xml to be parsed</param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptReader.Dispose(System.Boolean)">
+            <summary>
+            Deallocate memory and clear resources
+            </summary>
+            <param name="disposing">A boolean value. True to deallocate memory and clear resources</param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptReader.Dispose">
+            <summary>
+            Deallocate memory
+            </summary>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptReader.Log(System.String)">
+            <summary>
+            Log the message to the registered listeners.
+            </summary>
+            <param name="msg">The message to be logged</param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptReader.GetValue(System.String)">
+            <summary>
+            Get the value identified by the key.
+            </summary>
+            <param name="key">the key for the value to be returned.</param>
+            <returns>The value if key exists else null.</returns>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptReader.ToHashtable(System.String)">
+            <summary>
+            Convert the param xml to hashtable
+            </summary>
+            <param name="paramXml"></param>
+            <returns>hashtable</returns>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptReader.ReturnNodeValue(System.String,System.String)">
+            <summary>
+            Function which returns the Node Value
+            </summary>
+            <param name="strXML">XML To Parse Through</param>
+            <param name="nodeName">Node Name for which this function will return the value</param>
+            <returns></returns>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobParameters">
+            <summary>
+            Gets the job parameters
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobCriteria">
+            <summary>
+            Gets the job criteria
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobProperty">
+            <summary>
+            Gets the job property
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobSchedule">
+            <summary>
+            Gets the job schedule
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobPrint">
+            <summary>
+            Gets the Job print Options
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobType">
+            <summary>
+            Gets the job type.
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.CompCode">
+            <summary>
+            Gets the job Comp Code.
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.RefID">
+            <summary>
+            Gets the job Comp Code.
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobDesc">
+            <summary>
+            Gets the job Desc.
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.OutFileName">
+            <summary>
+            Gets the Output file name.
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.OwnerID">
+            <summary>
+            Gets the Owner ID
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.JobPriority">
+            <summary>
+            Gets the Job Priority
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.NextJobID">
+            <summary>
+            Gets the Next Job ID
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.ServerID">
+            <summary>
+            Gets the Job Server ID
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.ApplnDBConnectString">
+            <summary>
+            Gets the Application Connection String
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.ApplnDBMS">
+            <summary>
+            Gets the Application DBMS Value
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.ApplnDBOwner">
+            <summary>
+            Gets the Application Database Owner
+            </summary>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptReader.ApplnDBCoyID">
+            <summary>
+            Gets the Application Company Code
+            </summary>
+        </member>
+        <member name="T:MecWise.ReportBase.RptParams">
+            <summary>
+            Report XML Parameter Defn.
+            </summary>
+        </member>
+        <member name="T:MecWise.ReportBase.XmlRptWriter">
+            <summary>
+            ReportWriter.
+            </summary>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.Dispose(System.Boolean)">
+            <summary>
+            Deallocate memory and clear resources
+            </summary>
+            <param name="disposing">A boolean value. True to deallocate memory and clear resources</param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.Dispose">
+            <summary>
+            Deallocate memory
+            </summary>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.Root">
+            <summary>
+            The root of the Report Job XMLDocument
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddElement(System.String)">
+            <summary>
+            Add the first level elements
+            </summary>
+            <param name="elemName"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.CreateElement(System.String)">
+            <summary>
+            Create a new element and return the XmlElement created
+            </summary>
+            <param name="elemName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddElementValue(System.String,System.String)">
+            <summary>
+            Create a first level name / value pair element
+            </summary>
+            <param name="elemName"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.GetNode(System.String)">
+            <summary>
+            Get the node specified
+            </summary>
+            <param name="elemName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddChildElement(System.String,System.String,System.Object)">
+            <summary>
+            Create a child element
+            </summary>
+            <param name="tagName"></param>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddChildElementXml(System.String,System.String,System.String)">
+            <summary>
+            Create Child Elements using innerXml tag
+            </summary>
+            <param name="tagName"></param>
+            <param name="newTagName"></param>
+            <param name="innerXml"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddJobType(System.String)">
+            <summary>
+            Add job type
+            </summary>
+            <param name="jobType"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddCompCode(System.String)">
+            <summary>
+            Add Comp Code
+            </summary>
+            <param name="compCode"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddRefID(System.String)">
+            <summary>
+            Add Comp Code
+            </summary>
+            <param name="refID"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddJobDesc(System.String)">
+            <summary>
+            Add Job Desc
+            </summary>
+            <param name="desc"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddOutFileName(System.String)">
+            <summary>
+            Add Output filename
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddOwnerID(System.String)">
+            <summary>
+             Add Report Owner ID
+             </summary>
+             <param name="ownerID"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddJobPriority(System.String)">
+            <summary>
+             Set the job priority
+             </summary>
+             <param name="priority"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddNextJobID(System.String)">
+            <summary>
+             Set the next job id. i.e the next job to be executed in sequence.
+             </summary>
+             <param name="nextJobID"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddSchedule(System.DateTime)">
+            <summary>
+            Add a schedule when the report job is to be executed
+            </summary>
+            <param name="schedTime">the time to execute the report job</param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddServerID(System.String)">
+            <summary>
+            Add Server ID
+            </summary>
+            <param name="serverID"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddJobCriteria(System.String,System.Object)">
+            <summary>
+            Add criteria for the report job.
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddJobProperty(System.String,System.Object)">
+            <summary>
+            Add the report job properties
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddJobParams(System.String,System.String,System.Object)">
+            <summary>
+            add the parameters for the report jon
+            </summary>
+            <param name="paramName">The parameter name</param>
+            <param name="dataType">The data type of the parameter</param>
+            <param name="paramValue">The parameter value</param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddPrinter(System.String,System.String,System.Int32)">
+            <summary>
+            Add a printer 
+            </summary>
+            <param name="printType">Printer type</param>
+            <param name="printName">Name of printer</param>
+            <param name="noCopies">No of copies to print</param>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.Save(System.String)">
+            <summary>
+            Save the report xml to the specified file. Include the full path.
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.ReportBase.XmlRptWriter.AddApplnDBSettings(System.String,System.Object)">
+            <summary>
+            Add Application Database Settings
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="P:MecWise.ReportBase.XmlRptWriter.Xml">
+            <summary>
+            Get the Report Job XML .
+            </summary>
+            <remarks>the xml is created based on the values entered by user</remarks>
+        </member>
+    </members>
+</doc>

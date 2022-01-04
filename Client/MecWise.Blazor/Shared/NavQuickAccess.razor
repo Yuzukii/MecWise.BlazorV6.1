@@ -1,0 +1,108 @@
+﻿@inject SessionState Session;
+
+
+<div class="container-fluid px-0 nav-quick-access">
+    <div class="row w-100 mx-0 px-0">
+
+        <div class="col text-center">
+            <a class="border-0 bg-transparent" href="">
+                <span class="fa fa-home text-white"></span>
+            </a>
+            <span style="display:block">
+                Home
+            </span>
+        </div>
+
+        @{int i = 0; }
+
+        @foreach (MobileNavButton button in Session.AppConfig.MobileNavButtons)
+        {
+            i += 1;
+
+            if (button.showUnread)
+            {
+                @if (Session.Items.ContainsKey("noti.numOfUnRead"))
+                {
+                    @if (Session.Items["noti.numOfUnRead"].ToInt() > 0)
+                    {
+                        <div class="col text-center">
+                            <a class="border-0 bg-transparent unread" href="@button.href">
+                                <span class="@button.iconClass">
+                                    <span class="fa fa-circle background"></span>
+                                    <span class="num">@Session.Items["noti.numOfUnRead"].ToStr()</span>
+                                </span>
+                            </a>
+                            <span style="display:block">
+                                @button.label
+                            </span>
+                        </div>
+                    }
+                    else {
+                        <div class="col text-center">
+                            <a class="border-0 bg-transparent " href="@button.href">
+                                <span class="@button.iconClass">
+                                </span>
+                            </a>
+                            <span style="display:block">
+                                @button.label
+                            </span>
+                        </div>
+                    }
+                }
+                else {
+                    <div class="col text-center">
+                        <a class="border-0 bg-transparent " href="@button.href">
+                            <span class="@button.iconClass">
+                            </span>
+                        </a>
+                        <span style="display:block">
+                            @button.label
+                        </span>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col text-center">
+                    <a class="border-0 bg-transparent " href="@button.href">
+                        <span class="@button.iconClass">
+                        </span>
+                    </a>
+                    <span style="display:block">
+                        @button.label
+                    </span>
+                </div>
+            }
+
+
+            // maximum three 4 icons including Home
+            @if (i >= 3)
+            {
+                break;
+            }
+
+        }
+
+    </div>
+</div>
+
+
+@code{
+
+    protected override async Task OnInitializedAsync()
+    {
+        MobileNavButton inboxButton = Session.AppConfig.MobileNavButtons.Find(x => x.href.Contains("EpfScreen/INBOX") && x.showUnread);
+        if (inboxButton != null) {
+            int unread = await Session.ExecServerFuncAsync<int>("MecWise.Messenger.Web.Server", "INBOX", "GetNumberOfUnReadByEmpe",
+            Session.CompCode, Session.EmpeID);
+
+            if (Session.Items.ContainsKey("noti.numOfUnRead")) {
+                Session.Items["noti.numOfUnRead"] = unread;
+            }
+            else {
+                Session.Items.Add("noti.numOfUnRead", unread);
+            }
+        }
+
+    }
+}

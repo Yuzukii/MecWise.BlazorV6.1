@@ -1,0 +1,130 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+@inject SessionState Session;
+
+@if (TabContainerField == null) {
+    <p>Loading</p>
+}
+else {
+    string pageVisible = "";
+
+    <div id="@TabContainerField.ElementID" class="container-fluid px-0 top-buffer-medium @TabContainerField.StyleClass">
+        <br />
+        <ul class="nav nav-tabs">
+            @{bool firstItem = true; }
+            @foreach (FieldTabPage page in TabContainerField.TabPages) {
+
+
+                string href = "#" + page.ElementID;
+                string active = "";
+                if (TabContainerField.ActiveTabPageId == string.Empty) {
+                    if (firstItem) {
+                        active = "active";
+                        firstItem = false;
+                        TabContainerField.ActiveTabPageId = page.ElementID;
+                    }
+                    else {
+                        active = "";
+                    }
+                }
+                else {
+                    if (TabContainerField.ActiveTabPageId == page.ElementID) {
+                        active = "active";
+                    }
+                    else {
+                        active = "";
+                    }
+                }
+
+                pageVisible = page.Visible ? "" : "d-none";
+                <li class="nav-item @pageVisible"><a class="nav-link @active" data-toggle="tab" href="@href" @onclick="@(x => tabpage_onClick(page.ElementID))">@(page.Description)</a></li>
+
+
+            }
+        </ul>
+
+        <div class="tab-content">
+            @{ firstItem = true; }
+            @foreach (FieldTabPage page in TabContainerField.TabPages) {
+                string active = "";
+                if (TabContainerField.ActiveTabPageId == string.Empty) {
+                    if (firstItem) {
+                        active = "active";
+                        firstItem = false;
+                    }
+                    else {
+                        active = "";
+                    }
+                }
+                else {
+                    if (TabContainerField.ActiveTabPageId == page.ElementID) {
+                        active = "active";
+                    }
+                    else {
+                        active = "";
+                    }
+                }
+
+                pageVisible = page.Visible ? "" : "d-none";
+
+                <div id="@(page.ID)" class="tab-pane fade show @active @pageVisible" onshow="">
+                    @{
+                        FieldContainer containerField = new FieldContainer();
+                        containerField.TopBuffer = false;
+                        containerField.Fields = page.Fields;
+                        containerField.Render = true;
+                        <CompContainer ContainerField="@containerField" OnChange="@Change" />
+                    }
+                </div>
+
+            }
+        </div>
+    </div>
+}
+
+
+@code
+{
+
+
+    [Parameter]
+    public FieldTabContainer TabContainerField { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldChangeEventArgs> OnChange { get; set; }
+
+    protected override void OnInitialized() {
+        TabContainerField.Render = true;
+    }
+
+    protected override bool ShouldRender() {
+        if (TabContainerField.Render) {
+            return true;
+        }
+        return false;
+    }
+
+    protected override void OnAfterRender(bool firstRender) {
+        TabContainerField.Render = false;
+        base.OnAfterRender(firstRender);
+    }
+
+    private void Change(FieldChangeEventArgs args) {
+        OnChange.InvokeAsync(args);
+    }
+
+    protected override Task OnParametersSetAsync() {
+        StateHasChanged();
+        return base.OnParametersSetAsync();
+    }
+
+    private async void tabpage_onClick(string pageId) {
+        TabContainerField.ActiveTabPageId = pageId;
+        TabContainerField.Render = true;
+        StateHasChanged();
+        await Session.ExecJSAsync("_refreshAllGridInTabPage", pageId);
+    }
+
+}
+

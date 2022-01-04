@@ -1,0 +1,15 @@
+{
+  "short_name": "Self Help",
+  "name": "MecWise HR - Self Help",
+  "icons": [
+    {
+      "src": "./images/appIcon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "description": "MecWise HR - Self Help"
+}

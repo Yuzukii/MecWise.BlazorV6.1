@@ -1,0 +1,466 @@
+﻿
+@inherits LayoutComponentBase
+
+@using MecWise.Blazor.Pages;
+
+@inject SessionState Session;
+@inject NavigationManager  NaviManager;
+@inject IJSRuntime JSRuntime;
+@inject HttpClient Http;
+
+
+@if (_display == "d-none") {
+    <CompLoadPanel></CompLoadPanel>
+}
+
+@if (!_processing) {
+    @if (_accessToken) {
+        // Login with access token
+
+        @if (_isValidToken) {
+            @if (Session.CompCode == "%") {
+                <div class="login blue-gradient color-block z-depth-1">
+                    <LoginCompSelector DataSource="@_comps" OnClickOk="@LoginCompSelector_OnClickOk"></LoginCompSelector>
+                </div>
+            }
+            else if (!string.IsNullOrEmpty(Session.UserID) && !string.IsNullOrEmpty(Session.CompCode) && Session.CompCode != "%") {
+                
+                <MainBody LayoutComponentBody="@Body"/>
+
+                //hide quick access bar if the website is in iframe
+                @if (!_isiniFrame && _displayMenu) {
+                    if (Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen()) {
+                        <NavQuickAccess />
+                    }
+                }
+            }
+        }
+        else {
+            @if (!string.IsNullOrEmpty(_errMsg)) {
+                <div class="login blue-gradient color-block z-depth-1">
+                    <p class="p-4 font-italic bg-danger text-white border border-muted rounded">@string.Format("{0}. Please contact administrator.", _errMsg)</p>
+                </div>
+            }
+
+        }
+    }
+    else {
+        // Normal Login Section
+
+        if (_sessionExpired) {
+            // display session expired due to inactivity message with login redirect url
+            <div class="login blue-gradient color-block z-depth-1 @_display">
+                <LoginExpired></LoginExpired>
+            </div>
+        }
+        else {
+            if (string.IsNullOrEmpty(Session.UserID)) {
+                <div class="login blue-gradient color-block z-depth-1 @_display">
+                    <Login OnValidate="@Login_OnValidate"></Login>
+                </div>
+
+            }
+            else if (Session.CompCode == "%") {
+                <div class="login blue-gradient color-block z-depth-1 @_display">
+                    <LoginCompSelector DataSource="@_comps" OnClickOk="@LoginCompSelector_OnClickOk"></LoginCompSelector>
+                </div>
+            }
+            else if (!string.IsNullOrEmpty(Session.UserID) && !string.IsNullOrEmpty(Session.CompCode) && Session.CompCode != "%") {
+
+                <MainBody LayoutComponentBody="@Body"/>
+
+                //hide quick access bar if the website is in iframe
+                @if (!_isiniFrame && _displayMenu) {
+                    if (Session.AppConfig.enableMobileMenu && Session.IsMobileScreen()) {
+                        <NavQuickAccess />
+                    }
+                }
+            }
+        }
+
+
+    }
+}
+
+@code{
+
+    string _display = "d-none";
+    string _errMsg = "";
+    bool _processing = false;
+    bool _accessToken = false;
+    bool _isValidToken = false;
+    bool _isiniFrame = false;
+    bool _sessionExpired = false;
+    bool _displayMenu = true;
+    Config _config;
+    List<SV_MF_COMP> _comps = new List<SV_MF_COMP>();
+
+    protected override void OnInitialized() {
+        Uri uri = new Uri(NaviManager.Uri);
+        string menu = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("MENU");
+        if (string.IsNullOrEmpty(menu)) {
+            _displayMenu = true;
+        }
+        else {
+            _displayMenu = menu.ToBool();
+        }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender) {
+        try {
+            if (firstRender) {
+                InitAsync();
+            }
+        }
+        catch (TaskCanceledException) {
+        }
+
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async void InitAsync() {
+
+        _isiniFrame = await JSRuntime.InvokeAsync<bool>("iniFrame");
+
+        //assign config to Session
+        if (_config == null) {
+            _config = await Http.GetFromJsonAsync<Config>("config.json?time=" + DateTime.Now.ToString("yyyymmddhhmmss"));
+        }
+        Session.InitConfig(JSRuntime, _config);
+        await Session.ExecJSAsync("SetPageTitle", Session.AppConfig.appTitle);
+
+        _processing = true;
+
+        string oidc_user_token = await Session.GetStorageItemAsync("oidc_user");
+        string sessionKey = await Session.GetSessionKeyAsync();
+
+        if (!string.IsNullOrEmpty(oidc_user_token)) // check for OpenIdConnect Azure AD user
+        {
+            await Session.RemoveLocalStorageItem(sessionKey);
+            _accessToken = true;
+            _display = "d-none";
+            await CheckTokenAsync(oidc_user_token, LoginType.oidcTokenAccess);
+        }
+        else if (NaviManager.Uri.ToUpper().Contains("TOKEN")) // check for authentication with token from url param
+        {
+            Uri currUri = NaviManager.ToAbsoluteUri(NaviManager.Uri);
+            string currURL = currUri.Query;
+            string[] keyVal = currURL.Split('&');
+            string token = keyVal.Where(x => x.Contains("TOKEN=")).FirstOrDefault();
+            token = token.Replace("TOKEN=", "");
+            if (token.Contains("?")) token = token.Replace("?", "");
+
+            await Session.RemoveLocalStorageItem(sessionKey);
+            _accessToken = true;
+            _display = "d-none";
+            await CheckTokenAsync(token, LoginType.tokenAccess);
+        }
+        else if (await Session.InitSavedSession()) {  // check for current session
+            _config = await Http.GetFromJsonAsync<Config>("config.json?time=" + DateTime.Now.ToString("yyyymmddhhmmss"));
+            Session.InitConfig(JSRuntime, _config); //assign config again to Saved Session
+            await Session.SetLocalStorageItem(sessionKey, JObject.FromObject(Session).ToString());
+            await Session.ExecJSAsync("LoginRedirect"); // [21/05/2021, PhyoZin] Added to redirect to session expire page when session expired
+        }
+        else {
+
+            string savedSessionExpired = await Session.GetLocalStorageItem(sessionKey + "-expired");
+            if (!string.IsNullOrEmpty(savedSessionExpired)) {
+                _sessionExpired = true;
+                await Session.RemoveLocalStorageItem(sessionKey + "-expired");
+            }
+
+        }
+
+        _processing = false;
+        _display = "";
+        StateHasChanged();
+
+        return;
+    }
+
+    private async void Login_OnValidate(bool isValidUser) {
+
+        if (!isValidUser) {
+            StateHasChanged();
+            return;
+        }
+
+
+        var userProfiles = await GetUserProfileAsync(Session.UserID);
+        if (userProfiles.Count == 0) {
+            StateHasChanged();
+            return;
+        }
+
+        Session.EmpeID = userProfiles[0].EMPE_ID;
+
+        // Checking admin or not
+        if (userProfiles[0].AC_FLAG.ToArray()[9] == '1' || Session.UserID == "eplatform") {
+            Session.IsAdmin = true;
+        }
+        else {
+            Session.IsAdmin = false;
+        }
+
+        // Check and assign CompCode
+        if (string.IsNullOrEmpty(Session.CompCode)) {
+            Session.CompCode = userProfiles[0].COMP_ACES;
+        }
+
+        if (Session.CompCode == "%") {
+            string url = string.Format("Login/GetCompProfiles");
+            _comps = await Session.GetJsonAsync<List<SV_MF_COMP>>(Session.GetAbsoluteApiUrl(url));
+            if (_comps.Count > 1) {
+                StateHasChanged();
+                return;
+            }
+            else {
+                Session.CompCode = _comps[0].COMP_CODE;
+            }
+        }
+
+
+        // Saving Session daat to browser session storage
+        string sessionKey = await Session.GetSessionKeyAsync();
+        await Session.SetLocalStorageItem(sessionKey, JObject.FromObject(Session).ToString());
+        await Session.ExecJSAsync("LoginRedirect"); // [21/05/2021, PhyoZin] Added to redirect to session expire page when session expired
+        RegisterPushNoti();
+
+        StateHasChanged();
+    }
+
+
+    private async Task<List<SV_SC_USER_PROFILE>> GetUserProfileAsync(string userId) {
+        string url = string.Format("Login/GetUserProfile/{0}/", userId);
+        var userProfiles = await Session.GetJsonAsync<List<SV_SC_USER_PROFILE>>(Session.GetAbsoluteApiUrl(url));
+        return userProfiles;
+    }
+
+    private async void LoginCompSelector_OnClickOk(object e) {
+        // Saving Session daat to browser session storage
+        string sessionKey = await Session.GetSessionKeyAsync();
+        await Session.SetLocalStorageItem(sessionKey, JObject.FromObject(Session).ToString());
+        await Session.ExecJSAsync("LoginRedirect"); // [02/06/2021, PhyoZin] Added to redirect to session expire page when session expired
+        RegisterPushNoti();
+        StateHasChanged();
+    }
+
+    private async void RegisterPushNoti() {
+        // check for Push Noti Registration setting
+        if (!Session.AppConfig.registerPushNoti) {
+            return;
+        }
+
+        // Validate CompCode && EmpeId for push noti registration
+        if (string.IsNullOrEmpty(Session.CompCode) || string.IsNullOrEmpty(Session.EmpeID)) {
+            return;
+        }
+
+        // Register iOS Push Noti
+        if (await Session.ExecJSAsync<bool>("IsIOS")) {
+            RegisteriOSPushNoti();
+        }
+
+        // Register Android Push Noti
+        if (await Session.ExecJSAsync<bool>("IsAndroid")) {
+            RegisterDroidPushNoti();
+        }
+
+        // Register Web Push Notification
+        if (!await Session.ExecJSAsync<bool>("IsIOS") && !await Session.ExecJSAsync<bool>("IsAndroid")) {
+            RegisterWebPushNoti();
+        }
+
+    }
+
+    private async Task<JObject> GetRegisterPushNotiInfo() {
+        // create new registration
+        string url = "Login/GeneratePushNotiReg";
+        JObject postdata = new JObject();
+        postdata.Add("compCode", Session.CompCode);
+        postdata.Add("empeId", Session.EmpeID);
+        postdata.Add("effDate", DateTime.Now.Date);
+        postdata.Add("expyDate", new DateTime(2099, 1, 1));
+        await Session.PostJsonAsync<string>(url, postdata);
+
+        // get created registration
+        url = string.Format("Login/GetPushNotiReg/{0}/{1}", Session.CompCode, Session.EmpeID);
+        JObject data = await Session.GetJsonAsync<JObject>(Session.GetAbsoluteApiUrl(url));
+        JObject registration = new JObject();
+        JObject apiSetting = new JObject();
+        if (data.ContainsKey("apiSetting")) {
+            apiSetting = JObject.FromObject(data["apiSetting"]);
+            if (data.ContainsKey("registration")) {
+                registration = JObject.FromObject(data["registration"]);
+            }
+        }
+
+        JObject payload = new JObject();
+        payload.Add("RegistrationId", registration["MecwiseRegisterID"].ToStr());
+        payload.Add("MecwiseMessengerApiKey", apiSetting["ApiKey"].ToStr());
+        payload.Add("MecwiseMessengerApiUrl", apiSetting["ApiUrl"].ToStr());
+
+        return payload;
+    }
+
+    private async void RegisterDroidPushNoti() {
+        try {
+            JObject payload = await GetRegisterPushNotiInfo();
+            Console.WriteLine("request_for_action#register_push_notification?" + payload["RegistrationId"].ToStr() + "?" + payload["MecwiseMessengerApiKey"].ToStr() + "?" + payload["MecwiseMessengerApiUrl"].ToStr());
+        }
+        catch (Exception ex) {
+            Console.WriteLine("Error while registering Android push noti.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async void RegisteriOSPushNoti() {
+
+        try {
+            JObject payload = await GetRegisterPushNotiInfo();
+            await Session.ExecJSAsync("ExecIOSFunc", "RegisterPushNoti", payload.ToString());
+        }
+        catch (Exception ex) {
+            Console.WriteLine("Error while registering IOS push noti.");
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+    private async void RegisterWebPushNoti() {
+        try {
+
+            //Get Push Noti Registration
+            string url = string.Format("Login/GetPushNotiReg/{0}/{1}", Session.CompCode, Session.EmpeID);
+            JObject data = await Session.GetJsonAsync<JObject>(Session.GetAbsoluteApiUrl(url));
+
+            JObject registration = new JObject();
+            JObject apiSetting = new JObject();
+            if (data.ContainsKey("apiSetting")) // found registeration
+            {
+                apiSetting = JObject.FromObject(data["apiSetting"]);
+                if (data.ContainsKey("registration")) {
+                    registration = JObject.FromObject(data["registration"]);
+                }
+            }
+            else  // no registeration
+            {
+                // create new registration
+                url = "Login/GeneratePushNotiReg";
+                JObject postdata = new JObject();
+                postdata.Add("compCode", Session.CompCode);
+                postdata.Add("empeId", Session.EmpeID);
+                postdata.Add("effDate", DateTime.Now.Date);
+                postdata.Add("expyDate", new DateTime(2099, 1, 1));
+                await Session.PostJsonAsync<string>(url, postdata);
+
+                // get created registration
+                url = string.Format("Login/GetPushNotiReg/{0}/{1}", Session.CompCode, Session.EmpeID);
+                data = await Session.GetJsonAsync<JObject>(Session.GetAbsoluteApiUrl(url));
+                if (data.ContainsKey("apiSetting")) {
+                    apiSetting = JObject.FromObject(data["apiSetting"]);
+                    if (data.ContainsKey("registration")) {
+                        registration = JObject.FromObject(data["registration"]);
+                    }
+                }
+            }
+
+            if (registration.ContainsKey("WebPushSubscription")) {
+                registration["WebPushSubscription"] = Convert.ToString(await Session.ExecJSAsync("subscribeUser", apiSetting["WebPushServerPublicKey"].ToStr()));
+                await Session.PostAsync("Login/UpdatePushNotiReg", registration);
+            }
+
+        }
+        catch (Exception ex) {
+            Console.WriteLine("Error while registering web push noti.");
+            Console.WriteLine(ex.Message);
+        }
+
+
+    }
+
+
+    private async Task CheckTokenAsync(string token, LoginType tokenType) {
+
+        //assign config to Session
+        //Config config = await Http.GetFromJsonAsync<Config>("config.json");
+        //Session.InitConfig(JSRuntime, config);
+        _errMsg = "";
+
+        JObject retObj = await Session.LoginWithTokenAsync(token, tokenType);
+
+        if (retObj == null) {
+
+            //display error message if token is not from local storage
+            _errMsg = "Invalid User";
+
+            return;
+        }
+
+        _isValidToken = retObj["retSts"].ToBool();
+
+        if (_isValidToken) {
+            Session.UserID = retObj["UserID"].ToString();
+            Session.CompCode = retObj["CompID"].ToString();
+
+
+            if (retObj["CompID"].ToString() == "%") {
+                string url = string.Format("Login/GetCompProfiles");
+                _comps = await Session.GetJsonAsync<List<SV_MF_COMP>>(Session.GetAbsoluteApiUrl(url));
+                if (_comps.Count == 1) {
+                    // found only one company, assign it to client session
+                    Session.CompCode = _comps[0].COMP_CODE;
+                }
+                else {
+                    // found multiple companies, user must choose one
+                    StateHasChanged();
+                    //return;
+                }
+            }
+
+
+            // Get User Profile and assign empe Id
+            var userProfiles = await GetUserProfileAsync(Session.UserID);
+            if (userProfiles.Count == 0) {
+                StateHasChanged();
+                return;
+            }
+
+            Session.EmpeID = userProfiles[0].EMPE_ID;
+
+            // Checking admin or not
+            if (userProfiles[0].AC_FLAG.ToArray()[9] == '1' || Session.UserID == "eplatform") {
+                Session.IsAdmin = true;
+            }
+            else {
+                Session.IsAdmin = false;
+            }
+
+
+            // should not re-route if launchURL from token is empty
+            string launchURL = retObj["LaunchURL"].ToString();
+            if (!string.IsNullOrEmpty(launchURL)) {
+                launchURL = launchURL.Replace(NaviManager.BaseUri, "");
+                NaviManager.NavigateTo(launchURL);
+            }
+
+
+            // Saving Session daat to browser session storage
+            string sessionKey = await Session.GetSessionKeyAsync();
+            await Session.SetLocalStorageItem(sessionKey, JObject.FromObject(Session).ToString());
+            await Session.ExecJSAsync("LoginRedirect"); // [21/05/2021, PhyoZin] Added to redirect to session expire page when session expired
+            RegisterPushNoti();
+
+            StateHasChanged();
+        }
+        else {
+
+
+            //display error message if token is not from local storage
+            _errMsg = retObj["errMsg"].ToString();
+        }
+
+    }
+
+
+}

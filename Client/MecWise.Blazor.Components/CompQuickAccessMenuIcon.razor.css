@@ -1,0 +1,45 @@
+﻿
+.menuIconContainer {
+    text-align: center;
+}
+
+
+.menuIcon {
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: silver;
+    object-fit: fill;
+    width: 80px;
+    height: 80px;
+}
+
+.menuIcon-shadow {
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: silver;
+    object-fit: fill;
+    width: 80px;
+    height: 80px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.menuText {
+    padding-top: 5px;
+    font-size: 1.1rem;
+}
+
+.menuText-shadow {
+    padding-top: 5px;
+    font-size: 1.1rem;
+    text-shadow: 2px 2px 8px gray;
+}
+
+
+.menuText-highlight {
+    padding-top: 5px;
+    font-size: 1.0rem;
+    text-shadow: 2px 2px 8px gray;
+}

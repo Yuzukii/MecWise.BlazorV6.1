@@ -1,0 +1,16 @@
+﻿
+<div @onclick="@(e=>(OnMenuItemClick.InvokeAsync(MenuItem)))">
+
+    <span class="@MenuItem.IconCssClass mr-2" aria-hidden="true"></span> @MenuItem.IconText
+
+</div>
+
+@code {
+    //string iconClass;
+
+    [Parameter] public FieldTitleBarMenuItem MenuItem { get; set; }
+
+    [Parameter] public EventCallback<FieldTitleBarMenuItem> OnMenuItemClick { get; set; }
+
+
+}

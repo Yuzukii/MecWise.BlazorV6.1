@@ -1,0 +1,100 @@
+﻿@page "/EpfMenuSubItemDtl"
+@page "/EpfMenuSubItemDtl/{MENU_ID:int}/{MENU_ITEM_ID:int}/{MENU_SUB_ITEM_ID:int}"
+
+@using Microsoft.JSInterop
+
+@inject SessionState Session;
+@inject IJSRuntime JSRuntime;
+@inject NavigationManager  NavigationManager;
+
+@if (_subMenuItemDtls != null) {
+<div class="container-fluid menu-sub-item-detl">
+    <div class="">
+        <CompTitleBar TitleBarField="@_mtbar" />
+    </div>
+
+    @{
+        int _index = 0;
+    }
+    <div class="container-fluid" style="width: 100%;margin: 0 auto;padding: 20px;">
+        <div class="row">
+            @while (_index < _subMenuItemDtls.Count) {
+                <div class="col-xl-2 col-md-3 col-sm-4 col-6 p-2">
+                    <EpfMenuIcon ItemDetl="@_subMenuItemDtls[_index]" OnItemClick="@OnItemClick" />
+                </div>
+                _index += 1;
+
+                if (_index < _subMenuItemDtls.Count) {
+                    <div class="col-xl-2 col-md-3 col-sm-4 col-6 p-2">
+                        <EpfMenuIcon ItemDetl="@_subMenuItemDtls[_index]" OnItemClick="@OnItemClick" />
+                    </div>
+                }
+                _index += 1;
+
+                if (_index < _subMenuItemDtls.Count) {
+                    <div class="col-xl-2 col-md-3 col-sm-4 col-6 p-2">
+                        <EpfMenuIcon ItemDetl="@_subMenuItemDtls[_index]" OnItemClick="@OnItemClick" />
+                    </div>
+                }
+                _index += 1;
+
+                if (_index < _subMenuItemDtls.Count) {
+                    <div class="col-xl-2 col-md-3 col-sm-4 col-6 p-2">
+                        <EpfMenuIcon ItemDetl="@_subMenuItemDtls[_index]" OnItemClick="@OnItemClick" />
+                    </div>
+                }
+                _index += 1;
+
+            }
+        </div>
+    </div>
+</div>
+}
+
+@code{
+    string defImgSrc = "images/icon-menu/default.gif";
+    FieldTitleBar _mtbar = new FieldTitleBar();
+
+    [Parameter]
+    public int MENU_ID { get; set; }
+    [Parameter]
+    public int MENU_ITEM_ID { get; set; }
+    [Parameter]
+    public int MENU_SUB_ITEM_ID { get; set; }
+
+    List<EPF_BLZ_MNU_PAGE> _menuPages = new List<EPF_BLZ_MNU_PAGE>();
+    List<EPF_BLZ_MNU_SUBITEM_DTL> _subMenuItemDtls = new List<EPF_BLZ_MNU_SUBITEM_DTL>();
+
+
+    protected override async Task OnParametersSetAsync() {
+        bool mobile = false;
+        if (Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen()) {
+            mobile = true;
+        }
+        string url = string.Format("Menu/GetMenu/{0}/{1}/{2}/{3}/{4}/{5}", Session.UserID, Session.LangId, MENU_ID, MENU_ITEM_ID, MENU_SUB_ITEM_ID, mobile);
+        _menuPages = await Session.GetJsonAsync<List<EPF_BLZ_MNU_PAGE>>(Session.GetAbsoluteApiUrl(url));
+        if (_menuPages.Count > 0) {
+            if (_menuPages[0].MENU_ITEMS.Count > 0) {
+                if (_menuPages[0].MENU_ITEMS[0].MENU_SUBITEMS.Count > 0) {
+                    _subMenuItemDtls = _menuPages[0].MENU_ITEMS[0].MENU_SUBITEMS[0].MENU_SUBITEM_DTLS;
+                    _mtbar.TitleText = _menuPages[0].MENU_ITEMS[0].MENU_SUBITEMS[0].MENU_SUB_ITEM_NAME;
+                }
+            }
+        }
+        Session.ClearNavigationHistory();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await base.OnAfterRenderAsync(firstRender);
+        await JSRuntime.InvokeAsync<object>("FixBrokenMenuImages", defImgSrc);
+        await JSRuntime.InvokeAsync<object>("CloseErrorMessage");
+    }
+
+
+    private void OnItemClick(EPF_BLZ_MNU_SUBITEM_DTL ItemDtl) {
+        Session.PushNavigationHistory(NavigationManager.BaseUri, NavigationManager.Uri);
+
+        string uri = string.Format(ItemDtl.URL_TMP, ItemDtl.SCRN_ID);
+        NavigationManager.NavigateTo(uri);
+    }
+}

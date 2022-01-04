@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Version>6.0.0.0</Version>
+    <Company>StarVisionIT</Company>
+    <Copyright>Copyright ©  2021</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MecWise.Blazor.Common\MecWise.Blazor.Common.csproj" />
+    <ProjectReference Include="..\MecWise.Blazor.Components\MecWise.Blazor.Components.csproj" />
+  </ItemGroup>
+
+</Project>

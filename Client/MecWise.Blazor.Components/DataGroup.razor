@@ -1,0 +1,63 @@
+﻿@using System.Data
+@using Newtonsoft.Json.Linq
+
+    <div class="container-fluid">
+        <div class="row small rounded px-2 py-3 DataListItemActive">
+            <div class="col-md-12">
+                @{
+                    _displayFieldIndex = 0;
+                    for (int i = 1; i <= RowNo; i++)
+                    {
+                        <div class="row p-1">
+                            @{
+                                for (int c = 1; c <= _columnNo; c++)
+                                {
+                                    if (_displayFieldIndex <= DisplayFields.Count - 1 && _displayFieldIndex <= _maxFieldIndex)
+                                    {
+                                        <div class="@_columnClassName">
+                                            <span class="font-weight-bold">@DisplayFields.ElementAt(_displayFieldIndex).Value :</span>
+                                            @DataSource[DisplayFields.ElementAt(_displayFieldIndex).Key].ToString()
+                                        </div>
+
+                                        _displayFieldIndex += 1;
+                                    }
+                                }
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+@code {
+
+    DataListItemColumnFormat _colFmt;
+    int _columnNo;
+    string _columnClassName;
+    int _displayFieldIndex = 0;
+    int _maxFieldIndex = 0;
+    int _rowNo = 1;
+
+
+    [Parameter] public JObject DataSource { get; set; }
+    [Parameter] public Int32 RowNo {
+        get { return _rowNo; }
+        set {
+            _maxFieldIndex = (_columnNo * _rowNo) - 1;
+            _rowNo = value;
+        }
+    }
+    [Parameter] public DataListItemColumnFormat ColumnFormat {
+        get { return _colFmt;  }
+        set {
+            _columnNo = Convert.ToInt32(value.ToString("d")) + 1;
+            _columnClassName = string.Format("col-md-{0}", 12 / _columnNo);
+            _maxFieldIndex = (_columnNo * _rowNo) - 1;
+
+            _colFmt = value;
+        } }
+    [Parameter] public Dictionary<string, string> DisplayFields { get; set; } = null;
+
+
+}

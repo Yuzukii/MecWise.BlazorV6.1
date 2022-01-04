@@ -1,0 +1,33 @@
+﻿
+.tbar {
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    color: #333;
+}
+
+.tbar-small {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    z-index: 99999;
+}
+
+.tbarmenu {
+}
+
+
+.tbartext {
+    font-size: 1.2rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 3px;
+}
+
+
+.tbartext-subtitle {
+    font-size: 1rem;
+    padding-left: 5px;
+}
+

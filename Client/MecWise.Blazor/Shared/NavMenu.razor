@@ -1,0 +1,134 @@
+﻿@using MecWise.Blazor.Pages;
+
+@inject SessionState Session;
+@inject NavigationManager NavigationManager;
+
+<nav class="navbar navbar-expand-md sticky-top navbar-light menu" >
+    <div class="navbar-brand">
+        @*<span class="menu-brand">@SessionState.AppConfig.appTitle</span>*@
+        <img class="banner-logo" />
+    </div>
+
+
+    <button class="navbar-toggler navbar-right border-0 bg-transparent" type="button" data-toggle="collapse" data-target="#navbarContent">
+        <span class="oi oi-menu text-white"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mr-auto">
+            @if (menuPages != null) {
+                foreach (EPF_BLZ_MNU_PAGE menuPage in menuPages) {
+                    <li class="dropdown position-static mx-md-2 my-1">
+                        
+                        @if (string.IsNullOrEmpty(menuPage.SCRN_ID)) {
+                            <NavLink class="nav-link nav-color text-nowrap text-primary dropdown-toggle" data-toggle="dropdown">
+                                <span style="cursor:pointer">
+                                    <span class="oi oi-document" aria-hidden="true"></span>
+                                    @menuPage.MENU_NAME
+                                </span>
+                            </NavLink>
+
+                            <ul class="dropdown-menu w-100">
+                                <li>
+                                    <EpfMenuPage MENU_ID="@menuPage.MENU_ID.ToInt()"></EpfMenuPage>
+                                </li>
+                            </ul>
+                        }
+                        else { 
+                            <NavLink class="nav-link nav-color text-nowrap text-primary dropdown-toggle" 
+                                     @onclick="@(x => menuPage_OnClick(menuPage))">
+                                <span style="cursor:pointer">
+                                    <span class="oi oi-document" aria-hidden="true"></span>
+                                    @menuPage.MENU_NAME
+                                </span>
+                            </NavLink>
+                        }
+                        
+                    </li>
+                }
+            }
+
+        </ul>
+
+
+
+        <ul class="navbar-nav">
+            <li class="dropdown position-static mx-md-2">
+
+                <NavLink class="nav-link nav-color text-nowrap text-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="oi oi-person" aria-hidden="true"></span> @Session.UserID<span class="caret"></span>
+                </NavLink>
+
+                <ul class="dropdown-menu dropdown-menu-right dropdown-menu-custom pl-3">
+                    <li>
+                        <NavLink class="nav-link nav-color text-nowrap text-primary" href="">
+                            <span class="oi oi-home pr-1" aria-hidden="true"></span> Home
+                        </NavLink>
+                    </li>
+
+                    @if (Session.IsAdmin && !string.IsNullOrEmpty(Session.AppConfig.v5ConnectRoot)) {
+                        <li>
+                            <NavLink class="nav-link nav-color text-nowrap text-primary" @onclick="NavigateToV5">
+                                <span class="oi oi-transfer pr-1" aria-hidden="true"></span> Admin
+                            </NavLink>
+                        </li>
+                    }
+
+                    <li>
+                        <NavLink class="nav-link nav-color text-nowrap text-primary" href="#">
+                            <span class="oi oi-file pr-1" aria-hidden="true"></span> User Guide
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink class="nav-link nav-color text-nowrap text-primary" href="@logoutUri">
+                            <span class="oi oi-account-logout pr-1" aria-hidden="true"></span> Log Out
+                        </NavLink>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+</nav>
+
+
+
+@code {
+
+    string logoutUri = "logout";
+    List<EPF_BLZ_MNU_PAGE> menuPages;
+
+    protected override async Task OnInitializedAsync() {
+        bool mobile = false;
+        if (Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen()) {
+            mobile = true;
+        }
+        string url = string.Format("Menu/GetMenu/{0}/{1}/{2}/{3}", Session.UserID, Session.LangId, false, mobile);
+        menuPages = await Session.GetJsonAsync<List<EPF_BLZ_MNU_PAGE>>(Session.GetAbsoluteApiUrl(url));
+
+        string oidc_user = await Session.GetStorageItemAsync("oidc_user");
+        if (!string.IsNullOrEmpty(oidc_user)) {
+            logoutUri = "MicrosoftIdentity/Account/SignOut";
+        }
+    }
+
+    private void menuPage_OnClick(EPF_BLZ_MNU_PAGE menuPage) {
+
+        if (string.IsNullOrEmpty(menuPage.SCRN_ID)) {
+            return;
+        }
+
+        Session.PushNavigationHistory(NavigationManager.BaseUri, NavigationManager.Uri);
+        string uri = string.Format(menuPage.URL_TMP, menuPage.SCRN_ID);
+        NavigationManager.NavigateTo(uri);
+    }
+
+
+    private async void NavigateToV5() {
+        await Session.NavigateV5URLAsync(NavigationManager.BaseUri, "~/Default.aspx?RT=1", false, true);
+    }
+
+}

@@ -1,0 +1,211 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@using System.Collections.ObjectModel
+@using System.Data;
+@using System.ComponentModel.DataAnnotations
+
+@inject IJSRuntime JSRuntime;
+@inject SessionState Session;
+
+<DxScheduler StartDate="@DateTime.Today"
+             DataStorage="@DxSchedulerFieldResource.DataStorage"
+             AppointmentFormClosing="OnAppointmentFormClosing"
+             AppointmentFormShowing="OnAppointmentFormShowing"
+             AppointmentUpdated="async (e) => AppUpdated(e)"
+             AppointmentUpdating="async (e) => AppUpdating(e)"
+             AppointmentInserting="(e) => AppInserting(e)"
+             AppointmentInserted="async (e) => AppInserted(e)"
+             AppointmentRemoving="async (e) => AppRemoving(e)"
+             AppointmentRemoved="async (e) => AppRemoved(e)"
+             GroupType="SchedulerGroupType.Resource"
+             ResourceColorInHeaderVisible="@ResourceColorInHeaderVisible"
+             ShowAppointmentTooltip="true"
+             AppointmentFormMode="SchedulerAppointmentFormMode.EditForm"
+             ResourceNavigatorVisible="false"
+             CssClass="w-100">
+    <Views>
+        <DxSchedulerDayView DayCount="1" ShowWorkTimeOnly="false"></DxSchedulerDayView>
+        <DxSchedulerMonthView CellMinWidth="120"></DxSchedulerMonthView>
+        <DxSchedulerTimelineView Duration="@TimeSpan.FromDays(31)" CellMinWidth="140">
+            <Scales>
+                <DxSchedulerTimeScale Unit="@SchedulerTimeScaleUnit.Day" UnitCount="1"></DxSchedulerTimeScale>
+            </Scales>
+        </DxSchedulerTimelineView>
+    </Views>
+    <AppointmentFormLayout Context="formInfo">
+        <DxSchedulerSubjectFormLayoutItem></DxSchedulerSubjectFormLayoutItem>
+        <DxSchedulerAllDayFormLayoutItem></DxSchedulerAllDayFormLayoutItem>
+        <DxSchedulerStartDateFormLayoutItem></DxSchedulerStartDateFormLayoutItem>
+        <DxSchedulerStartTimeFormLayoutItem></DxSchedulerStartTimeFormLayoutItem>
+        <DxSchedulerEndDateFormLayoutItem></DxSchedulerEndDateFormLayoutItem>
+        <DxSchedulerEndTimeFormLayoutItem></DxSchedulerEndTimeFormLayoutItem>
+        <DxSchedulerRepeatFormLayoutItem></DxSchedulerRepeatFormLayoutItem>
+        <DxSchedulerLabelFormLayoutItem></DxSchedulerLabelFormLayoutItem>
+        <DxSchedulerResourceFormLayoutItem></DxSchedulerResourceFormLayoutItem>
+        <DxSchedulerDescriptionFormLayoutItem></DxSchedulerDescriptionFormLayoutItem>
+        @if (DxSchedulerFieldResource.schedulerType == "Booking")
+        {
+            <DxSchedulerCustomFormLayoutItem Caption="Capacity" ColSpanMd="12" ShowIcon="true" IconCssClass="oi oi-box align-self-center fa-lg">
+                <Template>
+                    <DxSpinEdit @bind-Value="(((CustomAppointmentFormInfo)formInfo).Capacity)" BindValueMode="BindValueMode.OnInput" NullText="Enter capacity here..." CssClass="cw-320"></DxSpinEdit>
+                </Template>
+            </DxSchedulerCustomFormLayoutItem>
+            <DxSchedulerCustomFormLayoutItem Caption="Remaining Booking Count" ColSpanMd="12" ShowIcon="true" IconCssClass="oi oi-box align-self-center fa-lg">
+                <Template>
+                    <DxTextBox Enabled="false" @bind-Text="(((CustomAppointmentFormInfo)formInfo).PackageCount)"></DxTextBox>
+                </Template>
+            </DxSchedulerCustomFormLayoutItem>
+            <DxSchedulerCustomFormLayoutItem Caption="Serialize" ColSpanSm="12" ShowIcon="false" CssClass="d-none">
+                <Template>
+                    <DxTextBox Enabled="false" @bind-Text="(((CustomAppointmentFormInfo)formInfo).SrlNo)"></DxTextBox>
+                </Template>
+            </DxSchedulerCustomFormLayoutItem>
+        }
+
+    </AppointmentFormLayout>
+</DxScheduler>
+
+<DxPopup @bind-Visible="PopupVisible" HeaderText="Warning" Closed="OnPopupClosed">
+    <p>@DxSchedulerFieldResource.validationMsg</p>
+</DxPopup>
+
+@code {
+
+    [Parameter]
+    public FieldDxSchedulerResource DxSchedulerFieldResource { get; set; }
+
+    //[Parameter]
+    //public EventCallback<SchedulerAppointmentOperationEventArgs> AppointmentInserting { get; set; }
+
+    //[Parameter]
+    //public EventCallback<DxSchedulerAppointmentItem> AppointmentInserted { get; set; }
+
+    //[Parameter]
+    //public EventCallback<DxSchedulerAppointmentItem> AppointmentUpdated { get; set; }
+
+    //[Parameter]
+    //public EventCallback<SchedulerAppointmentOperationEventArgs> AppointmentUpdating { get; set; }
+
+    //[Parameter]
+    //public EventCallback<DxSchedulerAppointmentItem> AppointmentRemoved { get; set; }
+
+
+    bool ResourceColorInHeaderVisible { get; set; } = true;
+
+    bool PopupVisible { get; set; } = false;
+
+    private void AppInserting(SchedulerAppointmentOperationEventArgs args)
+    {
+        args.Cancel = false;
+        DxSchedulerFieldResource.InvokeAppointmentInserting(DxSchedulerFieldResource, args);
+        if (DxSchedulerFieldResource.cancel)
+        {
+            args.Cancel = true;
+        }
+        StateHasChanged();
+    }
+
+    private void AppInserted(DxSchedulerAppointmentItem args)
+    {
+        DxSchedulerFieldResource.InvokeAppointmentInserted(DxSchedulerFieldResource, args);
+
+        StateHasChanged();
+    }
+
+    private void AppUpdating(SchedulerAppointmentOperationEventArgs args)
+    {
+        args.Cancel = false;
+        DxSchedulerFieldResource.InvokeAppointmentUpdating(DxSchedulerFieldResource, args);
+        if (DxSchedulerFieldResource.cancel)
+        {
+            args.Cancel = true;
+        }
+        StateHasChanged();
+    }
+
+    private void AppUpdated(DxSchedulerAppointmentItem args)
+    {
+        DxSchedulerFieldResource.InvokeAppointmentUpdated(DxSchedulerFieldResource, args);
+        StateHasChanged();
+    }
+
+    private void AppRemoving(SchedulerAppointmentOperationEventArgs args)
+    {
+        args.Cancel = false;
+        DxSchedulerFieldResource.InvokeAppointmentRemoving(DxSchedulerFieldResource, args);
+        if (DxSchedulerFieldResource.cancel)
+        {
+            args.Cancel = true;
+        }
+        StateHasChanged();
+    }
+
+    private void AppRemoved(DxSchedulerAppointmentItem args)
+    {
+        DxSchedulerFieldResource.InvokeAppointmentRemoved(DxSchedulerFieldResource, args);
+        StateHasChanged();
+    }
+
+    private void OnAppointmentFormShowing(SchedulerAppointmentFormEventArgs args)
+    {
+        args.Cancel = false;
+        DxSchedulerFieldResource.cancel = false;
+        args.FormInfo = new CustomAppointmentFormInfo(args.Appointment, DxSchedulerFieldResource.DataStorage);
+        DxSchedulerFieldResource.InvokeAppointmentFormShowing(DxSchedulerFieldResource, args);
+        if (DxSchedulerFieldResource.cancel)
+        {
+            args.Cancel = true;
+        }
+        StateHasChanged();
+    }
+
+    private void OnAppointmentFormClosing(SchedulerAppointmentFormClosingEventArgs e)
+    {
+        DxSchedulerFieldResource.cancel = false;
+        StateHasChanged();
+    }
+
+    private void OnPopupClosed()
+    {
+        PopupVisible = false;
+        DxSchedulerFieldResource.popupVisible = false;
+        StateHasChanged();
+    }
+
+    public class CustomAppointmentFormInfo : SchedulerAppointmentFormInfo
+    {
+        public CustomAppointmentFormInfo(DxSchedulerAppointmentItem appointmentItem, DxSchedulerDataStorage dataStorage) : base(appointmentItem, dataStorage) { }
+        [Required]
+        public override string Subject
+        {
+            get { return base.Subject; }
+            set { base.Subject = value; }
+        }
+        public string PackageCount
+        {
+            get { return CustomFields["PackageCount"].ToStr(); }
+            set { CustomFields["PackageCount"] = value; }
+        }
+        public string SrlNo
+        {
+            get { return CustomFields["SrlNo"].ToStr(); }
+            set { CustomFields["SrlNo"] = value; }
+        }
+        public int Capacity
+        {
+            get { return CustomFields["Capacity"].ToInt(); }
+            set { CustomFields["Capacity"] = value; }
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        PopupVisible = DxSchedulerFieldResource.popupVisible;
+        if (PopupVisible)
+        {
+            InvokeAsync(StateHasChanged);
+        }
+
+    }
+
+}

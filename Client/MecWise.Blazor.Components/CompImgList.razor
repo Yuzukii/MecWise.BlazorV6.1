@@ -1,0 +1,198 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@using System.Text.RegularExpressions
+
+@inject IJSRuntime JSRuntime
+@inject SessionState Session
+    
+@if (ImgListField.DataSource == null)
+{
+    <p>Loading...</p>
+}
+else //if (ImgListField.prevDataSource.ToStr() != ImgListField.DataSource.ToStr())
+{
+    <div class="imageListContainer">
+        <div id="ImageListLayoutType" class="d-none" field-type="text">v</div>
+        <div title="" class="imagelist-option float-right" data-original-title="Arrange by" data-toggle="tooltip">
+            <div class="btn-group" data-toggle="btn-toggle">
+                <button onclick="setlayout(this,'h',@imgCol)" class="btn btn-default active btnLayoutH" type="button"><i class="fa fa-arrows-h text-green"></i></button>
+                <button onclick="setlayout(this,'v',@imgCol)" class="btn btn-default btnLayoutV" type="button"><i class="fa fa-th  text-green"></i></button>
+            </div>
+        </div>
+        <div class="outer-shopping-container-h" style="clear:both">
+            <div class="inner-shopping-container-h">
+                <div class="shopping">
+                    <!-- Shopping items content -->
+                    <div class="shopping-content">
+                        <div class="row">
+                            @foreach (var item in ImgListField.DataSource)
+                            {
+                                <div class="shopping-item-container-h">
+                                    <!-- Shopping items -->
+                                    <div class="shopping-item shopping-h-border" @onclick="@(e => EpfImgList_OnItemClick(item))">
+                                        <div class="shopping-item-img-wrapper">
+                                            <!-- Image -->
+                                            @{ ItemImgSrc = ImgURL.Replace("IMG_URL", item[ImgColName].ToString() + "?" + DateTime.Now.Ticks.ToString()); }
+                                            <img id="imgId" class="shopping-img" runat="server" field-type="itemImage" src="@ItemImgSrc" alt="">
+                                        </div>
+                                        &nbsp;
+                                        @if (!String.IsNullOrEmpty(item[QntyColName].ToString()) && Regex.IsMatch(item[QntyColName].ToString(), @"^\d+$"))
+                                        {
+                                            @if ((!String.IsNullOrEmpty(DiscColName) && !String.IsNullOrEmpty(PromoColName)))
+                                            {
+                                                @if (String.IsNullOrEmpty(item[DiscColName].ToString()) && item[PromoColName].ToDbl() == 0)
+                                                {
+                                                    <span class="clsImageDesc"><h4 class="pull-left col-md-7 col-7" style="margin-top: 15px;"><a style="color:#007bff">@item[DescColName].ToString()</a></h4><span class="item-price pull-right" style="margin-top: 15px;">@item[PriceColName].ToString()</span><div class="clearfix"></div></span>
+                                                }
+                                                else
+                                                {
+                                                    @if (!String.IsNullOrEmpty(item[DiscColName].ToString()) && item[PromoColName].ToDbl() > 0)
+                                                    {
+                                                        <span class="clsImageDesc"><h4 class="pull-left col-md-7 col-7"><a style="color:#007bff">@item[DescColName].ToString()</a></h4><span class="item-price pull-right"><del>@item[PriceColName].ToString()</del></span><div class="clearfix"></div></span>
+                                                        <span class="clsImageDesc"><span class="pull-left disc-item col-md-10 col-10"><a style="color:#ff0000;">@item[DiscColName].ToString()</a></span><span class="disc-price pull-right">$@item[PromoColName].ToString()</span><div class="clearfix"></div></span>
+                                                    }
+                                                    else if (!String.IsNullOrEmpty(item[DiscColName].ToString()) && item[PromoColName].ToDbl() == 0)
+                                                    {
+                                                        <span class="clsImageDesc"><h4 class="pull-left col-md-7 col-7"><a style="color:#007bff">@item[DescColName].ToString()</a></h4><span class="item-price pull-right">@item[PriceColName].ToString()</span><div class="clearfix"></div></span>
+                                                        <span class="clsImageDesc"><span class="pull-left disc-item col-md-10 col-10"><a style="color:#ff0000;">@item[DiscColName].ToString()</a></span><div class="clearfix"></div></span>
+                                                    }
+                                                    else if (String.IsNullOrEmpty(item[DiscColName].ToString()) && item[PromoColName].ToDbl() > 0)
+                                                    {
+                                                        <span class="clsImageDesc"><h4 class="pull-left col-md-7 col-7"><a style="color:#007bff">@item[DescColName].ToString()</a></h4><span class="item-price pull-right"><del>@item[PriceColName].ToString()</del></span><div class="clearfix"></div></span>
+                                                        <span class="clsImageDesc"><span class="disc-price pull-right">$@item[PromoColName].ToString()</span><div class="clearfix"></div></span>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @if (!String.IsNullOrEmpty(PriceColName))
+                                                {
+                                                    @if (IsModi == true)
+                                                    {
+                                                        <span class="clsImageDesc"><h4 class="float-left col-md-7 col-7" style="margin-top: 15px;"><a style="color:#007bff">@item[DescColName].ToString()</a></h4><span class="item-price float-right" style="margin-top: 15px;">@item[PriceColName].ToString()</span><div class="clearfix"></div></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="clsImageDesc"><h4 class="float-left item-desc col-md-7 col-7" style="margin-top: 15px;"><a style="color:#007bff">@item[DescColName].ToString()</a></h4><span class="item-price float-right" style="margin-top: 15px;">@item[PriceColName].ToString()</span><div class="clearfix"></div></span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="clsImageDesc"><h4 class="pull-left col-md-7 col-7"><a style="color:#007bff">@item[DescColName].ToString()</a></h4></span>
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @*<span class="clsImageDesc">@item[ImgListField.DescColName].ToString()</span>*@
+                                            <span class="clsImageDesc"><h4 class="pull-left col-md-7 col-7"><a style="color:#007bff">@item[DescColName].ToString()</a></h4></span>
+                                        }
+
+                                        <!-- Shopping item hover block & link -->
+                                        <div class="item-hover br-red hidden-xs" style="color: #007bff"></div>
+
+                                        <a class="link hidden-xs">Select</a>
+                                        <!-- Count tag -->
+                                        @if (!String.IsNullOrEmpty(item[QntyColName].ToString()))
+                                        {
+                                            //if (Regex.IsMatch(item[QntyColName].ToString(), @"^\d+$") && item[QntyColName].ToString() != "0" && item[QntyColName].ToString() != "0.00")
+                                            //if (Regex.IsMatch(item[QntyColName].ToString(), @"^[0-9]([.,][0-9]{1,3})?$") && item[QntyColName].ToString() != "0" && Convert.ToDecimal(item[QntyColName].ToString()) > 0)
+                                            if (decimal.TryParse(item[QntyColName].ToString(), out decimal n) && item[QntyColName].ToString() != "0" && Convert.ToDecimal(item[QntyColName].ToString()) > 0)
+                                            {
+                                                <span class="quantity-tag br-red">@item[QntyColName].ToString()</span>
+                                            }
+                                        }
+                                        @*<asp:HiddenField ID="hidKey" runat="server" />*@
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public FieldImgList ImgListField { get; set; }
+
+    [Parameter]
+    public EventCallback<JToken> OnImgItemClick { get; set; }
+
+    public JObject DataSource { get; set; }
+
+    public Dictionary<string, JObject> DataColumnInfos { get; set; }
+
+    string ItemImgSrc = String.Empty;
+    bool IsModi = false; int imgCol = 3;
+
+    string ImgColName = ""; string QntyColName = ""; string DescColName = ""; string PriceColName = ""; string PromoColName = ""; string DiscColName = "";string ImgURL = "";
+
+    string defImgSrc = "default.jpg";
+
+    protected override Task OnParametersSetAsync()
+    {
+        ImgColName = ImgListField.ImgColName;
+        QntyColName = ImgListField.QntyColName;
+        DescColName = ImgListField.DescColName;
+        PriceColName = ImgListField.PriceColName;
+        if (!String.IsNullOrEmpty(ImgListField.PromoColName)) PromoColName = ImgListField.PromoColName;
+        if (!String.IsNullOrEmpty(ImgListField.DiscColName)) DiscColName = ImgListField.DiscColName;
+        ImgURL = ImgListField.IMG_URL;
+        IsModi = ImgListField.IsModi;
+        imgCol = ImgListField.IMG_COL;
+        defImgSrc = ImgURL.Replace("IMG_URL", defImgSrc + "?" + DateTime.Now.Ticks.ToString());
+        return base.OnParametersSetAsync();
+    }
+    protected override Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync");
+        imgCol = ImgListField.IMG_COL;
+        //ImgColName = ImgListField.ImgColName;
+        //QntyColName = ImgListField.QntyColName;
+        //DescColName = ImgListField.DescColName;
+        //PriceColName = ImgListField.PriceColName;
+        //if (!String.IsNullOrEmpty(ImgListField.PromoColName))  PromoColName = ImgListField.PromoColName;
+        //if (!String.IsNullOrEmpty(ImgListField.DiscColName)) DiscColName = ImgListField.DiscColName;
+        //ImgURL = ImgListField.IMG_URL;
+        //IsModi = ImgListField.IsModi;
+        //defImgSrc = ImgURL.Replace("IMG_URL", defImgSrc + "?" + DateTime.Now.Ticks.ToString());
+        return base.OnInitializedAsync();
+    }
+
+
+    protected override bool ShouldRender()
+    {
+        if (ImgListField.prevDataSource != ImgListField.DataSource)
+        {
+            ImgListField.prevDataSource = ImgListField.DataSource;
+            return true;
+        }
+        if (ImgListField.Render)
+        {
+            ImgListField.Render = false;
+            return true;
+        }
+        return false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //if (firstRender)
+        //{
+        await JSRuntime.InvokeAsync<object>("RenderImageList");
+        await JSRuntime.InvokeAsync<object>("FixBrokenItemImages", defImgSrc);
+        //}
+    }
+
+    private void EpfImgList_OnItemClick(JToken clickItem)
+    {
+        ImgListField.prevDataSource = new JArray();
+        ImgListField.InvokeOnImgItemClick(ImgListField, clickItem);
+        OnImgItemClick.InvokeAsync(clickItem);
+    }
+
+}
+

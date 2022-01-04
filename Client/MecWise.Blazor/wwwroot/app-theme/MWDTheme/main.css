@@ -1,0 +1,582 @@
+﻿/****************************************************
+                    LOGIN
+*****************************************************/
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-color: white;
+    background-image: url('logon.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 0.9;
+}
+
+    .login input {
+        padding: 10px 10px;
+        font-size: 1.1rem;
+        z-index: 999;
+        height: 46px;
+    }
+
+    .login button {
+        padding: 10px 10px;
+        font-size: 1rem;
+        z-index: 999;
+        height: 46px;
+        margin-top: 15px;
+    }
+
+
+.login-container {
+    position: absolute;
+    width: 50vw;
+    min-width: 350px;
+    max-width: 450px;
+    min-height: 400px;
+    /* border: 1px solid silver; */
+    background-color: rgba(255, 255, 255, 0.5);
+    padding-top: 40px;
+    border-top: 0;
+    color: #666;
+}
+
+    .login-container .container .container-fluid div .row .col-6 {
+        margin-left: 50%;
+    }
+
+
+.login-title {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    font-size: large;
+}
+
+.login-logo-container {
+    background-image: url('mecwiseLogo.png');
+    height: 70px;
+    width: auto;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding-bottom: 100px;
+    mix-blend-mode: multiply;
+}
+
+.home {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url('Landing.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 0.9;
+}
+
+/****************************************************
+                 BANNER & MENU
+*****************************************************/
+.menu {
+    font-size: 1.1rem;
+    /* background: linear-gradient(to right, #802b86, #2f43b6); */
+    background: linear-gradient(141deg, #1d9ebd 0%, #39bfe0 51%, #1a9dbd 75%);
+}
+
+.menu-mobile {
+    font-size: 1.1rem;
+   /*  background: linear-gradient(to right, #802b86, #2f43b6); */
+    background: linear-gradient(141deg, #1d9ebd 0%, #39bfe0 51%, #1a9dbd 75%);
+    height: 70px;
+}
+
+.banner-logo {
+    width: 110px;
+    height: 60px;
+    margin: 5px;
+    border-radius: 10px;
+    content: url('BannerLogo.jpg');
+}
+
+.nav-color {
+    color: silver !important;
+}
+
+a.nav-color:hover {
+    color: #007bff !important;
+}
+
+a.nav-color:focus {
+    color: white !important;
+}
+
+.dropdown-menu-custom {
+    width: 300px;
+    background-color: #2B366F;
+}
+
+    .dropdown-menu-custom .nav-color {
+        color: #c8c8c8 !important;
+    }
+
+.tbar-small-color {
+    color: black;
+    /* background-color: #D4C5DB; */
+    background-color: #39bfe0;
+}
+
+.tbar-underline {
+    /* background-color: #802C87; */
+    background-color: #1d9ebd;
+    height: 3px;
+    border-bottom: 1px solid silver;
+    width: 100%;
+    /*background: linear-gradient(to right, #802b86, #2f43b6);*/
+}
+
+/****************************************************
+                MOBILE SLIDE MENU
+*****************************************************/
+.navbar-toggler, .navbar-back {
+    color: silver !important;
+    font-size: 1.5rem;
+    margin-right: 2vw;
+}
+
+.sidenav.show {
+    width: 100%;
+}
+
+.sidenav {
+    position: fixed;
+    top: 0px;
+    width: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: auto;
+    height: auto;
+    width: 0px;
+    z-index: 2000;
+    margin-top: 110px;
+}
+
+    .sidenav.show .sidenav-overlay {
+        display: block;
+    }
+
+    .sidenav.show .sidenav-content {
+        width: 100%;
+    }
+
+.sidenav-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    background-color: #3a5b89;
+}
+
+.sidenav-content {
+    position: fixed;
+    top: 0px;
+    width: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: auto;
+    transition: all 0.15s ease-out 0s;
+    height: auto;
+    width: 0px;
+    color: #4D5787;
+    background: #e0e0e0;
+    z-index: 2000;
+    margin-top: 70px;
+    overflow-y: auto;
+}
+
+.sidenav a {
+    padding: 15px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    background: #FAF8F9;
+    height: 50px;
+}
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    /*font-size: 36px;*/
+    margin-left: 50px;
+}
+
+.sidenav .nav-color {
+    color: #3a5b89 !important;
+    border-bottom: 1px solid #efe7e7;
+}
+
+.nav-logout {
+    color: red !important;
+    border-bottom: 1px solid #efe7e7;
+    border-top: 1px solid #efe7e7;
+}
+
+.arrow-icon {
+    float: right;
+    margin-right: 12px;
+}
+
+.gap-before-logout {
+    height: 50px;
+}
+
+/****************************************************
+          MOBILE BOTTOM QUICK ACCESS MENU
+*****************************************************/
+.nav-quick-access {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    /* background: linear-gradient(to right, #802b86, #2f43b6); */
+    background: linear-gradient(141deg, #1d9ebd 0%, #39bfe0 51%, #1a9dbd 75%);
+    display: flex;
+    align-items: center;
+    color: white;
+    z-index: 1020;
+}
+
+    .nav-quick-access a {
+        font-size: 2.5rem;
+    }
+
+    .nav-quick-access a {
+        font-size: 2.5rem;
+    }
+
+
+
+.unread {
+    position: relative;
+}
+
+    .unread .background {
+        position: absolute;
+        font-size: 2rem;
+        top: -4px;
+        color: red;
+        right: -10px;
+    }
+
+    .unread .num {
+        position: absolute;
+        font-size: 0.4em;
+        top: 0px;
+        color: white;
+        right: -10px;
+        text-align: center;
+        width: 2rem;
+        height: 2rem;
+    }
+
+
+
+
+/****************************************************
+                 SIDE MENU
+*****************************************************/
+.side-menu-bar {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.side-menu-top-row {
+    /*padding: 0;
+    display: block;*/
+    background-color: rgba(0,0,0,0.4);
+}
+
+.side-menu-brand {
+    font-size: 1.5rem;
+    /*color: transparent !important;
+    width: 100%;
+    height: 100%;
+    background-image: url(MecwiseLogo.png);
+    background-repeat: no-repeat;
+    background-size: cover;*/
+}
+
+.side-menu-toggler {
+}
+
+.side-menu-toggler-icon {
+}
+
+.side-menu-item {
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+}
+
+    .side-menu-item > a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+.side-menu-body-top-row {
+    /*display: none !important;*/
+}
+
+.side-menu-body {
+}
+
+
+
+
+
+/****************************************************
+                 OTHERS
+*****************************************************/
+.modal.fade {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-backdrop.fade {
+    opacity: 0;
+}
+
+.field-label.font-weight-bold, .sub-banner {
+    font-size: 1.1rem !important;
+    padding-left: 0px !important;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.uppercase {
+    text-transform: uppercase !important;
+}
+
+.lowercase {
+    text-transform: lowercase !important;
+}
+
+.normal {
+    text-transform: none;
+}
+
+
+.dx-loadpanel-message {
+    text-align: center;
+    font-size: 12px;
+}
+
+.dx-datagrid-addrow-button {
+    display: none;
+}
+
+.dx-editor-cell .dx-texteditor.dx-state-disabled .dx-texteditor-input {
+    background: #DFDFDF;
+}
+
+.bootstrap-dialog-message {
+    white-space: pre-wrap;
+}
+
+.vh-25 {
+    height: 25vh;
+}
+
+.vh-50 {
+    height: 50vh;
+}
+
+.vh-75 {
+    height: 75vh;
+}
+.form-control-mandatory input, .form-control-mandatory textarea {
+    background-color: #CBFEFF !important;
+}
+
+.form-control-mandatory .dx-state-readonly input, .form-control-mandatory .dx-state-readonly textarea, input.field-picklist-disabled {
+    background-color: #F8F5F0 !important;
+}
+.nav-tabs > li > a {
+    background-color: #f8f5f0;
+    border-color: #dfd7ca;
+    color: #98978b;
+    margin: 1px;
+}
+
+    .nav-tabs > li > a:hover {
+        color: #444 !important;
+    }
+
+    .nav-tabs > li > a.active {
+        color: #444 !important;
+    }
+
+        .nav-tabs > li > a.active:hover {
+            color: #444 !important;
+        }
+
+.nav-link {
+    display: block;
+    padding: 1rem 1rem;
+    height: 40px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #3c8dbc;
+    border-color: #367fa9;
+}
+
+    .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+        background-color: #367fa9 !important;
+        border-color: #367fa9 !important;
+        box-shadow: none;
+    }
+
+    .btn-primary.disabled, .btn-primary:disabled {
+        color: #fff;
+        background-color: #367fa9;
+        border-color: #367fa9;
+    }
+
+.dialog-title {
+    background-color: #337ab7;
+    color: white;
+}
+
+.dx-state-readonly {
+    background-color: #F8F5F0 !important;
+}
+
+.form-control[readonly] {
+    background-color: #F8F5F0;
+    opacity: 1;
+}
+
+.top-buffer-small {
+    margin-top: 5px;
+}
+
+.top-buffer-medium {
+    margin-top: 10px;
+}
+
+.top-buffer-large {
+    margin-top: 15px;
+}
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.35715;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+
+/*#blazor-error-ui {
+    background: white;
+    top: 70px;
+    left: 0;
+    display: none;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .content {
+        background: lightyellow;
+        display: block;
+        border: 1px solid lightgray;
+    }
+
+    #blazor-error-ui .title {
+        display: block;
+        font-size: 2rem;
+    }
+
+    #blazor-error-ui .message {
+        margin-top: 5px;
+    }
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }*/
+
+#blazor-error-ui {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.75); /* Black background with opacity */
+    z-index: 1021; /* Specify a stack order in case you're using a different order for other elements */
+    /*text-align: center;*/
+}
+
+    #blazor-error-ui .title {
+        display: block;
+        font-size: 2rem;
+    }
+
+    #blazor-error-ui .message {
+        margin-top: 5px;
+    }
+
+    #blazor-error-ui #error-content {
+        font-size: 1.2em;
+        width: 400px;
+        padding: 25px;
+        border-radius: 10px;
+        color: inherit;
+        background-color: lightyellow;
+        /*border-color: white;
+        border-width: 3px;
+        border-style: solid;*/
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+@media (max-width: 767px) {
+    /* For mobiles: */
+
+}
+
+@media (min-width: 768px) {
+    /* For tablets: */
+
+}
+
+@media (min-width: 1024px) {
+    /* For desktop: */
+
+}

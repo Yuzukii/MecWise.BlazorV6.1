@@ -1,0 +1,42 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime
+
+
+@if (ImageField == null) {
+    <p>Loading</p>
+}
+else {
+
+    <div id="@(ImageField.ElementID + "_Container")" class="p-0 col @ImageField.StyleClassWidth">
+        <div id="@(ImageField.ElementID + "_SubContainer")" class="col">
+            <img id="@ImageField.ElementID" src="@ImageField.Source" alt="@ImageField.Description" class="col field-image @ImageField.StyleClass" @onclick="InvokeClickEvent" 
+                 style="height:@(string.Format("{0}px",ImageField.Height))" />
+        </div>
+    </div>
+
+}
+
+
+@code {
+
+    //string _style = "";
+    //string _styleWidth = "";
+
+    [Parameter]
+    public FieldImage ImageField { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldClickEventArgs> OnClick { get; set; }
+
+    protected override Task OnParametersSetAsync() {
+        return base.OnParametersSetAsync();
+    }
+
+    private void InvokeClickEvent() {
+        ImageField.InvokeOnClick(ImageField, new FieldClickEventArgs());
+        OnClick.InvokeAsync(new FieldClickEventArgs());
+    }
+
+}
+

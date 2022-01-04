@@ -1,0 +1,35 @@
+﻿
+.field-picklist {
+    z-index: 0;
+    font-size: 1rem;
+    padding-left: 7px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    min-height: 30px;
+}
+
+.field-picklist-button {
+    font-size: 1rem;
+    min-height: 27px;
+    padding-left: 7px;
+    border-color: #ced4da #ced4da #ced4da;
+    width: 32px;
+    background-color: #fff;
+}
+
+.field-picklist-disabled {
+    background-color: #F8F5F0;
+    border: 1px solid #EEEEEE;
+}
+
+.field-picklist-pickonly {
+    background-color: #F0F8FF !important;
+}
+
+.field-picklist-text-area {
+    resize: none
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #999999;
+}

@@ -1,0 +1,59 @@
+﻿@page "/EpfMenuPage"
+@page "/EpfMenuPage/{MENU_ID:int}"
+
+
+@inject SessionState Session;
+
+@if (_menuPage != null)
+{
+    @*<div class="px-3">
+        <CompTitleBar TitleBarField="@_mtbar" />
+    </div>*@
+    
+    <div class="masonry-layout menuPage">
+
+        @{_index = 0;}
+        @while (_index < _menuPage.MENU_ITEMS.Count)
+        {
+            <div class="masonry-layout__panel">
+                <div class="masonry-layout__panel-content">
+                    <EpfMenuItem Item="@_menuPage.MENU_ITEMS[_index]" />
+                </div>
+            </div>
+
+            _index += 1;
+        }
+
+    </div>
+
+}
+else{
+  <p>Loading...</p>
+}
+
+@code{
+    int _index = 0;
+
+    FieldTitleBar _mtbar = new FieldTitleBar();
+    EPF_BLZ_MNU_PAGE _menuPage;
+
+    [Parameter]
+    public int MENU_ID { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        bool mobile = false;
+        if (Session.AppConfig.mobileMenuDrawer && Session.IsMobileScreen()) {
+            mobile = true;
+        }
+        string url = string.Format("Menu/GetMenu/{0}/{1}/{2}/{3}/{4}", Session.UserID, Session.LangId, true, MENU_ID, mobile);
+        var pages = await Session.GetJsonAsync<List<EPF_BLZ_MNU_PAGE>>(Session.GetAbsoluteApiUrl(url));
+        if (pages.Count > 0)
+        {
+            _menuPage = pages[0];
+            _mtbar.TitleText = _menuPage.MENU_NAME;
+        }
+    }
+
+
+}

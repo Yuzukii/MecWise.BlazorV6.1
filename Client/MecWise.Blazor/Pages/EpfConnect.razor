@@ -1,0 +1,53 @@
+﻿@page "/EpfConnect"
+@page "/EpfConnect/{SystemToConnect}/{RedirectUri}"
+@page "/EpfConnect/{SystemToConnect}/{RedirectUri}/{CurrentWindow:bool}/{Popup:bool}"
+@page "/EpfConnect/{SystemToConnect}/{RedirectUri}/{CurrentWindow:bool}/{Popup:bool}/{UseFrame:bool}"
+
+@inject SessionState Session
+
+@if (_loading) {
+    <CompLoadPanel></CompLoadPanel>
+}
+else {
+    if (UseFrame) {
+        <iframe id="_epfConnectIframe" src="@_frameSource" style="width:100%; border: none;" onLoad="_epfConnect_hideV5NavBar();"></iframe>
+    }
+}
+
+@code {
+
+    bool _loading = true;
+    string _frameSource = "";
+
+    [Parameter]
+    public string SystemToConnect { get; set; } = "";
+
+    [Parameter]
+    public string RedirectUri { get; set; }
+
+    [Parameter]
+    public bool CurrentWindow { get; set; } = false;
+
+    [Parameter]
+    public bool Popup { get; set; } = false;
+
+    [Parameter]
+    public bool UseFrame { get; set; } = false;
+
+
+    protected override async Task OnInitializedAsync() {
+        if (SystemToConnect == "ver5") {
+            string ver5BaseUrl = Session.AppConfig.v5ConnectRoot;
+            if (!UseFrame) {
+                if (!string.IsNullOrEmpty(ver5BaseUrl)) {
+                    await Session.NavigateV5URLAsync(ver5BaseUrl, RedirectUri, Popup, Session.IsAdmin, CurrentWindow);
+                }
+            }
+            else {
+                _frameSource = await Session.GetV5URLAsync(ver5BaseUrl, RedirectUri, Session.IsAdmin);
+            }
+            _loading = false;
+        }
+    }
+
+}

@@ -1,0 +1,63 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime
+
+
+@if (ButtonField == null) {
+    <p>Loading</p>
+}
+else {
+
+    <div class="p-0 col @ButtonField.StyleClassWidth field-button-container">
+        <div class="col field-button-wrapper">
+            @if (ButtonField.Disabled) {
+                <button id="@ButtonField.ID" class="col btn field-button @ButtonField.StyleClass" type="button" disabled>
+                    <span class="@ButtonField.IconCssClass" aria-hidden="true"></span>
+                    <span class="field-button-label" aria-hidden="true">@ButtonField.Description</span>
+                </button>
+            }
+            else {
+                <button id="@ButtonField.ElementID" class="col btn field-button @ButtonField.StyleClass" type="button"
+                        @onclick="InvokeClickEvent">
+                    <span class="@ButtonField.IconCssClass" aria-hidden="true"></span>
+                    <span class="field-button-label" aria-hidden="true">@ButtonField.Description</span>
+                </button>
+            }
+
+        </div>
+    </div>
+
+    @*<button id="@ButtonField.ID" class="col btn btn-outline-primary field-button @ButtonField.StyleClass @ButtonField.StyleClassWidth" type="button"
+            @onclick="InvokeClickEvent">
+        <span class="@ButtonField.IconCssClass" aria-hidden="true"></span>@ButtonField.Description
+    </button>*@
+}
+
+
+@code {
+
+    //string _style = "";
+    //string _styleWidth = "";
+
+    [Parameter]
+    public FieldButton ButtonField { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldClickEventArgs> OnClick { get; set; }
+
+    protected override Task OnParametersSetAsync() {
+        //set btn-primary as default if no boostrap button class
+        if (!ButtonField.StyleClass.Contains("btn-")) {
+            ButtonField.StyleClass = "btn-primary";
+        }
+        StateHasChanged();
+        return base.OnParametersSetAsync();
+    }
+
+    private void InvokeClickEvent() {
+        ButtonField.InvokeOnClick(ButtonField, new FieldClickEventArgs());
+        OnClick.InvokeAsync(new FieldClickEventArgs());
+    }
+
+}
+

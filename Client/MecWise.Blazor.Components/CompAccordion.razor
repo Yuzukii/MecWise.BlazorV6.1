@@ -1,0 +1,143 @@
+﻿@using Microsoft.JSInterop
+@using Newtonsoft.Json.Linq
+@inject IJSRuntime JSRuntime;
+
+@if (AccordionField == null)
+{
+    <p>Loading</p>
+}
+else
+{
+    <div class="field-accordion">
+        @if (AccordionField.ShowTitleBar)
+        {
+            <CompTitleBar TitleBarField="AccordionField.TitleBar" onMenuItemClick="titlebar_OnMenuItemClick"></CompTitleBar>
+        }
+        <div class="container-fluid">
+
+            <div class="row" style="overflow-x: auto">
+                <div class="col" id="@AccordionField.ID" field-type="@AccordionField.GetFieldType()"></div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+
+@code {
+
+    JObject dxFieldProp = new JObject();
+
+    [Parameter]
+    public FieldAccordion AccordionField { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldChangeEventArgs> OnItemDetailClick { get; set; }
+
+    [Parameter]
+    public EventCallback<FieldClickEventArgs> OnAddNewClick { get; set; }
+
+
+    private void titlebar_OnMenuItemClick(FieldTitleBarMenuItem item)
+    {
+        if (item is FieldTitleBarMenuItemNew)
+        {
+            AccordionField.InvokeOnAddNewClick(AccordionField, null);
+            OnAddNewClick.InvokeAsync(null);
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (AccordionField.Render) {
+            await InitFieldPropAsync();
+            AccordionField.Render = false;
+        }
+
+    }
+
+    private async Task InitFieldPropAsync()
+    {
+        if (AccordionField != null)
+        {
+            if (AccordionField.ShowTitleBar)
+            {
+                AccordionField.TitleBar.Description = AccordionField.Description;
+                AccordionField.TitleBar.SubTitle = true;
+
+                if (AccordionField.ShowTitleBarAddNew)
+                {
+
+                    if (AccordionField.TitleBar.MenuItemList.Find(x => x is FieldTitleBarMenuItemNew) == null)
+                    {
+                        AccordionField.TitleBar.MenuItemList.Add(new FieldTitleBarMenuItemNew());
+                    }
+
+                }
+            }
+
+            dxFieldProp = AccordionField.GetFieldProp();
+            await JSRuntime.InvokeAsync<object>("_assign_field_prop", AccordionField.ID, dxFieldProp.ToString());
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeAsync<object>("controlEventHandler", AccordionField.ID, "EventCallBackMethod", DotNetObjectReference.Create(this));
+            await JSRuntime.InvokeAsync<object>("_render_field", AccordionField.ID);
+            dxFieldProp = AccordionField.GetFieldProp();
+            await JSRuntime.InvokeAsync<object>("_assign_field_prop", AccordionField.ID, dxFieldProp.ToString());
+        }
+
+        if (AccordionField != null)
+        {
+            AccordionField.Render = false;
+        }
+    }
+
+    protected override bool ShouldRender() {
+        if (AccordionField.Render)
+        {
+            AccordionField.Render = false;
+            return true;
+        }
+        return false;
+    }
+
+    [JSInvokable]
+    public void EventCallBackMethod(string jsonEventData)
+    {
+        JObject jObj = JObject.Parse(jsonEventData);
+
+        if (jObj["EventType"].ToString() == "onDetailClick") {
+            AccordionField.Value = jObj["Value"];
+
+            FieldChangeEventArgs args = new FieldChangeEventArgs();
+            args.FieldId = jObj["FieldId"].ToString();
+            args.PreviousValue = jObj["PreviousValue"].ToString();
+            args.Value = jObj["Value"].ToString();
+            args.DataSource = JObject.FromObject(jObj["Value"]);
+
+            AccordionField.InvokeOnItemDetailClick(AccordionField, args);
+        }
+        else if (jObj["EventType"].ToString() == "onRowRemoving" || jObj["EventType"].ToString() == "onDownloadClick") {
+            AccordionField.Value = jObj["Value"];
+
+            FieldGridActionEventArgs args = new FieldGridActionEventArgs();
+            args.FieldId = jObj["FieldId"].ToString();
+            args.PreviousValue = jObj["PreviousValue"].ToString();
+            args.Value = jObj["Value"].ToString();
+            args.DataSource = JObject.FromObject(jObj["Value"]);
+            args.EventType = jObj["EventType"].ToString().ToEnum<FieldGridActionEventType>();
+
+            AccordionField.InvokeOnAccordionAction(this.AccordionField, args);
+        }
+
+    }
+
+}
+
+

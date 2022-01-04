@@ -1,0 +1,1664 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+MecWise.WorkflowCommon
+</name>
+</assembly>
+<members>
+<member name="T:MecWise.WorkflowCommon.RecipientRole">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recipent Role Enum
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Approver">
+ -----------------------------------------------------------------------------
+ <summary>
+ Approver
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend2">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend2
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend3">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend3
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend4">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend4
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend5">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend5
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend6">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend6
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend7">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend7
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend8">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend8
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend9">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend9
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend10">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend10
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend11">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend11
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend12">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend12
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend13">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend13
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend14">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend14
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Recommend15">
+ -----------------------------------------------------------------------------
+ <summary>
+ Recommend15
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Notify">
+ -----------------------------------------------------------------------------
+ <summary>
+ Notification
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Certification">
+ -----------------------------------------------------------------------------
+ <summary>
+ Certification (C1)
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.RecipientRole.Certification0">
+ -----------------------------------------------------------------------------
+ <summary>
+ Certification0 (C0)
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="T:MecWise.WorkflowCommon.WorkflowType">
+ -----------------------------------------------------------------------------
+ <summary>
+ Workflow Type enum
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.WorkflowType.Serial">
+ -----------------------------------------------------------------------------
+ <summary>
+ Serial Workflow
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.WorkflowType.Notify">
+ -----------------------------------------------------------------------------
+ <summary>
+ Notification Workflow
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="T:MecWise.WorkflowCommon.DueAction">
+ -----------------------------------------------------------------------------
+ <summary>
+ Action to be taken when workflow is due
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.DueAction.AutoApprove">
+ -----------------------------------------------------------------------------
+ <summary>
+ Auto Approve 
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.DueAction.AutoDeny">
+ -----------------------------------------------------------------------------
+ <summary>
+ Auto Deny
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.DueAction.SendReminder">
+ -----------------------------------------------------------------------------
+ <summary>
+ Send Reminders
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="F:MecWise.WorkflowCommon.DueAction.None">
+ -----------------------------------------------------------------------------
+ <summary>
+ None
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="T:MecWise.WorkflowCommon.modCommon">
+ -----------------------------------------------------------------------------
+ <summary>
+ Common Module
+ </summary>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.modCommon.WFConnection(ePlatform.CommonClasses.EPSession@,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Workflow Connection
+ </summary>
+ <param name="currConn">The Active connection</param>
+ <param name="recipCompCode">Recipient Company Code</param>
+ <returns>EP Session object containing a reference to the recipient database</returns>
+ <remarks>
+ Gets the connection information from connectInfo.config
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.modCommon.FromWorkflowType(MecWise.WorkflowCommon.WorkflowType)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the string repesentation for the WorkflowType enum
+ </summary>
+ <param name="wfType">Workflow Type enum</param>
+ <returns>The string repesentation for the WorkflowType enum</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.modCommon.FromRecipentRole(MecWise.WorkflowCommon.RecipientRole)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the string representation of RecipentRole enum
+ </summary>
+ <param name="role">RecipentRole enum</param>
+ <returns>The string representation of RecipentRole enum</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.modCommon.FromDueAction(MecWise.WorkflowCommon.DueAction)">
+ <summary>
+ Gets the string representation of DueAction enum
+ </summary>
+ <param name="action">DueAction enum</param>
+ <returns>The string representation of DueAction enum</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.modCommon.WFResolveRecipient(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Recipent based on the role and Symbolic Reference
+ </summary>
+ <param name="epSess"></param>
+ <param name="compCode"></param>
+ <param name="appID"></param>
+ <param name="role"></param>
+ <param name="symbolicName"></param>
+ <returns></returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="T:MecWise.WorkflowCommon.Recipient">
+ -----------------------------------------------------------------------------
+ Project	 : MecWise.WorkflowCommon
+ Class	 : WorkflowCommon.Recipient
+ 
+ -----------------------------------------------------------------------------
+ <summary>
+ Recipent class. Contains Information about a Workflow Recipient
+ </summary>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+
+ Version 3.0.5000.20, 16 Feb 2012 by Rajeeb Sharma
+ - Added new property for recipient sequence, as custom routing list is entered with wrong sequence
+
+ Version 5.0.0.15, 25-Feb-12 by Rajeeb Sharma
+ - Added new property to support recipient action due in Hours/Minutes (besides in Days)
+</member>
+<member name="M:MecWise.WorkflowCommon.Recipient.#ctor">
+ -----------------------------------------------------------------------------
+ <summary>
+ Initializes an object of type Recipient
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.CompCode">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the Recipient company code
+ </summary>
+ <value></value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.ID">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the recipient ID
+ </summary>
+ <value></value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.Name">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the name of the recipient
+ </summary>
+ <value></value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.Email">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the email address of the recipient
+ </summary>
+ <value></value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.WorkflowType">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the type of workflow to be initiated
+ </summary>
+ <value></value>
+ <remarks>Defaults to Serial</remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.Role">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the workflow role for the recipient
+ </summary>
+ <value></value>
+ <remarks>Defaults to Notify</remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.DueAction">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the default action to be taken after workflow is due
+ </summary>
+ <value></value>
+ <remarks>Defaults to SendReminder</remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.DueDays">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the value when the workflow is due
+ </summary>
+ <value></value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.ResolveRecipient">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets if a sybmolic reference as been used
+ </summary>
+ <value></value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.Sequence">
+ <summary>
+ Gets or sets the recipient sequence in the routing list
+ </summary>
+ <value></value>
+</member>
+<member name="P:MecWise.WorkflowCommon.Recipient.DueHours">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the value for recipient action due (in Minutes)
+ </summary>
+ <value></value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="T:MecWise.WorkflowCommon.RecipientCollection">
+ -----------------------------------------------------------------------------
+ Project	 : MecWise.WorkflowCommon
+ Class	 : WorkflowCommon.RecipientCollection
+ 
+ -----------------------------------------------------------------------------
+ <summary>
+ Collection of Recipient object
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.RecipientCollection.#ctor">
+ -----------------------------------------------------------------------------
+ <summary>
+ Default constructor
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.RecipientCollection.Dispose">
+ -----------------------------------------------------------------------------
+ <summary>
+ Releases memory and removes unused references and objects
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.RecipientCollection.Add(MecWise.WorkflowCommon.Recipient)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Adds a recipient to the end of the collection
+ </summary>
+ <param name="recipObj">The recipient to add</param>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.RecipientCollection.Remove(System.Int32)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Removes the Recipient at the specified index
+ </summary>
+ <param name="index">The zero-based index of the recipient to remove. </param>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.RecipientCollection.Item(System.Int32)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the recipient at the specified index.
+ </summary>
+ <param name="index">The zero-based index of the recipient to get or set. </param>
+ <value>The element at the specified index</value>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.RecipientCollection.CompanyList">
+ -----------------------------------------------------------------------------
+ <summary>
+ Returns the list of company codes of the recipients
+ </summary>
+ <value>An ArrayList containing the list of company codes</value>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="T:MecWise.WorkflowCommon.WorkflowFunctions">
+ -----------------------------------------------------------------------------
+ Project	 : MecWise.WorkflowCommon
+ Class	 : WorkflowCommon.WorkflowFunctions
+ 
+ -----------------------------------------------------------------------------
+ <summary>
+ Standard Worklow Functions. 
+ </summary>
+ <remarks>
+ Provides an API to interface with the Workflow Service
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ 
+ Version 3.0.5000.4, 16 Jul 2007 by Rajeeb Sharma
+ - Updated StartRout() to add each company to the list.
+ 
+ Version 3.0.5000.5, 27 Jul 2007 by Rajeeb Sharma
+ - Updated StartRout() to add custom recipients according to their roles.
+ - Changed the recipient sequence of the custom recipients.
+ 
+ Version 3.0.5000.6, 25 Nov 2007 by Rajeeb Sharma
+ - Added Shared global object of WorkflowRequestHelper.
+ - Store the Screen object in WorkflowRequestHelper to check for special routing list.
+ - Updated StartRout() to use global object of WorkflowRequestHelper class.
+ 
+ Version 3.0.5000.7, 18 Dec 2007 by Rajeeb Sharma
+ - Changed default RoutingCheck() to check routing list according to APP_ID settings.
+ - For example, SDA_LTA/SDA_LTC routing list checking is based on LEAV_TYPE in LEV_MF_RECIPS table.
+ 
+ Version 3.0.5000.9, 21 Apr 2009 by Rajeeb Sharma
+ - Added SRL_NO in applink for SDA_APR(Appraisal Module). Currently hard-coded checking of APP_ID.
+ 
+ Version 3.0.5000.10, 01 Jul 2009 by Rajeeb Sharma
+ - Fixed StartRout() to add higher/additional recipients in the order of recipient's role, lineNo passed to procedure.
+ - As email is being sent by service, additional recipients added in the end are not sent email notification.
+ 
+ Version 3.0.5000.11, 15 Aug 2009 by Rajeeb Sharma
+ - Added checking for recipient existing in recipient list(WF_REQUEST_RECIPS) before adding additional recipients.
+ - To cater to enhancement, where the full routing list is sent from BO in recipient collection to StartRout().
+ 
+ Version 3.0.5000.12, 06 Nov 2009 by Rajeeb Sharma
+ - Changed view name in RoutingCheck to cater routing list checking in both WF_MF_RECIPS and LEV_MF_RECIPS tables.
+ 
+ Version 3.0.5000.13, 16 Mar 2010 by Rajeeb Sharma
+ - Overloaded StartRout() to allow RequestorId specified from BO.
+ 
+ Version 3.0.5000.14, 11 May 2010 by Rajeeb Sharma
+ - Added support for Approve/Deny workflow requests from BO.
+ 
+ Version 3.0.5000.15, 18 Oct 2010 by Rajeeb Sharma
+ 
+ Version 3.0.5000.16, 05 Apr 2011 by Rajeeb Sharma
+ - Added support for Clarify workflow requests from BO.
+ 
+ Version 3.0.5000.17, 21 Jun 2011 by Rajeeb Sharma
+ - Added support for Redirect workflow requests from BO.
+ 
+ Version 3.0.5000.18, 01 Sep 2011 by Rajeeb Sharma
+ - Fixed wrong EMPE_ID used for SUBMIT_ID (in WF_REQUEST), when custom routing list (like Positiong Management) used.
+ 
+ Version 3.0.5000.19, 01 Dec 2011 by Rajeeb Sharma
+ - Support SRL_NO in APP_KEY for SDA_APR_MY App ID.
+ 
+ Version 3.0.5000.20, 05 Jan 2012 by Rajeeb Sharma
+ - Added DeleteRecipientList function missing in V3 migration
+ 
+ Version 3.0.5000.20, 16 Feb 2012 by Rajeeb Sharma
+ - Added support for Recipient Sequence specified from BO for additional recipient/custom routing list.
+   (wrong sequence and line no entered, in case of custom routing list).
+ 
+ Version 4.0.5000.2, 15 Nov 2012 by Rajeeb Sharma
+ - Added support for replacing the standard routing list by custom list completely (changed StartRout() definition).
+ 
+ Version 4.0.5000.4, 26 Aug 2013 by Yemm
+ - Fixed issue of View Document for cross-company using ROUTE_ID, changed column name as table definition changed.
+ 
+ Version 4.0.5000.5, 09 Oct 2013 by Rajeeb Sharma
+ - Added SRL_NO in APP_LINK for SDA_PRJ and SDA_6MA in both the StartRout functions.
+ 
+ Version 4.0.5000.6, 22 Apr 2014 by Rajeeb Sharma
+ - Removed hardcoded APP_IDs using custom AppLink and moved them to database to support more APP_IDs in future.
+ 
+ Version 4.0.5000.7, 03 Sep 2015 by Rajeeb Sharma
+ - Fixes for cross-company recipient info not inserted into WF_EMPE_LIST, when added from BO.
+ 
+ Version 4.0.5000.8, 02 Nov 2015 by Rajeeb Sharma
+ - Fixes for replacing SV_MF_PREFER with SV_WF_MF_PREFER and column name changes in RoutingCheck().
+ 
+ Version 4.0.5000.10, 25 Sep 2017 by Rajeeb Sharma
+ - Added retry StartRout() to avoid deadlock situation.
+ 
+ Version 5.0.0.2, 26-Mar-18 by Rajeeb Sharma
+ - Added functionality for Clarify (select specific recipient) and Clarify All for workflow requests.
+ - Added support for mandatory remarks checking and CC routing for workflow actions launched from application BOs.
+ 
+ Verison 5.0.0.3, 30-Apr-18 by Adidam Jyothirmai
+ - Added functionality for Clarify Select (select multiple recipients) for clarification.
+ 
+ Version 5.0.0.4, 16-May-18 by Adidam Jyothirmai
+ - Added functionality for Approve/Deny/Clarify/Clarify(select specific recip)/Clarify All/Clarify Select.
+   (functions to be used from application BOs)
+ 
+ Version 5.0.0.5, 17-May-18 by Adidam Jyothirmai
+ - Added functionality to auto Start workflow request (to bypass workflow service initiating request).
+ 
+ Version 5.0.0.6, 26-May-18 by Rajeeb Sharma
+ - Added support to retrieve Workflow ID for customized APP_LINK (instead of standard COMP_CODE+DOC_TYPE+DEPT_CODE+RUN_NO).
+ 
+ Version 5.0.0.8, 13-Jun-18 by Rajeeb Sharma
+ - Added support to launch customized OS for Action screen provider (instead of configured screen ID).
+ 
+ Version 5.0.0.9, 25-Jun-18 by Adidam Jyothirmai
+ - Added support for multiple values in customized APP_LINK (comma-separated column IDs may be configured).
+   (By default the APP_LINK=COMP_CODE+DOC_TYPE+DEPT_CODE+RUN_NO and previously supported additional hardcoded column SRL_NO).
+ 
+ Version 5.0.0.10, 01-Aug-18 by Rajeeb Sharma
+ - Added support for customized (Application/Approval) history screens based on preference settings.
+ 
+ Version 5.0.0.11, 05-Sep-18 by Rajeeb Sharma
+ - Added support for not to send email on specific action taken on workflow request.
+ 
+ Version 5.0.0.12, 22-May-19 by Rajeeb Sharma
+ - Fixes for delegate recipient taking Clarify action, APPROVED_BY and RECIP_REMARKS, not updated correctly.
+ 
+ Version 5.0.0.14, 29-Nov-19 by Rajeeb Sharma
+ - Fixes for Redirect() call from BO, as wrong parameters passed.
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.GetWFID(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Workflow ID for the specified Record
+ </summary>
+ <param name="cbo">A reference to the CommonFunctions class </param>
+ <param name="screen">Reference to the screen object that contains the field collection for which the workflow id needs to be retrieved</param>
+ <returns>The Workflow ID for the record </returns>
+ <remarks>
+ The Fields collection must have the following fields.
+ COMP_CODE,DOC_TYPE,DEPT_CODE,RUN_NO
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.GetWFID(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Workflow ID for the specified Record
+ </summary>
+ <param name="sessObj">An EPSession object</param>
+ <param name="compCode">Company Code</param>
+ <param name="docType">Document Type</param>
+ <param name="deptCode">Department Code</param>
+ <param name="runNo">Run Number</param>
+ <returns>The Workflow ID for the record</returns>
+ <remarks>
+ APP_LINK is made up of COMP_CODE : DOC_TYPE : DEPT_CODE : RUN_NO
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.GetWFID(ePlatform.CommonClasses.EPSession,System.String)">
+ <summary>Gets the Workflow ID based on APP_LINK (to support customized APP_LINKs)</summary>
+ <param name="sess">Database connection instance</param>
+ <param name="appLink">Application Link</param>
+ <returns>Workflow ID for the record</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.StartRout(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,MecWise.WorkflowCommon.RecipientCollection)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Initializes the routing process.
+ </summary>
+ <param name="cbo">A reference to the CommonFunctions class </param>
+ <param name="screen">Reference to the screen object that contains the field collection for which the workflow needs to be initialized</param>
+ <param name="formText">Custom text to be displayed in the email notification</param>
+ <param name="recipColl">RecipientCollection object to store custom recipients based on business rules</param>
+ <returns>True if routing for the specified application could be initialized and started. False otherwise</returns>
+ <remarks>
+ The following fields need to be present in the Fields collection.
+ COMP_CODE,DOC_TYPE,DEPT_CODE,RUN_NO,APP_ID,EMPE_ID
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.StartRout(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.Object,System.String,MecWise.WorkflowCommon.RecipientCollection)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Initializes the routing process.
+ </summary>
+ <param name="cbo">A reference to the CommonFunctions class </param>
+ <param name="screen">Reference to the screen object that contains the field collection for which the workflow needs to be initialized</param>
+ <param name="requestorId">Requestor Id.</param>
+ <param name="formText">Custom text to be displayed in the email notification</param>
+ <param name="recipColl">RecipientCollection object to store custom recipients based on business rules</param>
+ <returns>True if routing for the specified application could be initialized and started. False otherwise</returns>
+ <remarks>
+ The following fields need to be present in the Fields collection.
+ COMP_CODE,DOC_TYPE,DEPT_CODE,RUN_NO,APP_ID,EMPE_ID
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.StartRout(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String,System.String,System.String,System.String,System.String,MecWise.WorkflowCommon.RecipientCollection)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Initializes the routing process.
+ </summary>
+ <param name="sessObj">An EPSession object containing the connection to the application database</param>
+ <param name="coyId">Company code </param>
+ <param name="docType">Document type</param>
+ <param name="deptCode">Department code</param>
+ <param name="runNo">Running number </param>
+ <param name="appId">Application ID assigned to the module</param>
+ <param name="empeId">Employee ID / Requestor ID</param>
+ <param name="formText">Custom text to be displayed in the email notification</param>
+ <param name="recipColl">RecipientCollection object to store custom recipients based on business rules.</param>
+ <returns>True if routing for the specified application could be initialized and started. False otherwise</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.StartRoutEx(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String[],System.Double[],System.DateTime[])">
+ -----------------------------------------------------------------------------
+ <summary>
+ DEPRECIATED.  StartRout functions needs to be enhanced to provide this functionality
+ </summary>
+ <param name="cbo"></param>
+ <param name="screen"></param>
+ <param name="formText"></param>
+ <param name="stringParams"></param>
+ <param name="numberParams"></param>
+ <param name="dateParams"></param>
+ <returns></returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.RoutingCheck(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Checks if routing conditions are satisifed 
+ </summary>
+ <param name="cbo">A reference to the CommonFunctions class </param>
+ <param name="screen">Reference to the screen object that contains the field collection for which the routing check needs to be done</param>
+ <returns>True if all conditions are satisfied. False otherwise</returns>
+ <remarks>
+ The Fields collection must have the following fields.
+ APP_ID, EMPE_ID
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.RoutingCheck(epObjects.epState,epObjects.epScreen)">
+ <summary>
+ Routing list checking in custom routing list tables according to APP_ID settings.
+ </summary>
+ <param name="state">Reference to epState object.</param>
+ <param name="screen">Reference to epScreen object.</param>
+ <returns>Message on successful/unsuccessful checking of routing list.</returns>
+ <remarks>
+ The field collection must have necessary fields for checking according to APP_ID settings.
+ </remarks>
+ <history>
+ 	[Rajeeb]	18/12/2007	Created
+ </history>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.RoutingCheck(ePlatform.CommonClasses.EPSession,System.Int64,System.String,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Checks if routing conditions are satisifed 
+ </summary>
+ <param name="sessObj">An EPSession object</param>
+ <param name="langID">Language ID for the application</param>
+ <param name="appId">Application ID </param>
+ <param name="reqId">Requestor ID. Normally the Employee ID</param>
+ <returns>True if all conditions are satisfied. False otherwise</returns>
+ <remarks>
+ To make sure that:
+ 1) There is a routing list <br/>
+ 2) There is atleast one routing officer for mandatory Roles.<br/>
+ 3) For all Roles, other than those with ROLE_MULTIPLE value as 'Y', to have One and only one officer. <br/>
+ 4) For all Roles, other than those with RECIP_MULTIPLE value as 'Y', to have that officer in only this role<br/>
+ 5) For all Roles, other than those with ROLE_SELF value as 'Y', to have Recipient is not Applicant.
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.DeleteRecipentList(ePlatform.CommonClasses.EPSession,System.String,System.String)">
+ <summary>
+ Deletes the recipient list
+ </summary>
+ <param name="epSess">Database connection instance</param>
+ <param name="appID">Application ID</param>
+ <param name="empeID">Employee ID</param>
+ <returns>True if recipient list deleted successfully, False otherwise.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ResolveRecipient(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Recipent based on the role and Symbolic Reference
+ </summary>
+ <param name="epSess">EP Session object</param>
+ <param name="compCode">Company Code</param>
+ <param name="appID">Application ID</param>
+ <param name="role">Workflow Role</param>
+ <param name="symbolicName">Symbolic Reference</param>
+ <returns>The recipient id</returns>
+ <remarks>
+ Resolves Symbolic Names to actual Employee Names. 
+ For example. HRManager can be resolved to an employee with the ID ABC 
+ This helps the user to set once and forget the settings.
+ Order Of Search
+ <para>
+ 1. COMP_CODE = [value],SYM_ID= [value],APP_ID= [value],ROLE_ID = [value]
+ 2. COMP_CODE = [value],SYM_ID= [value],APP_ID= [value],ROLE_ID LIKE [value]
+ 3. COMP_CODE = [value],SYM_ID= [value],APP_ID LIKE [value],ROLE_ID LIKE [value]
+ If no value is found. The Symbolic ID is returned	
+ </para>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.WorkFlowCancel(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Terminates the workflow for the specified record.
+ </summary>
+ <param name="cbo">A reference to the CommonFunctions class </param>
+ <param name="screen">Reference to the screen object that contains the field collection for which the workflow needs to be cancelled</param>
+ <returns>True if workflow could be cancelled successfully. false otherwise</returns>
+ <remarks>
+ The Fields collection must have the following fields.
+ APP_ID, WF_ID
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.WorkFlowCancel(ePlatform.CommonClasses.EPSession,System.String,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Terminates the workflow for the specified record.
+ </summary>
+ <param name="sessObj">An EPSession object</param>
+ <param name="appId">Application ID</param>
+ <param name="wfId">Workflow ID</param>
+ <returns>True if workflow could be cancelled successfully. false otherwise</returns>
+ <remarks>
+ Sets REQ_CMD = 'CNNF' and REPL_STATE = 'N'
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.AddSignOnInfo(epObjects.epScreen,System.String,System.String,System.String@,System.String@,System.String@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Enables Single Sign-on for worflow screens for cross compant workflow routings
+ </summary>
+ <param name="screen">The screen object</param>
+ <param name="refCompKey">Reference Company Key. Used to retrieve Logon Information from connectInfo.config</param>
+ <param name="refKey">Reference Key</param>
+ <param name="signonKey">Gets the Signon Key that needs to be passed as a parameter.</param>
+ <param name="connectString">Gets the connection string configured for the reference key </param>
+ <param name="linkUrl">Gets the URL that needs to be executed or launched that will display the cross company application record.</param>
+ <returns>True of sign on information could be processed successfully, false otherwise</returns>
+ <remarks>
+ Makes an entry WF_SIGN_ON table in the DB identified by the reference company key.
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.SendJobMail(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTime,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Sends a custom email using the workflow service. 
+ </summary>
+ <param name="epSess">EPSession Object</param>
+ <param name="cmd">Can be N or NQ where N = New Job and NQ = DIRECTLY QUEUE JOB</param>
+ <param name="userName">Name of the user who initiated this request</param>
+ <param name="mailFrom">the e-mail address of the sender</param>
+ <param name="mailTo">A semicolon-delimited list of recipient e-mail addresses</param>
+ <param name="mailCC">A semicolon-delimited list of e-mail addresses that receive a carbon copy (CC) of the e-mail message</param>
+ <param name="mailBCC">A semicolon-delimited list of email addresses that receive a blind carbon copy (BCC) of the e-mail message</param>
+ <param name="mailSubject">The subject line of the e-mail message</param>
+ <param name="mailBody">The body of the e-mail message</param>
+ <param name="mailActionDate">The date when the email message is to be sent</param>
+ <param name="errMsg">Gets the error message if any if the job request could not be added successfully.</param>
+ <returns>True if job request is added successfully, false otherwise</returns>
+ <remarks>
+ Interfaces with the JOB_MAIL table.
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.StartWorkflow(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.Boolean,System.String@,System.Boolean)">
+ <summary>
+ Start workflow request.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="autostart">Whether to Auto start the workflow request</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request approved successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Approve(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String@)">
+ <summary>
+ Approves workflow request.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <returns>True or false indicates request approved successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Approve(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String,System.String@)">
+ <summary>
+ Approves workflow request.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <returns>True or false indicates request approved successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Approve(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.Boolean,System.String,System.String@,System.Boolean)">
+ <summary>
+ Approves workflow request.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="autoApprove">Whether to auto approve</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request approved successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Deny(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String@)">
+ <summary>
+ Rejects workflow request.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while rejecting request.</param>
+ <returns>True or false indicates request rejected successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Deny(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String,System.String@)">
+ <summary>
+ Rejects workflow request.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while rejecting request.</param>
+ <returns>True or false indicates request rejected successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Deny(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.Boolean,System.String,System.String@,System.Boolean)">
+ <summary>
+ Rejects workflow request.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="autoDeny">Whether to auto deny</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while rejecting request.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request rejected successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Clarify(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String@)">
+ <summary>
+ Resends the request to previous recipient (approver/applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Clarify(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String,System.String@)">
+ <summary>
+ Resends the request to previous recipient (approver/applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Clarify(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.Boolean,System.String,System.String@,System.Boolean)">
+ <summary>
+ Resends the request to previous recipient (approver/applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="autoClarify">Whether to Clarify automatically.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifyRecipient(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String@)">
+ <summary>
+ Resends the request to specific recipient (among all previous approvers/applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="recipId">Recipient Id</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifyRecipient(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String,System.String,System.String@)">
+ <summary>
+ Resends the request to specific recipient (among all previous approvers/applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="recipId">Recipient Id</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifyRecipient(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.Boolean,System.String,System.String,System.String@,System.Boolean)">
+ <summary>
+ Resends the request to specific recipient (among all previous approvers/applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="autoClarify">Whether to Clarify automatically.</param>
+ <param name="recipId">Recipient Id</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifyAll(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String@)">
+ <summary>
+ Resends the request to all previous recipients (approvers and applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifyAll(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String,System.String@)">
+ <summary>
+ Resends the request to all previous recipients (approvers and applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifyAll(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.Boolean,System.String,System.String@,System.Boolean)">
+ <summary>
+ Resends the request to all previous recipients (approvers and applicant) for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="autoClarify">Whether to Clarify automatically.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifySelect(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String@)">
+ <summary>
+ Resends the request to the selected recipients for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while approving request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifySelect(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.String,System.String,System.String@)">
+ <summary>
+ Resends the request to the selected recipients for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ClarifySelect(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,System.Boolean,System.String,System.String,System.String@,System.Boolean)">
+ <summary>
+ Resends the request to the selected recipients for clarification.
+ </summary>
+ <param name="cbo">Reference to BO CommonFunctions class.</param>
+ <param name="screen">Reference to screen object, containing state, field collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="autoClarify">Whether to Clarify automatically.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error messages (if any), while clarifying request.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request Clarified successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.Redirect(ePlatform.BusinessObject.CommonFuncs,epObjects.epScreen,System.String,System.String,MecWise.WorkflowCommon.Recipient,System.String,System.String@,System.Boolean,System.Boolean)">
+ <summary>
+ Redirects workflow request to specified recipient.
+ </summary>
+ <param name="cbo">Reference to BO CommonFuntions class.</param>
+ <param name="screen">Reference to screen object, containing state, fields collection to retrieve WF request.</param>
+ <param name="appId">Application Id.</param>
+ <param name="wfId">Workflow Id.</param>
+ <param name="recipient">Workflow recipient.</param>
+ <param name="comments">Approver comments.</param>
+ <param name="message">Error/Success messages (if any), while redirecting request.</param>
+ <param name="autoRedirect">Whether to Redirect automatically.</param>
+ <param name="sendMail">Optional, preference to stop sending email after action taken</param>
+ <returns>True or false indicates request redirected successfully.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsClarifyActionEnabled(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String)">
+ <summary>
+ Enable or disable Clarify action (button), based on preference settings
+ <para>If applicant = current recipient, preference settings overwritten and Clarify action is disabled</para>
+ </summary>
+ <param name="sess">Database connection</param>
+ <param name="appId">Application ID</param>
+ <param name="wfId">Wokflow ID</param>
+ <param name="empeId">Employee ID (currently logged-in)</param>
+ <returns>True or false, if Clarify Action enabled</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsClarifyAllActionEnabled(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String)">
+ <summary>
+ Enable or disable Clarify All action (button), based on preference settings
+ <para>If applicant = current recipient, preference settings overwritten and Clarify All action is disabled</para>
+ </summary>
+ <param name="sess">Database connection</param>
+ <param name="appId">Application ID</param>
+ <param name="wfId">Wokflow ID</param>
+ <param name="empeId">Employee ID (currently logged-in)</param>
+ <returns>True or false, if Clarify All action enabled</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsClarifyToSelectionEnabled(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String)">
+ <summary>
+ Enable or disable Clarify To recip selection, based on preference settings
+ <para>If enabled, allows to select recip from prev recips + applicant (by default, prev recip is used always)</para>
+ <para>If applicant = current recipient, preference settings overwritten and Clarify action is disabled</para>
+ </summary>
+ <param name="sess">Database connection</param>
+ <param name="appId">Application ID</param>
+ <param name="wfId">Wokflow ID</param>
+ <param name="empeId">Employee ID (currently logged-in)</param>
+ <returns>True or false, if recipient selection for Clarify Action enabled</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsCustomApproverScreenEnabled(ePlatform.CommonClasses.EPSession,System.String,System.String@)">
+ <summary>
+ Enable or disable customized approver screen for APP_ID, based on preference settings
+ </summary>
+ <param name="sess">Database connection</param>
+ <param name="appId">Application Id</param>
+ <param name="scrnId">Customized approver screen Id, if enabled. Default workflow approver screen otherwise</param>
+ <returns>True or false, if customized approver screen enabled</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsCustomApproverScreenEnabled(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String@)">
+ <summary>
+ Enable or disable customized approver screen for APP_ID + ROLE_ID, based on preference settings
+ </summary>
+ <param name="sess">Database connection</param>
+ <param name="appId">Application Id</param>
+ <param name="wfId">Workflow Id</param>
+ <param name="scrnId">Customized approver screen Id, if enabled. Default workflow approver screen otherwise</param>
+ <returns>True or false, if customized approver screen enabled</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsCustomHistoryScreenEnabled(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String,System.String,System.String@)">
+ <summary>
+ Enable or disable customized history screen for APP_ID + WF_ID + EMPE_ID, based on preference settings
+ </summary>
+ <param name="sess">Database connection</param>
+ <param name="appId">Application Id</param>
+ <param name="wfId">Workflow Id</param>
+ <param name="empeId">Currently logged-in user (Employee ID)</param>
+ <param name="type">Type of history screen (Application History/Approval History)</param>
+ <param name="scrnId">Customized history screen Id, if enabled. Default application/approval history screen otherwise.</param>
+ <returns>True or false, if customized history screen enabled</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsClarifySelectActionEnabled(ePlatform.CommonClasses.EPSession,System.String,System.String,System.String)">
+ <summary>
+ Enable or disable Clarify(Select) action (button), based on preference settings
+ <para>If applicant = current recipient, preference settings overwritten and Clarify action is disabled</para>
+ </summary>
+ <param name="sess">Database connection</param>
+ <param name="appId">Application ID</param>
+ <param name="wfId">Wokflow ID</param>
+ <param name="empeId">Employee ID (currently logged-in)</param>
+ <returns>True or false, if Clarify select Action enabled</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.IsRecipRemarksMandatory(ePlatform.CommonClasses.EPSession,epObjects.epScreen)">
+ <summary>
+ Checks if recipient remarks are mandatory, based on preference settings
+ </summary>
+ <param name="sess">Database connection instance</param>
+ <param name="screen">Screen instance</param>
+ <returns>True or false, if recipient remarks are mandatory</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.SetWFActionControls(ePlatform.CommonClasses.EPSession,epObjects.epScreen)">
+ <summary>
+ Sets (show/hide or enable/disable) workflow action controls on the screen
+ </summary>
+ <param name="sess">Database connection instance</param>
+ <param name="screen">Screen instance</param>
+ <returns>True or false</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.ParseCCRecipsList(ePlatform.CommonClasses.EPSession,epObjects.epScreen)">
+ <summary>
+ Prepares the list of CC recipients and their names
+ </summary>
+ <param name="sess">Database connection instance</param>
+ <param name="screen">Screen instance</param>
+ <returns>CC Recipients names</returns>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowFunctions.StartCCRout(ePlatform.CommonClasses.EPSession,epObjects.epScreen)">
+ <summary>
+ Starts routing for CC recipients
+ </summary>
+ <param name="sess">Database connection instance</param>
+ <param name="screen">Screen instance</param>
+ <returns>True or False, if routing started succcessfully</returns>
+</member>
+<member name="T:MecWise.WorkflowCommon.WorkflowRequestHelper">
+ -----------------------------------------------------------------------------
+ Project	 : MecWise.WorkflowCommon
+ Class	 : WorkflowCommon.WorkflowRequestHelper
+ 
+ -----------------------------------------------------------------------------
+ <summary>
+ Helper class for WorkflowRequest
+ </summary>
+ <remarks>
+ Helper class for WorkflowRequest
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ 
+ Version 3.0.5000.5, 27 Jun 2007 by Rajeeb
+ - Added new function GetRecipientSequence to change recipient sequence when custom recipients are added.
+ 
+ Version 3.0.5000.6, 25 Nov 2007 by Rajeeb
+ - Added properties Screen and Fields to check for special routing list.
+ - Updated RecipientList() to check for custom/special routing list for APP_ID.
+ - If not found, default/standard workflow recipient list is used.
+ 
+ Version 3.0.5000.8, 17 Jul 2008 by Rajeeb
+ - Added function to get string representation of DueAction enum and used for adding additional recipients.
+ - Fixed to send reminders to additional recipients added from BO or at run-time.
+ 
+ Version 3.0.5000.9, 04 Mar 2009 by Rajeeb
+ - Added support to notify the delegator after last approval along with applicant (based on configuration).
+ 
+ Version 3.0.5000.10, 01 Jul 2009 by Rajeeb
+ - Added GetRecipientLineNo() and updated AddWorkflowRecipient() to add higher/additional recipients 
+   in the order of recipient's role, lineNo passed to procedure.
+ - As email is being sent by service, additional recipients added in the end are not sent email notification.
+ - Also, separated SQL for RN role (GetRecipientLineNo/GetRecipientSequence), as it may be added in the end of routing list.
+ 
+ Version 3.0.5000.11, 24 Jul 2009 by Rajeeb
+ - Added RecipientFoundInRoutingList() to check if recipient in already added to recipient list(WF_REQUEST_RECIPS).
+ - The check to avoid duplicate entries due to enhancement for passing full recipient list from BO.
+ - Enhancement - 
+      BO passes whole routing list to StartRout() and since StartRout() inserts standard routing list first.
+      This function can exclude those entries already inserted from the recipient list and insert only additional recipients.
+ 
+ Version 3.0.5000.12, 08 Oct 2009 by Rajeeb
+ - Added retrieving recipient name, before updating WF_EMPE_LIST, as name is updated to NULL otherwise.
+ - When cross-company recipient(higher approver) added from BO, name is not specified.
+ 
+ Version 3.0.5000.18, 01 Sep 2011 by Rajeeb Sharma
+ - Fixed wrong EMPE_ID used for SUBMIT_ID (in WF_REQUEST), when custom routing list (like Positiong Management) used.
+ 
+ Version 3.0.5000.20, 16 Feb 2012 by Rajeeb Sharma
+ - Fixed wrong EMPE_ID used for SUBMIT_ID (in WF_REQUEST), for non-custom routing lists.
+ 
+ Version 4.0.5000.7, 03 Sep 2015 by Rajeeb Sharma
+ - Fixes for cross-company recipient info not inserted into WF_EMPE_LIST, when added from BO.
+ 
+ Version 4.0.5000.8, 02 Nov 2015 by Rajeeb Sharma
+ - Fixes for replacing SV_MF_PREFER with SV_WF_MF_PREFER and column name changes in RecipientList().
+ 
+ Version 4.0.5000.9, 09 Feb 2017 by Rajeeb Sharma
+ - Fixes for applicant's record retrieved wrongly (cross-company scenario) and updated in cross-company DB.
+
+ Version 5.0.0.15, 25-Feb-12 by Rajeeb Sharma
+ - Added support for DUE_HOURS, recipient action due in Hours/Minutes (besides in Days)
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.#ctor">
+ -----------------------------------------------------------------------------
+ <summary>
+ Default constructor
+ </summary>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.Dispose">
+ -----------------------------------------------------------------------------
+ <summary>
+ Releases memory and removes unused references and objects
+ </summary>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.Dispose(System.Boolean)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Releases memory and removes unused references and objects 
+ </summary>
+ <param name="disposing">A boolean value indicating if memory is to be released or not</param>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.CompCode">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the company code 
+ </summary>
+ <value>The company code</value>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.AppID">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets The Application ID
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.ApplicantID">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets The Applicant ID
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.AppLink">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets The Application link
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.EPSession">
+ -----------------------------------------------------------------------------
+ <summary>
+ Sets the connection for the workflow request to be initiated
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.FormText">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets or sets the form text to be displayed in the email
+ </summary>
+ -----------------------------------------------------------------------------
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.Screen">
+ <summary>
+ Gets or Sets the Screen object.
+ </summary>
+</member>
+<member name="P:MecWise.WorkflowCommon.WorkflowRequestHelper.Fields">
+ <summary>
+ Gets or Sets the Fields collection.
+ </summary>
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.RecipientList">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Recipeint List for the specified Application ID and Applicant ID
+ </summary>
+ <returns>A DataRowCollection containing the list of recipients</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.ApplicantInfo">
+ -----------------------------------------------------------------------------
+ <summary>
+  Gets information regarading the applicant
+ </summary>
+ <returns>An object() array containing the applicant information</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[Binesh]	9/26/2006	Created
+ </history>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.IsRecipResolved(System.Data.DataRow)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets a value indicating if applicant id needs been resolved
+ </summary>
+ <param name="dRow">DataRow containing the applicant information</param>
+ <returns>True if applicant information needs to be resolved , false otherwise</returns>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.ResolveRecipient(MecWise.WorkflowCommon.Recipient@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Resolve the sybmolic reference to a valid recipient
+ </summary>
+ <param name="recipObj">The Recipient object</param>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.ResolveRecipient(System.Data.DataRow@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Resolve the sybmolic reference to a valid recipient
+ </summary>
+ <param name="dRow">A DataRow containing information</param>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.CompanyList(System.Data.DataRowCollection)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the consolidated list of compaines of the recipients
+ </summary>
+ <param name="rowColl">A DataRowCollection object containing recipient information.</param>
+ <returns>An ArrayList containing the list of recipient companies</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.RecipCompCode(System.Data.DataRow)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the recipient company code
+ </summary>
+ <param name="dRow">A DataRow containing the Recipient information</param>
+ <returns>Recipient company code</returns>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.UpdateWorkflowRequest(System.String,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Updates the Workflow Request table with the ref key parameter
+ </summary>
+ <param name="wfId">Workflow ID</param>
+ <param name="refId">Reference Key</param>
+ <returns></returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowRequest(System.String@,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Initiates a new workflow request
+ </summary>
+ <param name="wfid">Workflow ID</param>
+ <param name="refid">Refererenc ID</param>
+ <returns>True if new request is added successfully , false otherwise</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.InitiateWorkflow(System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Initiates the new workflow request
+ </summary>
+ <param name="wfId">Workflow ID </param>
+ <returns>true of workflow is initiated successfully.</returns>
+ <remarks>
+ Sets REQ_CMD = STRT and REPL_STATE = N
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowEmployee(System.String,System.String,System.String,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Adds a Cross Company Recipient to the workflow Recipient Table.
+ </summary>
+ <param name="recipCompCode">Recipient Company Code</param>
+ <param name="recipID">Recipient ID</param>
+ <param name="recipEmail">Recipient Email</param>
+ <param name="recipName">Recipient Name</param>
+ <returns>True if recipient added successfully, false otherwise</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowEmployee(System.Data.DataRow)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Adds a Cross Company Recipient to the workflow Recipient Table.
+ </summary>
+ <param name="dRow">A DataRow object containing the recipient information</param>
+ <returns>True if recipient added successfully, false otherwise</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowEmployee(MecWise.WorkflowCommon.Recipient)">
+ -----------------------------------------------------------------------------
+ <summary>
+  Adds a Cross Company Recipient to the workflow Recipient Table.
+ </summary>
+ <param name="recipObj">A Recipient object containing the recipient information</param>
+ <returns>True if recipient added successfully, false otherwise</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowRecipient(System.String,System.String,System.String,MecWise.WorkflowCommon.Recipient@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Adds the recipient to the Request Recips Table
+ </summary>
+ <param name="wfid">Workflow ID</param>
+ <param name="recipSequence">Recipient Sequence</param>
+ <param name="recipObj">Recipient Object </param>
+ <returns>True if recipient added successfully , false otherwise</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowRecipient(System.String,System.String,MecWise.WorkflowCommon.Recipient@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Adds the recipient to the Request Recips Table
+ </summary>
+ <param name="wfid">Workflow ID</param>
+ <param name="recipSequence">Recipient Sequence</param>
+ <param name="recipObj">Recipient Object </param>
+ <returns>True if recipient added successfully , false otherwise</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowRecipient(System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String,System.String,System.Int32)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Adds the recipient to the Request Recips Table
+ </summary>
+ <param name="wfid">Workflow ID</param>
+ <param name="recipSequence">Recipient Sequence</param>
+ <param name="recipID">Recipient ID</param>
+ <param name="recipRoleID">Recipient Role ID</param>
+ <param name="wfType">Workflow Type</param>
+ <param name="dueDays">Due Days</param>
+ <param name="dueAct">Due Action</param>
+ <param name="recipCompCode">Recipient Company Code</param>
+ <returns>True if recipient added successfully , false otherwise</returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.AddWorkflowRecipient(System.String,System.String,System.Data.DataRow@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Adds the recipient to the Request Recips Table
+ </summary>
+ <param name="wfid">Workflow ID</param>
+ <param name="recipSequence">Recipient Sequence</param>
+ <param name="dRow">A DataRow object containing the recipient information</param>
+ <returns>True if recipient added successfully , false otherwise</returns>
+ <remarks>
+ The DataRow must have the following columns
+ RECIP_ID,RECIP_ROLE_ID,WF_TYPE,DUE_DAYS,DUE_ACT,RECIP_COMP_CODE
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.GetResolvedRecipient(MecWise.WorkflowCommon.Recipient@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Resolved Recipient
+ </summary>
+ <param name="recipObj">A recipient object</param>
+ <returns></returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.GetResolvedRecipient(System.Data.DataRow@)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Gets the Resolved Recipient
+ </summary>
+ <param name="dRow">DataRow object</param>
+ <returns></returns>
+ <remarks>
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.HasRequestCompany(ePlatform.CommonClasses.EPRecordSet,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ Checks for backward compatibility to old wf engine
+ </summary>
+ <param name="epRec"></param>
+ <param name="paramName"></param>
+ <returns></returns>
+ <remarks>
+ Older Workflow Engines do not support company code parameter in request table
+ </remarks>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:MecWise.WorkflowCommon.WorkflowRequestHelper.ReplaceRoutingList(System.String,System.String)">
+ <summary>Whether or not completely replace standard routing list with the custom list</summary>
+ <param name="coyId">Company code</param>
+ <param name="appId">App Id</param>
+ <returns>True to replace, false otherwise</returns>
+ <remarks></remarks>
+</member>
+</members>
+</doc>

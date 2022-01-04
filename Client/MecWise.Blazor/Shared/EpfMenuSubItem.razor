@@ -1,0 +1,24 @@
+﻿
+@if (SubItem != null)
+{
+    <div class="text-primary px-3 menuSubItem">
+        <NavLink class="" href="@string.Format(SubItem.URL_TMP.ToStr(),SubItem.SCRN_ID.ToStr())">
+            <span class="oi oi-cog" aria-hidden="true"></span> @SubItem.MENU_SUB_ITEM_NAME
+        </NavLink>
+    </div>
+}
+
+@code{
+
+    //string _menuLink = "";
+
+    [Parameter]
+    public EPF_BLZ_MNU_SUBITEM SubItem { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+
+}

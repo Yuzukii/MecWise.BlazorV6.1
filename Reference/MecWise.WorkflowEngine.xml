@@ -1,0 +1,1925 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MecWise.WorkflowEngine</name>
+    </assembly>
+    <members>
+        <member name="T:MecWise.WorkflowEngine.WorkflowCommon">
+            <summary>Worfklow Common Class. Contains Helper methods and properties</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowCommon.IsSql">
+            <summary>Gets a value indicating if the service is connecting to SQL Server</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowCommon.Dbms">
+            <summary>Sets database provider value</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowCommon.CompList">
+            <summary>Gets list of companies which service servicing</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowCommon.IsLocalizationEnabled">
+            <summary>Gets or sets localization support enabled</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowCommon.ResourcePath">
+            <summary>Get Workflow resource file path</summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowCommon.GetResource(System.Object)">
+            <summary>Function to get Resource value</summary>
+            <param name="key">Resource Key</param>
+            <returns>Resource Value</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowCommon.GetResource(System.Object,System.String)">
+            <summary>Function to get Resource value</summary>
+            <param name="key">Resource Key</param>
+            <param name="path">Resource file Path</param>
+            <returns>Resource Value</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowCommon.GetResourceSql(System.Object)">
+            <summary>Function to get SQL Resource value based on DBMS</summary>
+            <param name="key">Resource Key</param>
+            <returns>SQL statement in Resource</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowCommon.GetResourceSql(System.Object,System.String)">
+            <summary>Function to get SQL Resource value based on DBMS</summary>
+            <param name="key">Resource Key</param>
+            <param name="path">Resource file Path</param>
+            <returns>SQL statement in Resource</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowCommon.IsWorkflowCompany(System.String,System.String)">
+            <summary>Validates if the current workflow service is handling the company the recipient belongs to</summary>
+            <param name="wfCompCode">Workflow Company Code</param>
+            <param name="defCompCode">Default Company Code</param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowCommon.CompanyListSql(System.String)">
+            <summary>Gets the Valid Company Code SQL Statement</summary>
+            <param name="defComp">Default company code</param>
+            <returns>SQL Statement containing valid COMP_CODE criteria</returns>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowDefn">
+            <summary>
+            Public structure for Workflow Defintion 
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.Workflow">
+            <summary>
+            Workflow User Name
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowDefn.WorkflowType">
+            <summary>
+            Workflow Types
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowType.WF_SERIAL">
+            <summary>
+            Serial Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowType.WF_PARALLEL">
+            <summary>
+            Parallel Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowType.WF_CARBONCOPY">
+            <summary>
+            CarbonCopy Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowType.WF_NOTIFY">
+            <summary>
+            Notify workflow
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState">
+            <summary>
+            Workflow States
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_INITIALIZE">
+            <summary>
+            Initialize
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_PENDING">
+            <summary>
+            Pending
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_DUE_ACT">
+            <summary>
+            Due Action
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_COMPLETE">
+            <summary>
+            Completed
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_CLOSED">
+            <summary>
+            Closed
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_FROZEN">
+            <summary>
+            Frozen
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_WITHDRAWN">
+            <summary>
+            Withdrawn
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_NOTIFIED">
+            <summary>
+            Notified
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR0">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR1">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR2">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR3">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR4">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR5">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR6">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR7">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR8">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.WorkflowState.WS_ERROR9">
+            <summary>
+            Reserve Errors
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand">
+            <summary>
+            Request Commands
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand.RC_NONE">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand.RC_START">
+            <summary>
+            Start Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand.RC_FREEZE">
+            <summary>
+            Freeze Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand.RC_RESUME">
+            <summary>
+            Resume Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand.RC_CANCEL">
+            <summary>
+            Cancel Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand.RC_CANCEL_NOTIFY">
+            <summary>
+            Cancel Notify Workflow
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RequestCommand.RC_MANUAL">
+            <summary>
+            Manual Workflow
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowDefn.DueAction">
+            <summary>
+            Due Actions
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.DueAction.DA_REMIND">
+            <summary>
+            Send Reminder
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.DueAction.DA_DEF_YES">
+            <summary>
+            Default Yes
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.DueAction.DA_DEF_NO">
+            <summary>
+            Default No
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.DueAction.DA_NONE">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowDefn.RecipAction">
+            <summary>
+            Recipient Actions
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RecipAction.RA_PENDING">
+            <summary>
+            Pending
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RecipAction.RA_APPROVE">
+            <summary>
+            Approved
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RecipAction.RA_DENY">
+            <summary>
+            Not Approved
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RecipAction.RA_CLARIFY">
+            <summary>Sent to previous recipient for clarification</summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RecipAction.RA_REDIRECT">
+            <summary>Redirected to other recipient</summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.RecipAction.RA_RESTART">
+            <summary>Workflow restarted</summary>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowDefn.ReplState">
+            <summary>
+            Replication State
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_NEW">
+            <summary>
+            Start Workflow Request
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_CHANGEREQUEST">
+            <summary>
+            Change Request Action
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_DUEREQUEST">
+            <summary>
+            Due for Action
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_RESEND">
+            <summary>
+            To Resend
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_MODIFIED">
+            <summary>
+            Modified
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_UPDATED">
+            <summary>
+            Action Performed
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_SENDALL">
+            <summary>
+            Resend All Emails
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowDefn.ReplState.RS_INPROGRESS">
+            <summary>
+            Request is currently being processed
+            </summary>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowManager">
+            <summary>
+            Workflow Management class. Provides internal helper methods 
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowManager.moWFConnect">
+            <summary>
+            Session Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowManager.moErrors">
+            <summary>
+            WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowManager.msLangID">
+            <summary>
+            Language ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowManager.WFConnect">
+            <summary>
+            Get/Set session object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowManager.Errors">
+            <summary>
+            Property to set/get WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowManager.LanguageID">
+            <summary>
+            Property to set/get Language ID
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.#ctor(ePlatform.CommonClasses.EPSession)">
+            <summary>
+            Function to Initialize Workflow
+            </summary>
+            <param name="oSession">Session Object</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.Finalize">
+            <summary>
+            Default Destructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetDBRecipients(System.String,System.String)">
+            <summary>
+            Function to get Recipients from database for the given Application Id and Workflow Id
+            </summary>
+            <param name="sAppId">Application Id</param>
+            <param name="sWfId">Workflow Id</param>
+            <returns>Workflow Recipients Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetDBRequests(System.String)">
+            <summary>
+            Function to get requests from database for the criteria specified
+            </summary>
+            <param name="sMatch">Criteria for getting requests.</param>
+            <returns>Workflow Requests Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequestsDue">
+            <summary>
+            Function to get due requests from database 
+            </summary>
+            <returns>Workflow Requests Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.DataRowCollToWfRequests(System.Data.DataRowCollection)">
+            <summary>
+            Function to return worflow requests object from data row collection
+            </summary>
+            <param name="dataRowColl">DataRowCollection object </param>
+            <returns>Workflow Requests Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.ArrayToWfRequest(System.Object[])">
+            <summary>
+            Function return workflow request object from array
+            </summary>
+            <param name="arrRow">Array containing request details</param>
+            <returns>Workflow Request Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.Log(System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+            <param name="Severity">Error Severity</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.Log(System.String)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequests(System.String)">
+            <summary>
+            Function to Get Requests based on criteria passed
+            </summary>
+            <param name="sWhat">Criteria to filter requests. Criteria can be NEW, CHANGE, RESEND, DUE, BYAPPROVER, BYREQUESTER</param>
+            <returns>Workflow Requests Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequests(System.String,System.String)">
+            <summary>
+            Function to Get Requests based on criteria passed
+            </summary>
+            <param name="sWhat">Criteria to filter requests. Criteria can be NEW, CHANGE, RESEND, DUE, BYAPPROVER, BYREQUESTER</param>
+            <param name="sUserId">User for getting by approver or by requester</param>
+            <returns>Workflow Requests Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequestsByAppId(System.String)">
+            <summary>
+            Function to get Requests by Application Id
+            </summary>
+            <param name="sAppId">Application ID</param>
+            <returns>WorkflowRequestCollection Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequestsByApprover(System.String)">
+            <summary>
+            Function to get Requests by Approver
+            </summary>
+            <param name="sUserId">User Id</param>
+            <returns>Workflow Requests Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequestsByRequester(System.String)">
+            <summary>
+            Function to get Requests by Requester
+            </summary>
+            <param name="sUserId">User Id</param>
+            <returns>Workflow Requests Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequest(System.String,System.String,System.String,System.String)">
+            <summary>
+            Function to get Request object based on criteria passed
+            </summary>
+            <param name="sWhat">NEXTREQUEST or PREVIOUSREQUEST or current request object</param>
+            <param name="sUserId">User Id</param>
+            <param name="sAppId">Application Id</param>
+            <param name="sWfId">Workflow Id</param>
+            <returns>Workflow Request Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequestNext(System.String,System.String,System.String)">
+            <summary>
+            Function to get next request
+            </summary>
+            <param name="sUserId">User Id</param>
+            <param name="sAppId">Application Id</param>
+            <param name="sWfId">Workflow Id</param>
+            <returns>Workflow Request Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequestPrevious(System.String,System.String,System.String)">
+            <summary>
+            Function to get previous request
+            </summary>
+            <param name="sUserId">User Id</param>
+            <param name="sAppId">Application Id</param>
+            <param name="sWfId">Workflow Id</param>
+            <returns>Workflow Request Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetARequest(System.String,System.String)">
+            <summary>
+            Function to get a request
+            </summary>
+            <param name="sAppId">Application Id</param>
+            <param name="sWfId">Workflow Id</param>
+            <returns>Workflow Request Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetARequestByAppLink(System.String,System.String)">
+            <summary>
+            Function to get a request by application link
+            </summary>
+            <param name="sAppLink">Application Link</param>
+            <param name="sUserId">User Id</param>
+            <returns>Workflow Request Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowManager.GetRequestsDueByHrs">
+            <summary>
+            Gets requests due by hours
+            </summary>
+            <returns>Workflow Requests Collection</returns>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowProfile">
+            <summary>
+            Workflow Profile Class. Encapsulates WF_MF_PROFILE
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msAppId">
+            <summary>
+            Application ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfName">
+            <summary>
+            Profile Name
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfDesc">
+            <summary>
+            Profile Description
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfLink">
+            <summary>
+            Profile Link
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfAdmID">
+            <summary>
+            Profile Administrator ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfRemark">
+            <summary>
+            Profile Remarks
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfEmailFrom">
+            <summary>
+            Profile e-mail from address
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfMailTemplate">
+            <summary>
+            Profile mail Template file
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfTerm">
+            <summary>
+            Profile Terminology
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msPrfScrnId">
+            <summary>
+            Profile Screen ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.mPrfMailText">
+            <summary>
+            Dictionary object to store Profile Mail Text(s)
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.moWFConnect">
+            <summary>
+            Session Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.moErrors">
+            <summary>
+            WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile.msLangID">
+            <summary>
+            Language ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile._mailSubject">
+            <summary>Mail subject</summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowProfile._mailUrl">
+            <summary>Mail url</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileName">
+            <summary>
+            Get Profile Name
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileDesc">
+            <summary>
+            Get Profile Description
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileLink">
+            <summary>
+            Get Profile Link
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileAdminID">
+            <summary>
+            Get Profile Administrator ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileRemarks">
+            <summary>
+            Get Profile Remarks
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.SaveToFile">
+            <summary>
+            True/False for save to file.
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileEmailFrom">
+            <summary>
+            Get Profile e-mail from address
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileMailTemplate">
+            <summary>
+            Get Profile e-mail Text
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileTerms">
+            <summary>
+            Get Profile Terminology
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.ProfileScreenID">
+            <summary>
+            Get Profile Terminology
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.MailText">
+            <summary>
+            Gets or sets the Profile Mail Text Dictionary. 
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.WFConnect">
+            <summary>
+            Get/Set Session object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.Errors">
+            <summary>
+            Property to set/get WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.LanguageID">
+            <summary>
+            Property to set/get Language ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.SendMail">
+            <summary>Gets or sets preference to send email for specific action taken on request</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.SendAlertsEnabled">
+            <summary>Whether to send alerts/emails by workflow (true=alerts/false=email)</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.MailSubject">
+            <summary>Gets or sets the mail subject</summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowProfile.MailUrl">
+            <summary>Gets or sets the mail url</summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.#ctor(ePlatform.CommonClasses.EPSession,MecWise.WorkflowBase.WorkflowErrorCollection@,System.String)">
+            <summary>
+            Overloaded Constructor
+            </summary>
+            <param name="oSession">Session Object</param>
+            <param name="Errors">Erros Collection</param>
+            <param name="sLangID">Language ID</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.Finalize">
+            <summary>
+            Default Destructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.ProcessProfileLink">
+            <summary>
+            Function used for Report file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.Log(System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+            <param name="Severity">Error Severity</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.Log(System.String)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.GetUnicodeMailTemplate">
+            <summary>
+            Returns the Language specific Mail Template file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.GetTemplateValue(System.String,System.String,System.String,System.String)">
+            <summary>
+            Function to get value from Mail Template file
+            </summary>
+            <param name="fileName">Template file name.</param>
+            <param name="sMailPart">Mail part from which value to get. SUBJECT,BODY...</param>
+            <param name="sWfTerm">Workflow term within mail part. CPLT,CLSD..</param>
+            <param name="sDefValue">Default value to return if no matching value found</param>
+            <returns>Template value</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.GetTemplateValue(System.String,System.String,System.String)">
+            <summary>
+            Function to get value from Mail Template file
+            </summary>
+            <param name="sMailPart">Mail part from which value to get. SUBJECT,BODY...</param>
+            <param name="sWfTerm">Workflow term within mail part. CPLT,CLSD..</param>
+            <param name="sDefValue">Default value to return if no matching value found</param>
+            <returns>Template value</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.GetProfile(System.String)">
+            <summary>
+            Function to get Profile details
+            </summary>
+            <param name="AppID">Application Id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.SendBookmark(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Hashtable,System.String)">
+            <summary>
+            Function to Send mail
+            </summary>
+            <param name="sToRecips">MailTo e-mail list</param>
+            <param name="sCCRecips">Carbon Copy Recipient list</param>
+            <param name="sBccRecips">Blind Carbon Copy Recipient list</param>
+            <param name="sReplyTo">Reply to email address</param>
+            <param name="sRecipients">Recipient Email List</param>
+            <param name="sSubject">Subject of the email</param>
+            <param name="sBody">Mail body text</param>
+            <param name="MailProps">Mail Property HashTable</param>
+            <param name="sPushNotiRecips">The list of recipients which push notifications will be sent</param>
+            <returns>True if email could be sent out , false otherwise</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowProfile.SendBookmark(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Hashtable)">
+            <summary>
+            Function to Send mail
+            </summary>
+            <param name="sToRecips">MailTo e-mail list</param>
+            <param name="sCCRecips">Carbon Copy Recipient list</param>
+            <param name="sBccRecips">Blind Carbon Copy Recipient list</param>
+            <param name="sReplyTo">Reply to email address</param>
+            <param name="sRecipients">Recipient Email List</param>
+            <param name="sSubject">Subject of the email</param>
+            <param name="sBody">Mail body text</param>
+            <param name="MailProps">Mail Property HashTable</param>
+            <returns>True if email could be sent out , false otherwise</returns>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowRecipient">
+            <summary>
+            Workflow Recipient object. Contains information about a single recipient
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msAppId">
+            <summary>
+            Application ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msWfId">
+            <summary>
+            Workflow ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.miLineNo">
+            <summary>
+            Line Number
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.miRecipSequence">
+            <summary>
+            Recipient Sequence Number
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msRecipId">
+            <summary>
+            Recipient ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msRoleId">
+            <summary>
+            Recipient Role ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msWfType">
+            <summary>
+            Workflow Type
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.miDueDays">
+            <summary>
+            Due Days
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msDueAction">
+            <summary>
+            Due Action
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.mdDueActionOn">
+            <summary>
+            Due Action On
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msRecipAction">
+            <summary>
+            Recipient Action
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.mdRecipActionOn">
+            <summary>
+            Recipient Action On
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msRecipRemarks">
+            <summary>
+            Recipient Remarks
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msApprovedBy">
+            <summary>
+            Actual Approving Officer
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.moWFConnect">
+            <summary>
+            Session Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.mbModified">
+            <summary>
+            Recipient action field modified
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.moErrors">
+            <summary>
+            WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipient.msLangID">
+            <summary>
+            Language ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.AppId">
+            <summary>
+            Get/Set Application ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.WfId">
+            <summary>
+            Get/Set Workflow ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.LineNo">
+            <summary>
+            Get/Set Line No
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RecipSequence">
+            <summary>
+            Get/Set Recipient Sequence
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RecipId">
+            <summary>
+            Get/Set Recipient ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RecipCompCode">
+            <summary>
+            Gets or sets the recipient company code
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RoleId">
+            <summary>
+            Get/Set Role Id
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.WfType">
+            <summary>
+            Get/Set Workflow Type
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.DueDays">
+            <summary>
+            Get/Set Due Days
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.DueAction">
+            <summary>
+            Get/Set Due Action
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.DueActionOn">
+            <summary>
+            Get/Set Due Action On
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RecipAction">
+            <summary>
+            Get/Set Recipient Action
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RecipActionOn">
+            <summary>
+            Get/Set Recipient Action On
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RecipRemarks">
+            <summary>
+            Get/Set Recipient Remarks
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.ApprovedBy">
+            <summary>
+            Get/Set Actual Approving Officer
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.WFConnect">
+            <summary>
+            Get/Set Session Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.Errors">
+            <summary>
+            Property to set/get WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RoleDescription">
+            <summary>
+            Property to get Role Description
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.LanguageID">
+            <summary>
+            Property to set/get Language ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipient.RecipientBelongsToCompany">
+            <summary>
+            Gets a value indicating if current recipient belongs to the current company code
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.#ctor(ePlatform.CommonClasses.EPSession,MecWise.WorkflowBase.WorkflowErrorCollection@,System.String)">
+            <summary>
+            Overloaded Constructor
+            </summary>
+            <param name="oSession">Session Object</param>
+            <param name="Errors">Errors Object</param>
+            <param name="sLangID">Language ID</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.Finalize">
+            <summary>
+            Default Destructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.UpdateRecips(ePlatform.CommonClasses.EPSession,System.String)">
+            <summary>
+            Function to call Update procedures 
+            </summary>
+            <param name="epSess">EPSession Object</param>
+            <param name="ProcName">Procedure Name</param>
+            <returns>Returns false if unsucessful</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.Log(System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+            <param name="Severity">Error Severity</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.Log(System.String)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.UpdateDB(ePlatform.CommonClasses.EPSession)">
+            <summary>
+            Update Database with workflow changes
+            </summary>
+            <param name="epSess">EPSession object</param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.PrintStr">
+            <summary>
+            Function to return Details of a particular Recipient
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipient.GetRoleTerm(System.String,System.String)">
+            <summary>
+            Function to get Role Terminology based on Term Type and Term Code
+            </summary>
+            <param name="sTermType">Terminology Type</param>
+            <param name="sTermCode">Terminology Code</param>
+            <returns>Role Terminology</returns>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowRecipientCollection">
+            <summary>
+            Collection to store WorkflowRecipient. 
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipientCollection.moWFConnect">
+            <summary>
+            Session Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipientCollection.moErrors">
+            <summary>
+            WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRecipientCollection.msLangID">
+            <summary>
+            Language ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipientCollection.RecipFirst">
+            <summary>
+            Returns reference to first recipient object in the collection
+            </summary>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipientCollection.RecipLast">
+            <summary>
+            Returns reference to last recipient object in the collection
+            </summary>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipientCollection.Errors">
+            <summary>
+            Property to set/get WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRecipientCollection.LanguageID">
+            <summary>
+            Property to set/get Language ID
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.#ctor(ePlatform.CommonClasses.EPSession,MecWise.WorkflowBase.WorkflowErrorCollection@,System.String)">
+            <summary>
+            Overloaded Constructor
+            </summary>
+            <param name="oSession">Session Object</param>
+            <param name="Errors">Errors Object</param>
+            <param name="sLangID">Language ID</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Finalize">
+            <summary>
+            Default Destructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Log(System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+            <param name="Severity">Error Severity</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Log(System.String)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Add(System.String,System.String,System.Int32,System.Int32,System.String,System.String,System.String,System.Int32,System.String,System.DateTime,System.String,System.DateTime,System.String,System.String)">
+            <summary>
+            Function to Add Recipient object to collection
+            </summary>
+            <param name="AppId">Application ID</param>
+            <param name="WfId">Workflow ID</param>
+            <param name="LineNo">Line No</param>
+            <param name="RecipSequence">Recipient Sequence</param>
+            <param name="RecipId">Recipient ID</param>
+            <param name="RoleId">Role ID</param>
+            <param name="WfType">Workflow Type</param>
+            <param name="DueDays">Due Days</param>
+            <param name="DueAction">Due Action</param>
+            <param name="DueActionOn">Due Action On</param>
+            <param name="RecipAction">Recipient Action</param>
+            <param name="RecipActionOn">Recipient Action On</param>
+            <param name="RecipRemarks">Recipient Remarks</param>
+            <param name="ApprovedBy">Approved By</param>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Item(System.Int32)">
+            <summary>
+            Obtains a reference to an object in recipient collection by referring to the index
+            </summary>
+            <param name="Index">Index</param>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.ItemByLineNo(System.Int32)">
+            <summary>
+            Obtains a reference to an object in recipient collection by referring to Line Number
+            </summary>
+            <param name="RecipNo">Recipient number</param>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.ItemByUserId(System.String)">
+            <summary>
+            Function to get Recipient object based on Login ID
+            </summary>
+            <param name="sUserID">Login ID</param>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.Exists(System.Int32)">
+            <summary>
+            Checks if the Recipient Number exists in the collection
+            </summary>
+            <param name="RecipNo">Recipient Number</param>
+            <returns>Boolean value</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.IndexOf(System.Int32)">
+            <summary>
+            Gets the Index of item in the collection based on Recipient Number
+            </summary>
+            <param name="RecipNo">Recipient Number</param>
+            <returns>Index</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.RecipRemove(System.Int32)">
+            <summary>
+            Removes the Recipient at the specified number
+            </summary>
+            <param name="RecipNo">Recipient number to remove</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.RecipNext(System.Int32)">
+            <summary>
+            Returns reference to next recipient object in the collection to the passed recipient number
+            </summary>
+            <param name="RecipNo">Recipient number</param>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.RecipComments(System.Int32)">
+            <summary>
+            Gets the previous recipient comments
+            </summary>
+            <param name="recipNo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.RecipPrevious(System.Int32)">
+            <summary>
+            Returns reference to previous recipient object in the collection to the passed recipient number
+            </summary>
+            <param name="RecipNo">Recipient number</param>
+            <returns>Recipient Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRecipientCollection.PrintStr">
+            <summary>
+            Function to return Details of the Recipients
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowRequest">
+            <summary>
+            Workflow Request object. Core file for workflow serice. 
+            Contains the logic and does the required processing based on values and conditions 
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msAppId">
+            <summary>
+            Application ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msWfId">
+            <summary>
+            Workflow ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msRequesterId">
+            <summary>
+            Requester ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msRequestCommand">
+            <summary>
+            Request Command
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.mdReqCommandOn">
+            <summary>
+            Request Command On
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msPrevRecipAction">
+            <summary>
+            Previous Recipient Action
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msPrevRecipId">
+            <summary>
+            Previous Recipient ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msCurrRecipId">
+            <summary>
+            Current Recipient ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.miCurrRecipLNo">
+            <summary>
+            Current Recipient Line Number
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msWfState">
+            <summary>
+            Workflow State
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.mdWfStateOn">
+            <summary>
+            Workflow State On
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msAppLink">
+            <summary>
+            Application Link
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msActionLink">
+            <summary>
+            Action Link
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.miWFSequence">
+            <summary>
+            Workflow Sequence
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msFormText">
+            <summary>
+            Form Text
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msWFStatus">
+            <summary>
+            Workflow Status
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msUserId">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.moWFConnect">
+            <summary>
+            Session Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.moRecips">
+            <summary>
+            Recipients Collection Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.mbLastApproverDone">
+            <summary>
+            Last Approver has acted or WF denied
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.mbModified">
+            <summary>
+            WfStatus field modified
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.moErrors">
+            <summary>
+            WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msLangID">
+            <summary>
+            Language ID
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msRefLink">
+            <summary>
+            Reference Link. Used when a crazy approver creates a cc list chain. 
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequest.msRefKey">
+            <summary>
+            Reference key... used to track wf across db's
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.AppId">
+            <summary>
+            Get/Set Application ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.WfId">
+            <summary>
+            Get/Set Workflow ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.ReferenceKey">
+            <summary>
+            Gets or sets the ReferenceKey. Used to track wf across db's
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.ReferenceLink">
+            <summary>
+            Gets or sets the ReferenceLink. Used when approver cc's a refererred wf
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.RequesterId">
+            <summary>
+            Get/Set Requester ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.RequestCommand">
+            <summary>
+            Get/Set Request Command
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.ReqCommandOn">
+            <summary>
+            Get/Set Request Command On
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.PrevRecipAction">
+            <summary>
+            Get/Set Previous Recipient Action
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.PrevRecipId">
+            <summary>
+            Get/Set Previous Recipient ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.CurrRecipId">
+            <summary>
+            Get/Set Current Recipient ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.CurrRecipLNo">
+            <summary>
+            Get/Set Current Recipient Line Number
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.WfState">
+            <summary>
+            Get/Set Workflow State
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.WfStateOn">
+            <summary>
+            Get/Set Workflow State On
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.AppLink">
+            <summary>
+            Get/Set Application Link
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.WFSequence">
+            <summary>
+            Get/Set Workflow Sequence
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.FormText">
+            <summary>
+            Get/Set Form Text
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.WFStatus">
+            <summary>
+            Get/Set Workflow Status
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.UserId">
+            <summary>
+            Get/Set User Id
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.WFConnect">
+            <summary>
+            Get/Set session object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.Recips">
+            <summary>
+            Get/Set Recipients Collection Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.NumRecips">
+            <summary>
+            Get Number of Recipients
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.WfType">
+            <summary>
+            Get Workflow Type of Current Recipient
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.Errors">
+            <summary>
+            Property to set/get WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.LanguageID">
+            <summary>
+            Property to set/get Language ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.SaveToFile">
+            <summary>
+            Property to get/set Save to File.
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequest.SendMail">
+            <summary>Gets or sets preference to send email for specific action taken on request</summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.#ctor(ePlatform.CommonClasses.EPSession,MecWise.WorkflowBase.WorkflowErrorCollection@,System.String)">
+            <summary>
+            Overloaded Constructor
+            </summary>
+            <param name="oSession">Session Object</param>
+            <param name="Errors">Errors Object</param>
+            <param name="sLangID">Language ID</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Finalize">
+            <summary>
+            Default Destructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.RecipientSession(System.String)">
+            <summary>
+            Gets the recipent connection information
+            </summary>
+            <param name="compCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.RecipCompanyList">
+            <summary>
+            Gets the recipient company list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.UpdateRequest(ePlatform.CommonClasses.EPSession,System.String)">
+            <summary>
+            Function to Update Database
+            </summary>
+            <param name="epSess">EPSession object</param>
+            <param name="ProcName">Procedure Name</param>
+            <returns>Returns false if unsucessful</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.UpdateDbReplState">
+            <summary>
+            Function to update Replication State field in database
+            </summary>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.SetNextApprover">
+            <summary>
+            Function to set Next Approver
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.IncCurrRecipNo">
+            <summary>
+            Function to Increament Current Recipient Number
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.AutoNotedEnabled">
+            <summary>
+            Check if Auto-Noted option enabled.
+            </summary>
+            <returns>True, if enabled. False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.AutoNoted(MecWise.WorkflowEngine.WorkflowRecipient)">
+            <summary>
+            Mark as Noted automatically after last approval for all recipients with action For Information.
+            </summary>
+            <param name="recip">Recipient.</param>
+            <returns>True if successful. False otherwise.</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.SetDueDate">
+            <summary>
+            Function to set Due Date for current recipient
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.SetWorkflowStatus">
+            <summary>
+            Function to set appropriate Workflow status based on the conditions
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.SendNotification(MecWise.WorkflowEngine.WorkflowRecipient)">
+            <summary>
+            Function to send notification to the appropriate recipient(s)
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.NotifyRequestor">
+            <summary>
+            Sends Acknoledgement email to applicant. ( Requestor ) once app is approved / cancelled / withdrawn
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.SendReminder">
+            <summary>
+            Function to send reminders to the late approver
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.PrepActionLink(System.String,System.Int32,MecWise.WorkflowEngine.WorkflowRecipient)">
+            <summary>
+            Gets the direct approval or denial profile link
+            </summary>
+            <param name="profileLink">The link to be modified</param>
+            <param name="linkType">1 - for approval. 2 - for denial. 3 - For Noty</param>
+            <param name="recipObj">Current workflow recipient</param>
+            <returns>the valid approval , noty or denial link</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.CheckRights">
+            <summary>
+            Function to check if the user has rights over the workflow
+            </summary>
+            <returns>Returns True if user has rights</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.CheckCovering(System.String,MecWise.WorkflowEngine.WorkflowRecipient)">
+            <summary>
+            Function to Check whether the user is the actual recipient or covering officer
+            </summary>
+            <param name="sRemarks">Remarks of the current recipient</param>
+            <param name="recip">Workflow Recipient</param>
+            <returns>Formatted remarks for the current recipient</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.GetDelegateRecipient(System.String,System.String,System.DateTime)">
+            <summary>
+            Function to get Delegate recipient ID
+            </summary>
+            <param name="sRecipId">Recipient ID</param>
+            <param name="sRoleId">Recipient Role</param>
+            <param name="dDueDate">Due Date for delegation</param>
+            <returns>Delegate recipient Id or the current recipient</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.GetEmpeDetails(System.String)">
+            <summary>
+            Function to get Employee Details based on employee ID
+            </summary>
+            <param name="EmpeID">Employee ID</param>
+            <returns>Employee Name</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.SendCCNotification(System.String)">
+            <summary>
+            Function to send notification to CC recipients set by current recipient
+            </summary>
+            <param name="sRemarks">Remarks to be sent to CC Recipients</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Log(System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+            <param name="Severity">Error Severity</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Log(System.String)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.SetCancelCommand">
+            <summary>
+            Function to Set Request Command Cancel Notify
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.PrintStr">
+            <summary>
+            Function to return Details of a particular Request
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.UpdateDB">
+            <summary>
+            Function to Update Database
+            </summary>
+            <returns>Returns false if unsucessful</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.InvokeBusObj">
+            <summary>
+            Invoke Custom Workflow BO
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.UpdateDB(ePlatform.CommonClasses.EPSession)">
+            <summary>
+            Function to Update WF_REQUEST table
+            </summary>
+            <param name="epSess">EPSession object</param>
+            <returns>Returns false if unsucessful</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.StartWorkflow">
+            <summary>
+            Function to Start Workflow
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.CancelWorkflow">
+            <summary>
+            Function to Cancel Workflow
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.ChangeWorkflow">
+            <summary>
+            Function to Change Workflow
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Resend">
+            <summary>
+            Function to Resend Notification
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.ResendAll">
+            <summary>
+            Function to Resend Notification
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Approve(System.String)">
+            <summary>
+            Function to Approve Workflow for current recipient
+            </summary>
+            <param name="sRemarks">Remarks of the current recipient</param>
+            <returns>Returns true if successful</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Deny(System.String)">
+            <summary>
+            Function to Deny Workflow for current recipient
+            </summary>
+            <param name="sRemarks">Remarks of the current recipient</param>
+            <returns>Returns true if successful</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Noted(System.String)">
+            <summary>
+            Function to perform Noted action for current recipient
+            </summary>
+            <param name="sRemarks">Remarks of the current recipient</param>
+            <returns>Returns true if successful</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.GetRights">
+            <summary>
+            Function to Get user rights from database
+            </summary>
+            <returns>User Rights</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.DoDueAction">
+            <summary>
+            Function to perform Due Action
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.Comments">
+            <summary>
+            Function to get Recipient Comments
+            </summary>
+            <returns>Recipient Comments</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.ProcessingFormText">
+            <summary>
+            Gets the Form Text
+            </summary>
+            <remarks>DEPRECIATED.. Use FormText property</remarks>
+            <returns>An empty string</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequest.ReportFile">
+            <summary>
+            Gets the name of the report file generated
+            </summary>
+            <remarks>DEPRECIATED ... This feature was never implemented</remarks>
+            <returns>An empty string</returns>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowRequestCollection">
+            <summary>
+            Collection to store WorkflowRequest
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequestCollection.moWFConnect">
+            <summary>
+            Session Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequestCollection.moErrors">
+            <summary>
+            WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="F:MecWise.WorkflowEngine.WorkflowRequestCollection.msLangID">
+            <summary>
+            Language ID
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequestCollection.Errors">
+            <summary>
+            Property to set/get WorkflowErrorCollection Object
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowRequestCollection.LanguageID">
+            <summary>
+            Property to set/get Language ID
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.#ctor(ePlatform.CommonClasses.EPSession,MecWise.WorkflowBase.WorkflowErrorCollection@,System.String)">
+            <summary>
+            Overloaded Constructor
+            </summary>
+            <param name="oSession">EPSession Object</param>
+            <param name="Errors">Errors Object</param>
+            <param name="sLangID">Language ID</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Finalize">
+            <summary>
+            Default Destructor
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Dispose">
+            <summary>
+            Destroy all Memory references and free resources
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Dispose(System.Boolean)">
+            <summary>
+            Protected function that actually destroy all Memory references and free resources
+            </summary>
+            <param name="disposing">bool</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Log(System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+            <param name="Severity">Error Severity</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Log(System.String)">
+            <summary>
+            Function to Log Errors
+            </summary>
+            <param name="sErrorMessage">Error Message</param>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Add(System.String,System.String,System.String,System.String,System.DateTime,System.String,System.String,System.String,System.Int32,System.String,System.DateTime,System.String,System.Int32,System.String,System.String,MecWise.WorkflowEngine.WorkflowRecipientCollection)">
+            <summary>
+            Function to add Request Object to collection
+            </summary>
+            <param name="AppId">Application ID</param>
+            <param name="WfId">Workflow ID</param>
+            <param name="RequesterId">Requester ID</param>
+            <param name="RequestCommand">Request Command</param>
+            <param name="ReqCommandOn">Request Command On</param>
+            <param name="PrevRecipAction">Previous Recipient Action</param>
+            <param name="PrevRecipId">Previous Recipient ID</param>
+            <param name="CurrRecipId">Current Recipient ID</param>
+            <param name="CurrRecipNo">Current Recipient Number</param>
+            <param name="WfState">Workflow State</param>
+            <param name="WfStateOn">Workflow State On</param>
+            <param name="AppLink">application Link</param>
+            <param name="WFSequence">workflow Sequence</param>
+            <param name="FormText">form Text</param>
+            <param name="WFStatus">Workflow Status</param>
+            <param name="Recips">Recipients Object</param>
+            <returns>Request Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Item(System.Int32)">
+            <summary>
+            Obtains a reference to an object in your collection by referring to the index
+            </summary>
+            <param name="Index">Index</param>
+            <returns>FRequest Object</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.Exists(System.String)">
+            <summary>
+            Gets a value identifying if the workflow id is a valid id
+            </summary>
+            <param name="WfId">The workflow id to check for existence</param>
+            <returns>True if exists, false otherwise</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.IndexOf(System.String)">
+            <summary>
+            Gets the index of the request identified by the workflow id within the collection
+            </summary>
+            <param name="WfId">Workflow ID whose index is to be retrieved</param>
+            <returns>Index of the record identified by the workflow id</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowRequestCollection.PrintStr">
+            <summary>
+            Function to return Details of the Requests
+            </summary>
+            <returns>Request Details in string format</returns>
+        </member>
+        <member name="T:MecWise.WorkflowEngine.WorkflowSql">
+            <summary>
+            Internal class to return Workflow SQL statements
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowSql.EmployeeDetails">
+            <summary>
+            Gets the Employee Details SQL
+            </summary>
+        </member>
+        <member name="P:MecWise.WorkflowEngine.WorkflowSql.EmployeeDetailsForCompany">
+            <summary>
+            Gets the Employee Details for the company SQL
+            </summary>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowSql.RES_GETDBREQUESTS(System.Boolean)">
+            <summary>
+            Gets the sql that will return all the worklow requests that are pending action.
+            </summary>
+            <param name="isSql">A boolean value identifying if the request is to be retrieved from a SQL Server database</param>
+            <returns>Request SQL</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowSql.RES_GETAREQUEST(System.Boolean)">
+            <summary>
+            Gets the sql that will return a single worklow request
+            </summary>
+            <param name="isSql">A boolean value identifying if the request is to be retrieved from a SQL Server database</param>
+            <returns>Request SQL</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowSql.RES_GETREQUESTSDUE(System.Boolean)">
+            <summary>
+            Gets the sql that will return all requests which are due (used for sending reminders/take default action).
+            </summary>
+            <param name="isSql">A boolean value identifying if the request is to be retrieved from a SQL Server database</param>
+            <returns>Request SQL</returns>
+        </member>
+        <member name="M:MecWise.WorkflowEngine.WorkflowSql.RES_GETREQUESTSDUEBYHRS(System.Boolean)">
+            <summary>
+            Gets the sql that will return all requests which are due (used for sending reminders/take default action) by hours.
+            </summary>
+            <param name="sql">A boolean value identifying if the request is to be retrieved from a SQL Server database</param>
+            <returns>Request SQL</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,167 @@
+@using MecWise.Blazor.Pages;
+@inject SessionState Session;
+@inject NavigationManager NavigationManager;
+
+@if (Session.AppConfig.mobileMenuDrawer)
+{
+    // right side drawer menu
+
+    <nav class="navbar navbar-expand-md sticky-top navbar-light menu-mobile">
+        <div class="navbar-brand">
+            <img class="banner-logo" />
+            @*<span class="menu-brand">@SessionState.AppConfig.appTitle</span>*@
+            @*<button class="navbar-back border-0 bg-transparent" type="button" onClick="javascript:history.go(-1)">
+            <span class="oi oi-chevron-left"></span>
+            </button>*@
+        </div>
+
+        <button class="navbar-toggler navbar-right border-0 bg-transparent" type="button" data-toggle="collapse" data-target="#_mobileSideNav">
+            <span class="oi oi-list"></span>
+        </button>
+
+    </nav>
+
+    <div id="_mobileSideNav" class="sidenav collapse">
+
+        <div class="sidenav-overlay" data-toggle="collapse" data-target="#_mobileSideNav">
+        </div>
+
+        <div class="sidenav-content">
+
+            <ul class="navbar-nav mr-auto" data-toggle="collapse" data-target="#_mobileSideNav">
+
+                <li>
+                    <NavLink class="nav-color" href="">
+                        <span class="navlink-icon" style="background-image: url(./images/icon-menu/mobile-menu/home.png)"  aria-hidden="true"></span> Home <span class="oi oi-chevron-right arrow-icon" style="float: right;" aria-hidden="true"></span>
+                    </NavLink>
+                </li>
+
+                @if (Session.IsAdmin && !string.IsNullOrEmpty(Session.AppConfig.v5ConnectRoot))
+                {
+                    <li>
+                        <NavLink class="nav-color" @onclick="NavigateToV5">
+                            <span class="navlink-icon" style="background-image: url(./images/icon-menu/mobile-menu/admin.png)" aria-hidden="true"></span> Admin<span class="oi oi-chevron-right arrow-icon" style="float: right;" aria-hidden="true"></span>
+                        </NavLink>
+                    </li>
+                }
+
+
+                @if (menuPages != null)
+                {
+                    @foreach (EPF_BLZ_MNU_PAGE menuPage in menuPages)
+                    {
+                        //string _menuLink = string.Format("EpfMenuSubItemDtl/{0}/{1}/{2}", menuSubItem.MENU_ID.ToInt(), menuSubItem.MENU_ITEM_ID.ToInt(), menuSubItem.MENU_SUB_ITEM_ID.ToInt());
+                        string backgroundImg = menuPage.MENU_ATTR;
+                        @if (string.IsNullOrEmpty(backgroundImg))
+                        {
+                            backgroundImg = "./images/icon-menu/menu-item-black.png";
+                        }
+                        <li>
+                            <NavLink class="nav-color" href="@string.Format(menuPage.URL_TMP,menuPage.SCRN_ID)">
+                                <span class="navlink-icon" style="background-image: url(@backgroundImg)" aria-hidden="true"></span> @menuPage.MENU_NAME<span class="oi oi-chevron-right arrow-icon" style="float: right;" aria-hidden="true"></span>
+                            </NavLink>
+                        </li>
+
+                    }
+                }
+                <div class="gap-before-logout"></div>
+                <li>
+                    <NavLink class="nav-logout" href="@logoutUri">
+                        <span class="oi oi-account-logout pr-1" aria-hidden="true"></span> Log Out
+                    </NavLink>
+                </li>
+
+
+            </ul>
+
+        </div>
+    </div>
+}
+else
+{
+    // default menu
+    <nav class="navbar navbar-expand-md sticky-top navbar-light menu-mobile" data-toggle="collapse" data-target="#navbarContent">
+        <div class="navbar-brand">
+            @*<img src="images/mecwise.png" alt="MecWise HR" class="rounded-lg" style="height:48px"/>*@
+            <span class="menu-brand">@Session.AppConfig.appTitle</span>
+        </div>
+
+
+        <button class="navbar-toggler navbar-right border-0 bg-transparent" type="button" data-toggle="collapse" data-target="#navbarContent">
+            <span class="oi oi-menu text-white"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+
+            <ul class="navbar-nav mr-auto">
+                <li class="dropdown position-static mx-md-2 my-2 text-nowrap">
+                    <NavLink class="nav-color" href="#">
+                        <span class="navlink-icon" style="background-image: url(./images/icon-menu/mobile-menu/home.png)" aria-hidden="true"></span> Home
+                    </NavLink>
+                </li>
+
+                @if (Session.IsAdmin)
+                {
+                    <li>
+                        <NavLink class="nav-color" @onclick="NavigateToV5">
+                            <span class="navlink-icon" style="background-image: url(./images/icon-menu/mobile-menu/admin.png)" aria-hidden="true"></span> Admin
+                        </NavLink>
+                    </li>
+                }
+
+                @if (menuPages != null)
+                {
+                    @foreach (EPF_BLZ_MNU_PAGE menuPage in menuPages)
+                    {
+                        //string _menuLink = string.Format("EpfMenuSubItemDtl/{0}/{1}/{2}", menuSubItem.MENU_ID.ToInt(), menuSubItem.MENU_ITEM_ID.ToInt(), menuSubItem.MENU_SUB_ITEM_ID.ToInt());
+                        string backgroundImg = menuPage.MENU_ATTR;
+                        @if (string.IsNullOrEmpty(backgroundImg))
+                        {
+                            backgroundImg = "oi oi-cog pr-1";
+                        }
+                        <li class="dropdown position-static mx-md-2 my-2 text-nowrap">
+                            <NavLink class="nav-color" href="@string.Format(menuPage.URL_TMP,menuPage.SCRN_ID)">
+                                <span class="navlink-icon" style="background-image: url(@backgroundImg)"  aria-hidden="true"></span> @menuPage.MENU_NAME
+                            </NavLink>
+                        </li>
+
+                    }
+                }
+
+                <li>
+                    <NavLink class="nav-link nav-color text-nowrap text-primary" href="@logoutUri">
+                        <span class="oi oi-account-logout pr-1" aria-hidden="true"></span> Log Out
+                    </NavLink>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+}
+
+
+
+@code {
+
+    string logoutUri = "logout";
+    List<EPF_BLZ_MNU_PAGE> menuPages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string url = string.Format("Menu/GetMenuMobile/{0}/{1}/{2}/{3}", Session.UserID, Session.LangId, false, Session.IsMobileScreen());
+        menuPages = await Session.GetJsonAsync<List<EPF_BLZ_MNU_PAGE>>(Session.GetAbsoluteApiUrl(url));
+
+        string oidc_user = await Session.GetStorageItemAsync("oidc_user");
+        if (!string.IsNullOrEmpty(oidc_user)) {
+            logoutUri = "MicrosoftIdentity/Account/SignOut";
+        }
+    }
+
+    private async void NavigateToV5()
+    {
+        await Session.NavigateV5URLAsync(NavigationManager.BaseUri, "~/Default.aspx?RT=1", false);
+    }
+
+}
