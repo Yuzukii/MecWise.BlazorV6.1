@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>DevExpress.Blazor</id>
+    <version>21.1.6</version>
+    <authors>Developer Express Inc.</authors>
+    <owners>Developer Express Inc.</owners>
+    <description>This package contains native and high performance DevExpress UI Components for Blazor. Use these components to create intuitive and refined user experiences for Blazor Server and Blazor WebAssembly.</description>
+    <language>en-US</language>
+    <licenseUrl>https://www.devexpress.com/Support/EULAs</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <iconUrl>https://secure.gravatar.com/avatar/6b38f1e9ffd8b069bcdc2741934fdbcf?s=512&amp;r=g&amp;d=retro</iconUrl>
+    <dependencies>
+      <group targetFramework="net5.0">
+        <dependency id="DevExpress.Data" version="[21.1.6]" />
+        <dependency id="DevExtreme.AspNet.Data" version="2.8.6" />
+        <dependency id="Microsoft.AspNetCore.Components" version="5.0.2" />
+        <dependency id="Microsoft.AspNetCore.Components.Web" version="5.0.2" />
+      </group>
+    </dependencies>
+    <frameworkReferences />
+  </metadata>
+</package>

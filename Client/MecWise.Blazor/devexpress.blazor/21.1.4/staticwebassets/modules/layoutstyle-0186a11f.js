@@ -1,0 +1,1 @@
+import{R as e}from"./dom-utils-d8c2ed7a.js";import"./dom-a06f5987.js";function t(t){const o=new Blob([t],{type:"text/css"}),r=window.URL.createObjectURL(o);return e((()=>{const e=document.createElement("link");e.onload=e.onerror=e.remove.bind(e),e.href=r,e.rel="preload",e.as="style",document.head.appendChild(e)})),r}const o={getCssUrl:t};export default o;export{t as getCssUrl};

@@ -1,0 +1,1 @@
+const o=window,e=window.navigator.userAgent,t={isMobileDevice:/(cpu iphone os)|(Android)/i.test(e),isTablet:/(ipad)/i.test(e)};async function i(){if(!o.DxBlazor)try{const e=await import("./modules/dx-blazor-32f20536.js");Object.defineProperty(o,"DxBlazor",{value:e.default})}catch(e){o.console.error(e)}}function n(){return t}export{n as getDeviceInfo,i as initializeEnvironment};

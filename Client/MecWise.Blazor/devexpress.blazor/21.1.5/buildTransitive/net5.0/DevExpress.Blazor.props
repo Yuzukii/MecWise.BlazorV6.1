@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="../DevExpress.Blazor.props" />
+  <PropertyGroup>
+    <DxExtendStartupHost Condition=" '$(DxExtendStartupHost)' == '' ">True</DxExtendStartupHost>
+    <DxStartupHostFile Condition=" '$(DxStartupHostFile)' == '' ">Startup.DevExpress.cs</DxStartupHostFile>
+  </PropertyGroup>
+</Project>
